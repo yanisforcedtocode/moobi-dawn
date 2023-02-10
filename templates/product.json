@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "product-add2Cart": {
+      "type": "section_main_product_addSection",
+      "settings": {
+      }
+    },
+    "product-description": {
+      "type": "section_main_product_description",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "product-add2Cart",
+    "product-description"
+  ]
+}

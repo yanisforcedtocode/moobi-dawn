@@ -1,0 +1,64 @@
+.firstPurchasePromptBanner__section{
+    position: fixed;
+    width: fit-content;
+    max-width: 70vw;
+    left: 20px;
+    bottom: 20px;
+    background: #FFF;
+    box-shadow: rgb(60 60 60 / 20%) 2px 2px 6px;
+    display: none;
+    opacity: 0%;
+    transition-property: opacity, transform;
+    transition-duration: 400ms;
+    border-radius: 5px;
+    border: 2px solid #ffc5008a;
+    border-left: 5px solid #ffc500;
+    z-index: 10;
+    &__container{
+        position: relative;
+        padding: 15px;
+        &__closeBtn{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        &__ctaButton{
+            display: inline-block;
+            background: #ffc500;
+            color: #000;
+            font-weight: 800;
+            width: fit-content;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-right: 22px;
+            &:hover{
+                background: #f3f3f3;
+            }
+        }
+        &__text{
+            display: inline-block;
+            margin-right: 12px
+        }
+    }
+}
+
+
+@keyframes firstPurchaseBannerAppears {
+    0% {
+        transform: translateX(-200px);
+    }
+    10%{
+        opacity: 0%;
+    }
+    100% {
+        transform: traslateX(400px);
+        opacity: 93%;
+    }
+}
+
+.firstPurchaseBannerAppears{
+    animation: firstPurchaseBannerAppears 300ms ease-out 1200ms 1 normal forwards
+}
+

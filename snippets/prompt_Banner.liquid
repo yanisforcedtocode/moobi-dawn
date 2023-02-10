@@ -1,0 +1,37 @@
+{% liquid
+  assign cta_text = cta_text
+  assign cta_url = cta_url
+  assign prompt_text = prompt_text
+%}
+
+{% unless customer and customer.orders_count >= 1 %}
+  <link
+    rel="stylesheet"
+    href="{{ 'style--component--firstPromptBanner.css' | asset_url }}"
+    type="text/css"
+    media="print"
+    onload="this.media='all';onLoadStylesheet()"
+  >
+
+    <div class = "firstPurchasePromptBanner__section" style = "display: none">
+        <div class = "firstPurchasePromptBanner__section__container">
+            <div id = "firstPurchasePromptBanner__section__closeBtn" class = "firstPurchasePromptBanner__section__container__closeBtn">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            {% comment %} <div class = "firstPurchasePromptBanner__section__container__text">新客戶首單免運費！</div> {% endcomment %}
+            <div class = "firstPurchasePromptBanner__section__container__text">{{prompt_text}}</div>
+
+            <a href = {{cta_url}}>
+              {% comment %} <div class = "firstPurchasePromptBanner__section__container__ctaButton">立即使用</div> {% endcomment %}
+              <div class = "firstPurchasePromptBanner__section__container__ctaButton">{{cta_text}}</div>
+
+            </a>
+        </div>
+    </div>
+    <script defer = "defer" src="{{ 'script--activationRepCheck.js' | asset_url }}"></script>
+    <script defer = "defer" src="{{ 'script--firstPurchaseCloseRepCheck.js' | asset_url }}"></script>
+
+{% endunless %}
+
+
+

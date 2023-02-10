@@ -1,0 +1,87 @@
+<div class="mainSlider__section">
+    <div class="mainSlider__section__container">
+      {% for block in section.blocks %}
+        <p>block {{ forloop.index }}</p>
+        <h1>{{ block.settings.description }}</h1>
+      {% endfor %}
+    </div>
+  </div>
+
+{% comment %} gloabl homepage stylesheet, non component based
+<link rel="stylesheet" href="{{ 'style--homepage.css' | asset_url }}" media="print" onload="this.media='all'"> {% endcomment %}
+  
+
+{% schema %}
+  {
+    "name": "HomePage slideShow",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Main image"
+      },
+      {
+        "type": "text",
+        "id": "text-id",
+        "default": "default",
+        "label": "text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "banner",
+        "name": "HomePage banners",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_1800",
+            "label": "Image for desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_720",
+            "label": "Image for mobile"
+          },
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Banner link"
+          },
+          {
+            "type": "text",
+            "id": "description",
+            "label": "Banner description"
+          },
+          {
+            "type": "text",
+            "id": "banner_title",
+            "label": "Banner title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "HomePage slideShow",
+        "blocks": [
+          {
+            "type": "banner"
+          },
+          {
+            "type": "banner"
+          },
+          {
+            "type": "banner"
+          },
+          {
+            "type": "banner"
+          },
+          {
+            "type": "banner"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

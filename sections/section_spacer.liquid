@@ -1,0 +1,51 @@
+
+{% case section.settings.section_color %}
+    {% when "yellow" %}
+        {% assign background = "#FFC500" %}
+    {% when "white" %}
+        {% assign background = "#FFF" %}
+    {% when "grey" %}
+        {% assign background = "#F3F3F3" %}
+    {% endcase %}
+
+<div class="homePage_spacer__section" 
+    style="height:{{ section.settings.section_height }}px; background:{{background}}">
+</div>
+
+{% schema %}
+{
+  "name": "Section spacer",
+  "settings": [
+    {
+      "type": "number",
+      "id": "section_height",
+      "label": "Section height"
+    },
+    {
+      "type": "select",
+      "id": "section_color",
+      "label": "Section color",
+      "options": [
+        {
+          "value": "yellow",
+          "label": "Yellow"
+        },
+        {
+          "value": "grey",
+          "label": "Grey"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        }
+      ],
+      "default": "yellow"
+    }
+  ],
+  "presets": [
+    {
+      "name": "HomePage spacer"
+    }
+  ]
+}
+{% endschema %}

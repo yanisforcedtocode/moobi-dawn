@@ -1,0 +1,56 @@
+
+  {%  assign displayedSectionTitle = section.settings.title %}
+  {%  assign featuredCollections = section.settings.collection_list %}
+  {%  assign engagementType = section.settings.engagement_type %}
+    
+
+<div class="featuredCollection__section" data-homePage_engagement_type = "{{ engagementType }}">
+    <div class="featuredCollection__section__container">
+      <div class="featuredCollection__section__h2container">
+        <h2>{{ displayedSectionTitle }}</h2>
+      </div>
+      {% for collection in featuredCollections %}
+      <div class="featuredCollection__section__container__item">
+        <a href="{{ collection.url }}">
+          <div>
+            <img
+              src="{{ collection.featured_image | image_url: width: 200 }}"
+              class= "" width = 200 height = 200
+              loading= "lazy"
+            />
+          </div>
+        </a>
+        <p>{{ collection.title }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Featured collections",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section title"
+      },
+      {
+        "type": "collection_list",
+        "id": "collection_list",
+        "label": "Collections"
+      },
+      {
+        "type": "text",
+        "id": "engagement_type",
+        "label": "Engagement type"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured collections"
+      }
+    ]
+  }
+  {% endschema %}
+  

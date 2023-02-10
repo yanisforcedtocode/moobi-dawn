@@ -1,0 +1,61 @@
+{%- liquid
+    assign featured_collection = section.settings.collection
+    assign collectionDisplayTitle = section.settings.title
+    assign identificationCode = section.settings.idenfication_code
+    assign engagement_type = section.settings.engagement_type
+    -%}
+  
+  <div class="productSlider__section">
+      <div class="productSlider__section__container" data-homePage_engagement_type = "{{ engagement_type }}" >
+        <div class="products-slide-section productslidesection{{ identificationCode }}">
+          <a href= '{{ featured_collection.url }}'>
+            <h2 class="products-slide-h2">{{ collectionDisplayTitle }} ></h2></a
+          >
+          <i
+            id="productslidesection-{{ identificationCode }}left"
+            class="fas fa-chevron-circle-left"
+          ></i>
+          <i
+            id="productslidesection-{{ identificationCode }}right"
+            class="fas fa-chevron-circle-right"
+          ></i>
+  
+          <div class="products-slide-container productslidecontainer-{{ identificationCode }}">
+            {% render 'index-productslider', featured_collection: featured_collection %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% schema %}
+{
+  "name": "Product slider section",
+  "settings": [
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Display title"
+      },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "engagement_type",
+      "label": "Engagement type"
+    },
+    {
+      "type": "text",
+      "id": "identification_code",
+      "label": "Identification code"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product slider section"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,19 @@
+{% assign featured_collection = featured_collection %}
+{% for product in featured_collection.products limit: 9 %}
+  <a href="/products/{{ product.handle }}">
+    <div class="products-slide-item-container">
+      <img
+        class="products-slide-item-img lazyload"
+        src="{{ product.featured_image | image_url: width: 200 }}"
+        width= 180
+        height= 180
+        loading="lazy"
+      >
+      <h3 class="products-slide-item-title">{{ product.title }}</h3>
+
+      <p class="products-slide-item-vendor">{{ product.vendor }}</p>
+      <span class="products-slide-item-price">{{ product.price | money }}</span>
+      <span class="products-slide-item-price-original">{{ product.compare_at_price | money }}</span>
+    </div>
+  </a>
+{% endfor %}

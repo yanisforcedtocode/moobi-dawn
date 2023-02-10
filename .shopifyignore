@@ -1,0 +1,6 @@
+assets/scss
+assets/*.ts
+dist
+.vscode
+.shopifyignore
+tsconfig.json

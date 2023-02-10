@@ -1,0 +1,136 @@
+{
+  "sections": {
+    "47f6e5d8-7598-4bbd-832b-1b9ba1f49655": {
+      "type": "section_slideshow_hero",
+      "blocks": {
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-0": {
+          "type": "banner",
+          "settings": {
+            "image_link": "",
+            "description": "",
+            "banner_title": ""
+          }
+        },
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-1": {
+          "type": "banner",
+          "settings": {
+            "image_link": "",
+            "description": "gggg",
+            "banner_title": ""
+          }
+        },
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-2": {
+          "type": "banner",
+          "settings": {
+            "image_link": "",
+            "description": "sdfd",
+            "banner_title": ""
+          }
+        },
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-3": {
+          "type": "banner",
+          "settings": {
+            "image_link": "",
+            "description": "asdf",
+            "banner_title": ""
+          }
+        },
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-4": {
+          "type": "banner",
+          "settings": {
+            "image_link": "",
+            "description": "",
+            "banner_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-0",
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-1",
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-2",
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-3",
+        "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-4"
+      ],
+      "settings": {
+        "text-id": "default"
+      }
+    },
+    "spacer_homepage_01": {
+      "type": "section_spacer",
+      "settings": {
+        "section_height": 30,
+        "section_color": "yellow"
+      }
+    },
+    "product_slider_homePage_01": {
+      "type": "section_product_slider",
+      "settings": {
+        "title": "車身清潔",
+        "collection": "3m",
+        "engagement_type": "homePage_product_slider_cleaning",
+        "identification_code": "02"
+
+      }
+    },
+    "spacer_homepage_02": {
+      "type": "section_spacer",
+      "settings": {
+        "section_height": 30,
+        "section_color": "grey"
+      }
+    },
+    "section_featuredCollection_homePage_01": {
+      "type": "section_featuredCollection",
+      "settings": {
+        "title": "旗艦系列.",
+        "engagement_type": "homePage_featuredCollections",
+        "collection_list": [
+          "3m",
+          "99-atelier",
+          "aion",
+          "air-spencer",
+          "ambi-pur-hk-car-air-freshener-collection",
+          "armorall"
+        ]
+      }
+    },
+    "spacer_homepage_03": {
+      "type": "section_spacer",
+      "settings": {
+        "section_height": 30,
+        "section_color": "yellow"
+      }
+    },
+    "section_featuredCollection_homePage_02": {
+      "type": "section_featuredCollection",
+      "settings": {
+        "title": "我們的品牌.",
+        "engagement_type": "homePage_featuredBrands",
+        "collection_list": [
+          "3m",
+          "99-atelier",
+          "aion",
+          "air-spencer",
+          "ambi-pur-hk-car-air-freshener-collection",
+          "armorall"
+        ]
+      }
+    },
+    "1675921204c310004c": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "47f6e5d8-7598-4bbd-832b-1b9ba1f49655",
+    "spacer_homepage_01",
+    "product_slider_homePage_01",
+    "spacer_homepage_02",
+    "section_featuredCollection_homePage_01",
+    "spacer_homepage_03",
+    "section_featuredCollection_homePage_02",
+    "1675921204c310004c"
+  ]
+}
