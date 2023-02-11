@@ -1,0 +1,27 @@
+{{ page.title }}
+
+{% liquid 
+    assign sortedPageSections = page.content | split: '[$section$]'
+%}
+
+{% for pageSection in sortedPageSections %}
+    {% liquid 
+        assign typeArray = pageSection | split: '[$type$]'
+        assign type = typeArray[1]
+        assign titleArray = pageSection | split: '[$title$]'
+        assign title = titleArray[1]
+        assign contentArray = pageSection | split: '[$content$]'
+        assign content = contentArray[1]
+        assign content = content | replace: '[$seperator$]', '<div class = "separator"></div>'
+        assign imgArray = pageSection | split: '[$img$]'
+        assign img = imgArray[1]
+        assign colorArray = pageSection | split: '[$color$]'
+        assign color = colorArray[1]
+    %}
+    <p>{{ title }}</p>
+    <p>{{ type }}</p>
+    <p>{{ img }}</p>
+    <p>{{ content }}</p>
+    {% comment %} 
+    {{ color }} {% endcomment %}
+{% endfor %}
