@@ -1,0 +1,177 @@
+{{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+
+{% liquid 
+  assign productCardDivTemplate = '<div class = "section__article__productCard"><a href = "_href"><h3>_title</h3><img loading = "lazy" src = "_src"></a></div>' 
+  assign blogcontent = article.content
+  assign steps = blogcontent | split: "[$step$]"
+  assign introduction = steps[0] | split: '[$intro$]'
+%}
+
+<div class="articleMetadata" data-tags = "{% for tag in article.tags%}{% if forloop.last == true %}{{tag}}{%else%}{{tag}},{%endif%}{%endfor%}"></div>
+
+<div class = "article__section__meta">
+  {% assign time = steps[0] | split: '[$time$]' %}
+  {% assign budget = steps[0] | split: '[$budget$]' %}
+  {% assign pre = steps[0] | split: '[$pre_img$]' %}
+  {% assign post = steps[0] | split: '[$post_img$]' %}  
+  {{ time[1] }}
+  {{ budget[1] }}
+  <img src="{{ pre[1] }}" loading = "lazy" height = 400 width = 'unset'>
+  <img src="{{ post[1] }}" loading = "lazy" height = 400 width = 'unset'>
+</div>
+
+  <div id = "dbDocumentId" data-id="{{ article.metafields.navi.docId }}"></div>
+  <h1 class = "article__section__meta__h1">{{ article.title }}</h1>
+  <p class = "article__section__meta__intro">{{ introduction[1] }}</p>
+
+
+{{ article.published_at }}
+{{ article.author }}
+
+{% for step in steps %}
+  {% liquid 
+    assign subHead = step | split: "[$subHead$]"
+    assign content = step | split: "[$content$]"
+    assign productHandle = step | split: "[$product$]"
+    assign stepProduct = all_products[productHandle[1]]
+    assign imgSrc = step | split: "[$img$]"
+  %}
+  {{ subHead[1] }}
+  {{ content[1] }}
+  <img src = "{{ imgSrc[1] }}" loading = "lazy" width: 400 height = 'unset'>
+  {% assign productImageSrc = stepProduct.featured_image | image_url: width: 400 %}
+  {% assign productCardDiv = productCardDivTemplate | replace: "_href", stepProduct.url | replace: "_src", productImageSrc | replace: "_title", stepProduct.title %}
+  {{ productCardDiv }}
+{% endfor %}
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "articleBody": {{ article.content | strip_html | json }},
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ request.origin | append: page.url | json }}
+    },
+    "headline": {{ article.title | json }},
+    {% if article.excerpt != blank %}
+      "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+    {% if article.image %}
+      "image": [
+        {{ article | image_url: width: article.image.width | prepend: "https:" | json }}
+      ],
+    {% endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "author": {
+      "@type": "Person",
+      "name": {{ article.author | json }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      {% if settings.share_image %}
+        "logo": {
+          "@type": "ImageObject",
+          "height": {{ settings.share_image.height | json }},
+          "url": {{ settings.share_image | image_url: width: settings.share_image.width | prepend: "https:" | json }},
+          "width": {{ settings.share_image.width | json }}
+        },
+      {% endif %}
+      "name": {{ shop.name | json }}
+    }
+  }
+  </script>
+
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "featured_image",
+      "name": "t:sections.main-article.blocks.featured_image.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "image_height",
+          "options": [
+            {
+              "value": "adapt",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__1.label"
+            },
+            {
+              "value": "small",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__2.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__3.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__4.label"
+            }
+          ],
+          "default": "adapt",
+          "label": "t:sections.main-article.blocks.featured_image.settings.image_height.label",
+          "info": "t:sections.main-article.blocks.featured_image.settings.image_height.info"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "t:sections.main-article.blocks.title.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "blog_show_date",
+          "default": true,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_date.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_show_author",
+          "default": false,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "t:sections.main-article.blocks.content.name",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "t:sections.main-article.blocks.share.name",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "share_label",
+          "label": "t:sections.main-article.blocks.share.settings.text.label",
+          "default": "Share"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-article.blocks.share.settings.featured_image_info.content"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-article.blocks.share.settings.title_info.content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

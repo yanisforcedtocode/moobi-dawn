@@ -9,12 +9,10 @@
 
 {% for description in sortedDescription offset: 1 %}
   {% unless forloop.last %}
-    {{ forloop.index }}
     {% assign content = description | split: '<h4>' %}
     {{ content[0] }}
     {% endunless %}
   {% if forloop.last %}  
-    {{ forloop.index }}
     {% assign content = description | split: '<h3>' %}
     {{ content[0] }}
   {% endif %}

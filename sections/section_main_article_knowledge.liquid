@@ -1,0 +1,205 @@
+{{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+
+{%  liquid 
+  assign productCardDivTemplate = '<div class = "section__article__productCard"><a href = "_href"><h3>_title</h3><img loading = "lazy" src = "_src"></a></div>' 
+  assign content = article.content
+%}
+
+{% for articleProduct in article.metafields.articleFields.productsList.value %}
+    {% assign replaceString = "{{" | append: "%product_card%" | append: "}}" %}
+    {% assign productImageSrc = articleProduct.featured_image | image_url: width: 400 %}
+    {% assign productCardDiv = productCardDivTemplate | replace: "_href", articleProduct.url | replace: "_src", productImageSrc | replace: "_title", articleProduct.title %}
+    {% assign content = content | replace_first: replaceString, productCardDiv %}
+{% endfor %}
+
+<h1>{{ article.title }}</h1>
+{{ article.published_at }}
+<img
+    srcset="{% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
+      {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+      {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+      {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+      {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
+      {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
+      {{ article.image | image_url }} {{ article.image.width }}w"
+    sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw"
+    src="{{ article.image | image_url: width: 1100 }}"
+    loading="eager"
+    width="{{ article.image.width }}"
+    height="{{ article.image.height }}"
+    alt="{{ article.image.alt | escape }}">
+
+
+<div class="article-template__social-sharing page-width page-width--narrow" {{ block.shopify_attributes }}>
+    <share-button class="share-button" {{ block.shopify_attributes }}>
+      <button class="share-button__button hidden">
+        {% render 'icon-share' %}
+        {{ block.settings.share_label | escape }}
+      </button>
+      <details id="Details-{{ block.id }}-{{ section.id }}">
+        <summary class="share-button__button">
+          {% render 'icon-share' %}
+          {{ block.settings.share_label | escape }}
+        </summary>
+        <div id="Article-share-{{ section.id }}" class="share-button__fallback motion-reduce">
+          <div class="field">
+            <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status">
+            </span>
+            <input type="text"
+                  class="field__input"
+                  id="url"
+                  value="{{ request.origin | append: article.url }}"
+                  placeholder="{{ 'general.share.share_url' | t }}"
+                  onclick="this.select();"
+                  readonly
+            >
+            <label class="field__label" for="url">{{ 'general.share.share_url' | t }}</label>
+          </div>
+          <button class="share-button__close hidden no-js-hidden">
+            {% render 'icon-close' %}
+            <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
+          </button>
+          <button class="share-button__copy no-js-hidden">
+            {% render 'icon-clipboard' %}
+            <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
+          </button>
+        </div>
+      </details>
+    </share-button>
+    <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
+  </div>
+{{ article.author }}
+{{ article.excerpt }}
+{{ content }}
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "articleBody": {{ article.content | strip_html | json }},
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ request.origin | append: page.url | json }}
+    },
+    "headline": {{ article.title | json }},
+    {% if article.excerpt != blank %}
+      "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+    {% if article.image %}
+      "image": [
+        {{ article | image_url: width: article.image.width | prepend: "https:" | json }}
+      ],
+    {% endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "author": {
+      "@type": "Person",
+      "name": {{ article.author | json }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      {% if settings.share_image %}
+        "logo": {
+          "@type": "ImageObject",
+          "height": {{ settings.share_image.height | json }},
+          "url": {{ settings.share_image | image_url: width: settings.share_image.width | prepend: "https:" | json }},
+          "width": {{ settings.share_image.width | json }}
+        },
+      {% endif %}
+      "name": {{ shop.name | json }}
+    }
+  }
+  </script>
+
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "featured_image",
+      "name": "t:sections.main-article.blocks.featured_image.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "image_height",
+          "options": [
+            {
+              "value": "adapt",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__1.label"
+            },
+            {
+              "value": "small",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__2.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__3.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__4.label"
+            }
+          ],
+          "default": "adapt",
+          "label": "t:sections.main-article.blocks.featured_image.settings.image_height.label",
+          "info": "t:sections.main-article.blocks.featured_image.settings.image_height.info"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "t:sections.main-article.blocks.title.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "blog_show_date",
+          "default": true,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_date.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_show_author",
+          "default": false,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "t:sections.main-article.blocks.content.name",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "t:sections.main-article.blocks.share.name",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "share_label",
+          "label": "t:sections.main-article.blocks.share.settings.text.label",
+          "default": "Share"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-article.blocks.share.settings.featured_image_info.content"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-article.blocks.share.settings.title_info.content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
