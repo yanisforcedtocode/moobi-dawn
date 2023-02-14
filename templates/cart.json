@@ -4,7 +4,8 @@
       "type": "main-cart-items",
       "settings": {
         "padding_top": 16,
-        "padding_bottom": 36
+        "padding_bottom": 36,
+        "discount_product":"soft-99-glaco-de-cleaner"
       }
     },
     "cart-footer": {

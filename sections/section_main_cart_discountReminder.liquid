@@ -1,0 +1,100 @@
+{% liquid
+  assign original_total_price = cart.original_total_price
+  assign total_price = cart.total_price
+  assign system_discount = cart.total_discount
+  assign freeShipPrice = section.settings.free_shipping_price
+  assign save10Price = section.settings.save10_price
+  assign free_shippingPrompt = section.settings.free_shippingPrompt
+  assign discount_Prompt = section.settings.discount_Prompt
+  assign shippingFee = 49
+  assign discount = 0
+%}
+
+{% if settings.free_shipping_on == true and total_price >= freeShipPrice %}
+  {% liquid
+    assign shippingFee = 0
+  %}
+{% endif %}
+
+{% if settings.save10_on == true and total_price >= save10Price %}
+  {% liquid
+    assign special_discount = total_price | divided_by: 10
+  %}
+{% endif %}
+<div
+  id="discount_and_shipping_policies"
+  data-save10="{{ settings.save10_on }}"
+  data-freeShip="{{ settings.free_shipping_on }}"
+  data-free_shippingPrompt="{{free_shippingPrompt}}"
+  data-discount_Prompt="{{discount_Prompt}}"
+>
+  <h2>折扣及運費</h2>
+
+  <p>current shipping fee:</p>
+  <p>{{ shippingFee }}</p>
+  {% if shippingFee == 0 %}
+    <p class = "discount_prompt">{{ free_shippingPrompt }}</p>
+  {%- endif %}
+
+  <p>system discount:</p>
+  <p>{{ system_discount }}</p>
+  {% if system_discount > 0 %}
+    <p  class = "discount_prompt">
+    {% for campaign in cart.cart_level_discount_applications %}
+      {{ campaign }}
+    {% endfor %}
+    </p>
+  {% endif %}
+
+  <p>special discount:</p>
+  <p>{{ special_discount }}</p>
+  <div>
+    {% if special_discount > 0 %}
+      <p class = "discount_prompt">{{ discount_Prompt }}</p>
+    {%- endif %}
+</div>
+
+  <p>total discount:</p>
+</div>
+
+{% schema %}
+{
+  "name": "Cart discount reminder",
+  "settings": [
+    {
+      "type": "number",
+      "id": "free_shipping_price",
+      "label": "Free shipping price"
+    },
+    {
+      "type": "number",
+      "id": "save10_price",
+      "label": "SAVE10 price"
+    },
+    {
+      "type": "checkbox",
+      "id": "save10_on",
+      "label": "SAVE10 available",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "free_shipping_on",
+      "label": "FreeShipping available",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "free_shippingPrompt",
+      "label": "Free shipping prompt",
+      "default": "免運費"
+    },
+    {
+      "type": "text",
+      "id": "discount_Prompt",
+      "label": "Discount prompt",
+      "default": "免運費"
+    }
+  ]
+}
+{% endschema %}

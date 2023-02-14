@@ -23,8 +23,6 @@ class ExternalTriggerInterfaceClass {
 }
 const externalTriggerInterface = new ExternalTriggerInterfaceClass()
 
-externalTriggerInterface.addToCartResponse = (res:any)=>{console.log(res)}
-
 const cartPageAddButtonFinallyExtHandler = (_this:any)=>{
     const button = _this.submitButton as HTMLElement
     if (button){
@@ -32,5 +30,7 @@ const cartPageAddButtonFinallyExtHandler = (_this:any)=>{
         _this.submitButton.innerText = "added to cart"
     }
   }
+
+externalTriggerInterface.addToCartResponse = (res:any)=>{console.log(res)}
 
 externalTriggerInterface.addToCartFinally = cartPageAddButtonFinallyExtHandler

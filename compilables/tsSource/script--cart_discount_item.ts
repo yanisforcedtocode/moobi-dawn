@@ -8,7 +8,7 @@ class CartDiscountController {
     quantity__inputs: NodeListOf<HTMLInputElement> 
     constructor(producdTitle: string){
         this.productTitle = producdTitle
-        this.quantity__inputs = document.querySelectorAll('.quantity__input')
+        this.quantity__inputs = this.returnInputsFromDOM()
         this.buttonClass = "quantity__button"
         this.initDiscountItem()
     }
@@ -24,30 +24,29 @@ class CartDiscountController {
 
     }
 
-    matchingProductHandler(el: HTMLInputElement){
+    matchingProductHandler(el: HTMLInputElement) {
         this.changeElmBackground(el)
-        const parent = el.parentElement!
-                const buttons = parent.querySelectorAll(`.${this.buttonClass}`) as NodeListOf<HTMLButtonElement>
-                buttons.forEach((el_1)=>{
-                    this.disableElement(el_1)
-                    this.changeElmBackground(el_1)
-                })
-                if(this.checkProductQtyOne(el)){
-                    this.moreThanOneQtyHandler(el)
-                    // document.location.reload()
-                }
-                // this.disableElement(el)
+        this.disableSideButtons(el)
+        if (this.checkProductQtyOne(el)) {
+            this.moreThanOneQtyHandler(el)
+        }
     }
 
-    moreThanOneQtyHandler(el: HTMLInputElement){
-        el.disabled = false
+    async moreThanOneQtyHandler(el: HTMLInputElement){
         el.value = '1'
-        const cartItem = el.closest('cart-items') as any
-        if(cartItem){
-            console.log(cartItem)
-            console.log(cartItem.onChange)
+        const elIndex = parseInt(el.dataset.index!)
+        await this.updateCartItem(el, elIndex)
+        this.updateInputsElm()
+        this.disableElement(this.quantity__inputs[elIndex-1])
+        this.changeElmBackground(this.quantity__inputs[elIndex-1])
+        this.disableSideButtons(this.quantity__inputs[elIndex-1])
         }
-        // el.dispatchEvent(new Event('debounce', { 'bubbles': true }))
+    
+    async updateCartItem(el: HTMLInputElement, index: number) {
+            const name = document.activeElement ? document.activeElement.getAttribute('name') : null
+            const cartItem = el.closest('cart-items') as any
+            const elIndex = el.dataset.index
+            await cartItem.updateQuantity(elIndex, 1, name)  
     }
 
 
@@ -75,6 +74,15 @@ class CartDiscountController {
         }
     }
 
+    disableSideButtons(el: HTMLInputElement) {
+        const parent = el.parentElement!
+        const buttons = parent.querySelectorAll(`.${this.buttonClass}`) as NodeListOf<HTMLButtonElement>
+        buttons.forEach((el_1) => {
+            this.disableElement(el_1)
+            this.changeElmBackground(el_1)
+        })
+    }
+
     disableElement(elem: HTMLInputElement | HTMLButtonElement){
         elem.disabled = true
     }
@@ -82,6 +90,16 @@ class CartDiscountController {
     changeElmBackground(elem: HTMLInputElement | HTMLButtonElement){
         elem.style.background = '#f3f3f3'
     }
+
+    returnInputsFromDOM(){
+        const inputs = document.querySelectorAll('.quantity__input') as NodeListOf<HTMLInputElement> 
+        return inputs
+    }
+
+    updateInputsElm(){
+        this.quantity__inputs = this.returnInputsFromDOM()
+    }
+    
 
 
 }

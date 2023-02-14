@@ -3,6 +3,10 @@
   Onchange => update live regions and cart quantities.
   Operation should rely on id="CartItem-{{ item.index | plus: 1 }} to itentify the target line item
 {% endcomment %}
+{% liquid 
+  assign discountProduct = section.settings.discount_product
+  assign discountItemTitle = discountProduct.title
+%}
 
 {{ 'component-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
@@ -28,6 +32,7 @@
 
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+  <script defer = "defer" src = "{{ 'script--cartResponseInterface.js' | asset_url }}" ></script>
   <script defer = "defer" src = "{{ 'script--cart_discount_item.js' | asset_url }}" ></script>
 {%- endunless -%}
 
@@ -209,11 +214,11 @@
                         {{ 'products.product.quantity.label' | t }}
                       </label>
                       <quantity-input class="quantity">
-                        <button class="quantity__button no-js-hidden" name="minus" type="button">
+                        <button class="quantity__button no-js-hidden" name="minus" type="button" {% if item.product.title == discountItemTitle %} disabled style = "background:#f3f3f3" {% endif %}>
                           <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}</span>
                           {% render 'icon-minus' %}
                         </button>
-                        <input class="quantity__input"
+                        <input class="quantity__input" {% if item.product.title == discountItemTitle %} disabled style = "background:#f3f3f3" {% endif %}
                           type="number"
                           name="updates[]"
                           value="{{ item.quantity }}"
@@ -222,7 +227,7 @@
                           id="Quantity-{{ item.index | plus: 1 }}"
                           data-index="{{ item.index | plus: 1 }}"
                         >
-                        <button class="quantity__button no-js-hidden" name="plus" type="button">
+                        <button class="quantity__button no-js-hidden" name="plus" type="button" {% if item.product.title == discountItemTitle %} disabled style = "background:#f3f3f3" {% endif %}>
                           <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}</span>
                           {% render 'icon-plus' %}
                         </button>
@@ -312,6 +317,11 @@
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "product",
+      "id": "discount_product",
+      "label": "Discount product"
     },
     {
       "type": "range",
