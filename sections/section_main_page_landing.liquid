@@ -3,6 +3,7 @@
 {% liquid 
     assign sortedPageSections = page.content | split: '[$section$]'
 %}
+{% render 'add2Cart_button_external' featuredProduct: all_products['soft-99-glaco-de-cleaner'] %}
 
 {% for pageSection in sortedPageSections %}
     {% liquid 

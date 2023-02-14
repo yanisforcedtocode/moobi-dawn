@@ -38,7 +38,7 @@
   %}
   {{ subHead[1] }}
   {{ content[1] }}
-  <img src = "{{ imgSrc[1] }}" loading = "lazy" width: 400 height = 'unset'>
+  <img src = "{{ imgSrc[1] }}" loading = "lazy" width= 400 height = 'unset'>
   {% assign productImageSrc = stepProduct.featured_image | image_url: width: 400 %}
   {% assign productCardDiv = productCardDivTemplate | replace: "_href", stepProduct.url | replace: "_src", productImageSrc | replace: "_title", stepProduct.title %}
   {{ productCardDiv }}

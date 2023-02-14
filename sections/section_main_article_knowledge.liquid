@@ -6,10 +6,12 @@
 %}
 
 {% for articleProduct in article.metafields.articleFields.productsList.value %}
-    {% assign replaceString = "{{" | append: "%product_card%" | append: "}}" %}
-    {% assign productImageSrc = articleProduct.featured_image | image_url: width: 400 %}
-    {% assign productCardDiv = productCardDivTemplate | replace: "_href", articleProduct.url | replace: "_src", productImageSrc | replace: "_title", articleProduct.title %}
-    {% assign content = content | replace_first: replaceString, productCardDiv %}
+  {% liquid 
+    assign replaceString = "{{" | append: "%product_card%" | append: "}}" 
+    assign productImageSrc = articleProduct.featured_image | image_url: width: 400 
+    assign productCardDiv = productCardDivTemplate | replace: "_href", articleProduct.url | replace: "_src", productImageSrc | replace: "_title", articleProduct.title 
+    assign content = content | replace_first: replaceString, productCardDiv 
+  %}
 {% endfor %}
 
 <h1>{{ article.title }}</h1>
