@@ -67,7 +67,6 @@ class CartItems extends HTMLElement {
   }
 
   async updateQuantity(line, quantity, name) {
-    console.log(line, quantity, name)
     try {
       this.enableLoading(line);
 
@@ -84,7 +83,6 @@ class CartItems extends HTMLElement {
       });
       const state = await res.text();
       const parsedState = await JSON.parse(state);
-      console.log(parsedState)
       this.classList.toggle("is-empty", parsedState.item_count === 0);
       const cartDrawerWrapper = document.querySelector("cart-drawer");
       const cartFooter = document.getElementById("main-cart-footer");

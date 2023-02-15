@@ -1,6 +1,6 @@
 "use strict";
 // 28/01/2023 by Yan yancetse@gmail.com refractor the old slider module
-class HeroBanner {
+class CustomHeroBanner {
     constructor() {
         this.bannerElms = {
             sliderLeft: document.querySelector("#rectsliderleft"),
@@ -186,4 +186,4 @@ class HeroBanner {
         });
     }
 }
-const heroBannerControllers = new HeroBanner();
+const heroBannerControllers = new CustomHeroBanner();

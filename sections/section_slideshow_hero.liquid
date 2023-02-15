@@ -1,15 +1,47 @@
+<link
+  rel="stylesheet"
+  href="{{ 'style--homepage.css' | asset_url }}"
+  type="text/css"
+>
 <div class="mainSlider__section">
     <div class="mainSlider__section__container">
+      <div class = "custom-section">
+        <div class="rectslider-container">
+          <div class="rectslider-imgs-container" data-homePage_engagement_type = "homePage_main_slider">
+            {% for block in section.blocks %}
+              <a href="{{ block.settings.image_link }}">
+                <picture>
+                <source media="(min-width:551px)" srcset='{{ block.settings.image_1800 | image_url: width: 1800 }}'>
+                <source media="(max-width:550px)" srcset='{{ block.settings.image_720 | image_url: width: 720 }}'>
+                <img loading = "lazy" src="{{ block.settings.image_720 | image_url: width: 720 }}">
+              </picture></a>
+            {% endfor %}
+          </div>
+          <i id="rectsliderleft" class="fas fa-angle-left"></i>
+          <i id="rectsliderright" class="fas fa-angle-right"></i>
+        </div>
+        <div class="rectsliderdots-container"></div>
+      </div>
+      <div class="rectslidertextboxcontainer">
       {% for block in section.blocks %}
-        <p>block {{ forloop.index }}</p>
-        <h1>{{ block.settings.description }}</h1>
-      {% endfor %}
-    </div>
+        <div data-linkto="{{ forloop.index | minus: 1 }}" class="rectslidertextbox">
+          <p data-linkto="{{ forloop.index | minus: 1 }}">{{ block.settings.banner_title }}<br />{{ block.settings.banner_description }}</p>
+      </div>
+    {% endfor %}
   </div>
+      </div>
+    </div>
+  
+
+  <script async = "async" src = "{{ 'script--homePage--heroSlider.js' | asset_url }}"></script>
+
+
+
+
 
 {% comment %} gloabl homepage stylesheet, non component based
 <link rel="stylesheet" href="{{ 'style--homepage.css' | asset_url }}" media="print" onload="this.media='all'"> {% endcomment %}
-  
+<script defer = "defer" src = '{{ 'script--homePage--heroSlider.js' | asset_url }}'></script>
 
 {% schema %}
   {
@@ -50,7 +82,7 @@
           },
           {
             "type": "text",
-            "id": "description",
+            "id": "banner_description",
             "label": "Banner description"
           },
           {

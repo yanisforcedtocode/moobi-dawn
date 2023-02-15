@@ -25,30 +25,34 @@
     assign special_discount = total_price | divided_by: 10
   %}
 {% endif %}
-<div 
+<div class = "page-width"
   id="custom_discount_and_shipping_policies"
-  data-save10="{{ settings.save10_on }}"
-  data-freeShip="{{ settings.free_shipping_on }}"
+  data-save10="{{ section.settings.save10_on }}"
+  data-freeShip="{{ section.settings.free_shipping_on }}"
   data-free_shippingPrompt="{{free_shippingPrompt}}"
   data-no_free_shippingPrompt="{{no_free_shippingPrompt}}"
-  data-special_discount_Prompt="{{discount_Prompt}}"
+  data-special_discount_Prompt="{{special_discount_Prompt}}"
   data-no_special_discount_Prompt="{{no_special_discount_Prompt}}"
   data-system_discount_Prompt="{{system_discount_Prompt}}"
-  data-no_system_discount_Prompt="{{no_system_discount_Prompt}}"
+  data-default_shippingFee="{{ default_shippingFee }}"
+  data-freeShipPrice="{{freeShipPrice}}"
+  data-save10Price="{{save10Price}}"
 >
   <h2>折扣及運費</h2>
   {% if section.settings.free_shipping_on %}
-    <div type="discount_and_shippment_blocks">
+    <div type="freeShipping_prompt_block">
       <p>current shipping fee:</p>
       <p type="money">{{ shippingFee | money }}</p>
       {% if shippingFee == 0 %}
         <p type="discount_prompt">{{ free_shippingPrompt }}</p>
+        {% else %}
+        <p type="discount_prompt">{{ no_free_shippingPrompt }}</p>
       {%- endif %}
     </div>
   {% endif %}
 
   {% if section.settings.system_discount_on %}
-    <div type="discount_and_shippment_blocks">
+    <div type="systemDiscount_prompt_block">
       <p>system discount:</p>
       <p type="money">{{ system_discount | money }}</p>
       {% if system_discount > 0 %}
@@ -68,7 +72,7 @@
   {% endif %}
 
   {% if section.settings.save10_on %}
-  <div type="discount_and_shippment_blocks">
+  <div type="specialDiscount_prompt_block">
     <p>special discount:</p>
     <p type="money">{{ special_discount | money }}</p>
     <div>
@@ -83,8 +87,7 @@
 
   <div type="total_discount_block">
     <p>total discount:</p>
-    <p id="total_discount"></p>
-    {{ shippingFee | minus: default_shippingFee | abs | plus: system_discount | plus: special_discount | money }}
+    <p id="total_discount">{{ shippingFee | minus: default_shippingFee | abs | plus: system_discount | plus: special_discount | money }}</p>
   </div>
 </div>
 

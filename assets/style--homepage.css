@@ -24,7 +24,7 @@
 }
 /**=========hero banner by Yan 10/07/2021=========**/
 .custom-section {
-  max-width: 1450px;
+  max-width: 1800px;
   margin: 0px auto;
 }
 
@@ -127,8 +127,8 @@
 .rectslidertextbox p {
   color: grey;
   margin: 5px;
-  font-size: 0.8rem;
-  font-family: "Noto Sans TC", sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.5;
 }
 
 @media screen and (max-width: 550px) {
@@ -469,7 +469,7 @@ body.template-index {
   padding-bottom: 10px;
   box-shadow: rgba(60, 60, 60, 0.2) 2px 2px 4px;
   position: relative;
-  z-index: 3;
+  z-index: 1;
 }
 
 .mainSlider__section__container {
@@ -490,7 +490,7 @@ body.template-index {
   background-color: #fff;
   box-shadow: rgba(60, 60, 60, 0.2) 2px 2px 4px;
   position: relative;
-  z-index: 3;
+  z-index: 1;
   padding: 40px 0;
 }
 

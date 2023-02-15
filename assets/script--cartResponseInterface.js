@@ -1,29 +1,33 @@
 "use strict";
 class CartResponseInterface {
     constructor(object) {
-        this.originalTotalPrice = object.original_total_price;
-        this.totalPrice = object.total_price;
-        this.totalDiscount = object.total_discount;
-        this.itemCount = object.item_count;
-        this.items = object.items;
-        this.itemSubtotalPrice = object.items_subtotal_price;
+        this._originalTotalPrice = object.original_total_price;
+        this._totalPrice = object.total_price;
+        this._totalDiscount = object.total_discount;
+        this._itemCount = object.item_count;
+        this._items = object.items;
+        this._itemSubtotalPrice = object.items_subtotal_price;
+        this._cart_level_discount_applications = object.cart_level_discount_applications;
     }
-    getOriginalTotalPrice() {
-        return this.originalTotalPrice;
+    get originalTotalPrice() {
+        return this._originalTotalPrice;
     }
-    getTotalPrice() {
-        return this.totalPrice;
+    get totalPrice() {
+        return this._totalPrice;
     }
-    getTotalDiscount() {
-        return this.totalDiscount;
+    get totalDiscount() {
+        return this._totalDiscount;
     }
-    getItemCount() {
-        return this.itemCount;
+    get itemCount() {
+        return this._itemCount;
     }
-    getItems() {
-        return this.items;
+    get items() {
+        return this._items;
     }
-    getItemSubtotalPrice() {
-        return this.itemSubtotalPrice;
+    get itemSubtotalPrice() {
+        return this._itemSubtotalPrice;
+    }
+    get cart_level_discount_applications() {
+        return this._cart_level_discount_applications;
     }
 }

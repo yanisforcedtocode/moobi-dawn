@@ -25,13 +25,4 @@ class ExternalTriggerInterfaceClass {
     }
 }
 const externalTriggerInterface = new ExternalTriggerInterfaceClass();
-const cartPageAddButtonFinallyExtHandler = (_this) => {
-    const button = _this.submitButton;
-    if (button) {
-        _this.submitButton.disabled = true;
-        _this.submitButton.innerText = "added to cart";
-    }
-};
 externalTriggerInterface.addToCartResponse = (res) => { console.log(res); };
-externalTriggerInterface.addToCartFinally = cartPageAddButtonFinallyExtHandler;
-// externalTriggerInterface.updateQuantity = (parsedState:{})=>{console.log('parsedState')}

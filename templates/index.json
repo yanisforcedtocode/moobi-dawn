@@ -6,41 +6,51 @@
         "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-0": {
           "type": "banner",
           "settings": {
-            "image_link": "",
-            "description": "",
-            "banner_title": ""
+            "image_1800": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_1800.jpg",
+            "image_720": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_720.jpg",
+            "image_link": "shopify:\/\/pages\/timelimitedoffer",
+            "banner_description": "快靚正",
+            "banner_title": "DIY修補教室"
           }
         },
         "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-1": {
           "type": "banner",
           "settings": {
+            "image_1800": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_1800.jpg",
+            "image_720": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_720.jpg",
             "image_link": "",
-            "description": "gggg",
-            "banner_title": ""
+            "banner_description": "消費券",
+            "banner_title": "歡迎使用"
           }
         },
         "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-2": {
           "type": "banner",
           "settings": {
+            "image_1800": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_1800.jpg",
+            "image_720": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_720.jpg",
             "image_link": "",
-            "description": "sdfd",
-            "banner_title": ""
+            "banner_description": "閃亮發售",
+            "banner_title": "補漆筆"
           }
         },
         "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-3": {
           "type": "banner",
           "settings": {
+            "image_1800": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_1800.jpg",
+            "image_720": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_720.jpg",
             "image_link": "",
-            "description": "asdf",
-            "banner_title": ""
+            "banner_description": "10% OFF",
+            "banner_title": "消費滿 $349"
           }
         },
         "template--16731748598010__47f6e5d8-7598-4bbd-832b-1b9ba1f49655-1675918136e7694105-4": {
           "type": "banner",
           "settings": {
+            "image_1800": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_1800.jpg",
+            "image_720": "shopify:\/\/shop_images\/newClientsShipping_mobile_banner_720.jpg",
             "image_link": "",
-            "description": "",
-            "banner_title": ""
+            "banner_description": "省油除積碳",
+            "banner_title": "原箱優惠"
           }
         }
       },
@@ -69,7 +79,6 @@
         "collection": "3m",
         "engagement_type": "homePage_product_slider_cleaning",
         "identification_code": "02"
-
       }
     },
     "spacer_homepage_02": {
@@ -83,7 +92,6 @@
       "type": "section_featuredCollection",
       "settings": {
         "title": "旗艦系列.",
-        "engagement_type": "homePage_featuredCollections",
         "collection_list": [
           "3m",
           "99-atelier",
@@ -91,7 +99,8 @@
           "air-spencer",
           "ambi-pur-hk-car-air-freshener-collection",
           "armorall"
-        ]
+        ],
+        "engagement_type": "homePage_featuredCollections"
       }
     },
     "spacer_homepage_03": {
@@ -105,7 +114,6 @@
       "type": "section_featuredCollection",
       "settings": {
         "title": "我們的品牌.",
-        "engagement_type": "homePage_featuredBrands",
         "collection_list": [
           "3m",
           "99-atelier",
@@ -113,7 +121,8 @@
           "air-spencer",
           "ambi-pur-hk-car-air-freshener-collection",
           "armorall"
-        ]
+        ],
+        "engagement_type": "homePage_featuredBrands"
       }
     },
     "1675921204c310004c": {

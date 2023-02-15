@@ -1,6 +1,6 @@
 // 28/01/2023 by Yan yancetse@gmail.com refractor the old slider module
 
-class HeroBanner {
+class CustomHeroBanner {
     bannerElms: {
         sliderLeft: HTMLElement,
         sliderRight: HTMLElement,
@@ -224,4 +224,4 @@ class HeroBanner {
     }
 }
 
-const heroBannerControllers = new HeroBanner()
+const heroBannerControllers = new CustomHeroBanner()
