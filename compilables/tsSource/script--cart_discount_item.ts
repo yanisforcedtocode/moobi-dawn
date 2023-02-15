@@ -2,14 +2,18 @@
 // plus a color change
 // if quantity > 1 => change to 1
 
-class CartDiscountController {
+class CartDiscountItemController {
+    noLineItemMatch: boolean;
     productTitle: string
     buttonClass: string
     quantity__inputs: NodeListOf<HTMLInputElement> 
+    addedToCart: string
     constructor(producdTitle: string){
+        this.noLineItemMatch = true
         this.productTitle = producdTitle
         this.quantity__inputs = this.returnInputsFromDOM()
         this.buttonClass = "quantity__button"
+        this.addedToCart = "Discount item redeemed"
         this.initDiscountItem()
     }
     initDiscountItem(){
@@ -19,14 +23,20 @@ class CartDiscountController {
         this.quantity__inputs.forEach((el)=>{
             if(this.checkProductTitle(el)){
                 this.matchingProductHandler(el)
+                this.noLineItemMatch = false
             }
         })
+        if(this.noLineItemMatch){
+            this.enableAddButton()
+        }
 
     }
 
     matchingProductHandler(el: HTMLInputElement) {
+        console.log('matching')
         this.changeElmBackground(el)
         this.disableSideButtons(el)
+        this.disableAddButton()
         if (this.checkProductQtyOne(el)) {
             this.moreThanOneQtyHandler(el)
         }
@@ -74,6 +84,13 @@ class CartDiscountController {
         }
     }
 
+    enableAddButton(){
+        const addButton = document.querySelector('[name="add"]') as HTMLButtonElement | null
+        if (addButton) {
+            addButton.disabled = false
+        }
+    }
+
     disableSideButtons(el: HTMLInputElement) {
         const parent = el.parentElement!
         const buttons = parent.querySelectorAll(`.${this.buttonClass}`) as NodeListOf<HTMLButtonElement>
@@ -82,13 +99,23 @@ class CartDiscountController {
             this.changeElmBackground(el_1)
         })
     }
+    disableAddButton(){
+        const addButton = document.querySelector('[name="add"]') as HTMLButtonElement | null
+        if (addButton) {
+            this.disableElement(addButton)
+            addButton.innerText = this.addedToCart
+        }
+    }
 
     disableElement(elem: HTMLInputElement | HTMLButtonElement){
         elem.disabled = true
     }
 
-    changeElmBackground(elem: HTMLInputElement | HTMLButtonElement){
+    changeElmBackground(elem: HTMLInputElement | HTMLButtonElement, color?: string | undefined){
         elem.style.background = '#f3f3f3'
+        if(color){
+            elem.style.background = color
+        }
     }
 
     returnInputsFromDOM(){
@@ -104,4 +131,36 @@ class CartDiscountController {
 
 }
 
-const cartDiscountController = new CartDiscountController('雨敵 玻璃清潔噴劑 GLACO Windscreen Glass De Cleaner')
+const cartDiscountController = new CartDiscountItemController('雨敵 玻璃清潔噴劑 GLACO Windscreen Glass De Cleaner')
+
+class CartDiscountPromptController {
+    // wrap external functions to cartItem.updateQuantity
+    // original cartItem.updateQuantity parsedstate
+    // use new CartResponseInterface(parsedstate) to get relevant information
+    // get all the sections to render
+    // get all the strings from data-set
+    // calculation
+    // render
+    // return
+    constructor(){
+        this.wrapUpdateQuantity()
+    }
+    wrapUpdateQuantity() {
+        let cartItems = document.querySelector('cart-items') as any
+        const handlerCopy = cartItems.updateQuantity
+        const wrapperFn = async ([arg]: any) => {
+            const parsedStates = await handlerCopy([arg])
+            // externalTriggerInterface.updateQuantity(parsedStates)
+            console.log('do sth')
+        };
+        cartItems.updateQuantity = wrapperFn;
+    }
+
+    discountPromptHandler(parsedState: ParsedCartResponse) {
+        const digestedState = new CartResponseInterface(parsedState)
+
+    }
+
+}
+
+const discountPrompt = new CartDiscountPromptController()

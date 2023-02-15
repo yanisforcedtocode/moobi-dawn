@@ -11,11 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-class CartDiscountController {
+class CartDiscountItemController {
     constructor(producdTitle) {
+        this.noLineItemMatch = true;
         this.productTitle = producdTitle;
         this.quantity__inputs = this.returnInputsFromDOM();
         this.buttonClass = "quantity__button";
+        this.addedToCart = "Discount item redeemed";
         this.initDiscountItem();
     }
     initDiscountItem() {
@@ -25,12 +27,18 @@ class CartDiscountController {
         this.quantity__inputs.forEach((el) => {
             if (this.checkProductTitle(el)) {
                 this.matchingProductHandler(el);
+                this.noLineItemMatch = false;
             }
         });
+        if (this.noLineItemMatch) {
+            this.enableAddButton();
+        }
     }
     matchingProductHandler(el) {
+        console.log('matching');
         this.changeElmBackground(el);
         this.disableSideButtons(el);
+        this.disableAddButton();
         if (this.checkProductQtyOne(el)) {
             this.moreThanOneQtyHandler(el);
         }
@@ -79,6 +87,12 @@ class CartDiscountController {
             return false;
         }
     }
+    enableAddButton() {
+        const addButton = document.querySelector('[name="add"]');
+        if (addButton) {
+            addButton.disabled = false;
+        }
+    }
     disableSideButtons(el) {
         const parent = el.parentElement;
         const buttons = parent.querySelectorAll(`.${this.buttonClass}`);
@@ -87,11 +101,21 @@ class CartDiscountController {
             this.changeElmBackground(el_1);
         });
     }
+    disableAddButton() {
+        const addButton = document.querySelector('[name="add"]');
+        if (addButton) {
+            this.disableElement(addButton);
+            addButton.innerText = this.addedToCart;
+        }
+    }
     disableElement(elem) {
         elem.disabled = true;
     }
-    changeElmBackground(elem) {
+    changeElmBackground(elem, color) {
         elem.style.background = '#f3f3f3';
+        if (color) {
+            elem.style.background = color;
+        }
     }
     returnInputsFromDOM() {
         const inputs = document.querySelectorAll('.quantity__input');
@@ -101,4 +125,31 @@ class CartDiscountController {
         this.quantity__inputs = this.returnInputsFromDOM();
     }
 }
-const cartDiscountController = new CartDiscountController('雨敵 玻璃清潔噴劑 GLACO Windscreen Glass De Cleaner');
+const cartDiscountController = new CartDiscountItemController('雨敵 玻璃清潔噴劑 GLACO Windscreen Glass De Cleaner');
+class CartDiscountPromptController {
+    // wrap external functions to cartItem.updateQuantity
+    // original cartItem.updateQuantity parsedstate
+    // use new CartResponseInterface(parsedstate) to get relevant information
+    // get all the sections to render
+    // get all the strings from data-set
+    // calculation
+    // render
+    // return
+    constructor() {
+        this.wrapUpdateQuantity();
+    }
+    wrapUpdateQuantity() {
+        let cartItems = document.querySelector('cart-items');
+        const handlerCopy = cartItems.updateQuantity;
+        const wrapperFn = ([arg]) => __awaiter(this, void 0, void 0, function* () {
+            const parsedStates = yield handlerCopy([arg]);
+            // externalTriggerInterface.updateQuantity(parsedStates)
+            console.log('do sth');
+        });
+        cartItems.updateQuantity = wrapperFn;
+    }
+    discountPromptHandler(parsedState) {
+        const digestedState = new CartResponseInterface(parsedState);
+    }
+}
+const discountPrompt = new CartDiscountPromptController();

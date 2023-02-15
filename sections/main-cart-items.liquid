@@ -31,8 +31,8 @@
 {%- endstyle -%}
 
 {%- unless settings.cart_type == 'drawer' -%}
-  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
   <script defer = "defer" src = "{{ 'script--cartResponseInterface.js' | asset_url }}" ></script>
+  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
   <script defer = "defer" src = "{{ 'script--cart_discount_item.js' | asset_url }}" ></script>
 {%- endunless -%}
 

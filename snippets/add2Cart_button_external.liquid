@@ -1,6 +1,7 @@
 {% liquid
   assign product = featuredProduct
   assign product_form_id = 'product-form-' | append: section.id
+  assign disabled = disabled
 %}
 
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
@@ -52,6 +53,9 @@
         >
         <div class="product-form__buttons">
           <button
+            {% if disabled %}
+              disabled
+            {% endif %}
             type="submit"
             name="add"
             class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"

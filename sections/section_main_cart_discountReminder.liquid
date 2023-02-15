@@ -1,60 +1,91 @@
 {% liquid
   assign original_total_price = cart.original_total_price
   assign total_price = cart.total_price
+  assign default_shippingFee = section.settings.shipping_fee | times: 100
+  assign shippingFee = section.settings.shipping_fee | times: 100
   assign system_discount = cart.total_discount
-  assign freeShipPrice = section.settings.free_shipping_price
-  assign save10Price = section.settings.save10_price
+  assign special_discount = 0
+  assign freeShipPrice = section.settings.free_shipping_price | times: 100
+  assign save10Price = section.settings.save10_price | times: 100
   assign free_shippingPrompt = section.settings.free_shippingPrompt
-  assign discount_Prompt = section.settings.discount_Prompt
-  assign shippingFee = 49
-  assign discount = 0
+  assign no_free_shippingPrompt = section.settings.no_free_shippingPrompt
+  assign special_discount_Prompt = section.settings.special_discount_Prompt
+  assign no_special_discount_Prompt = section.settings.no_special_discount_Prompt
+  assign no_system_discount_Prompt = section.settings.no_system_discount_Prompt
 %}
 
-{% if settings.free_shipping_on == true and total_price >= freeShipPrice %}
+{% if section.settings.free_shipping_on == true and total_price >= freeShipPrice %}
   {% liquid
     assign shippingFee = 0
   %}
 {% endif %}
 
-{% if settings.save10_on == true and total_price >= save10Price %}
+{% if section.settings.save10_on == true and total_price >= save10Price %}
   {% liquid
     assign special_discount = total_price | divided_by: 10
   %}
 {% endif %}
-<div
-  id="discount_and_shipping_policies"
+<div 
+  id="custom_discount_and_shipping_policies"
   data-save10="{{ settings.save10_on }}"
   data-freeShip="{{ settings.free_shipping_on }}"
   data-free_shippingPrompt="{{free_shippingPrompt}}"
-  data-discount_Prompt="{{discount_Prompt}}"
+  data-no_free_shippingPrompt="{{no_free_shippingPrompt}}"
+  data-special_discount_Prompt="{{discount_Prompt}}"
+  data-no_special_discount_Prompt="{{no_special_discount_Prompt}}"
+  data-system_discount_Prompt="{{system_discount_Prompt}}"
+  data-no_system_discount_Prompt="{{no_system_discount_Prompt}}"
 >
   <h2>折扣及運費</h2>
-
-  <p>current shipping fee:</p>
-  <p>{{ shippingFee }}</p>
-  {% if shippingFee == 0 %}
-    <p class = "discount_prompt">{{ free_shippingPrompt }}</p>
-  {%- endif %}
-
-  <p>system discount:</p>
-  <p>{{ system_discount }}</p>
-  {% if system_discount > 0 %}
-    <p  class = "discount_prompt">
-    {% for campaign in cart.cart_level_discount_applications %}
-      {{ campaign }}
-    {% endfor %}
-    </p>
+  {% if section.settings.free_shipping_on %}
+    <div type="discount_and_shippment_blocks">
+      <p>current shipping fee:</p>
+      <p type="money">{{ shippingFee | money }}</p>
+      {% if shippingFee == 0 %}
+        <p type="discount_prompt">{{ free_shippingPrompt }}</p>
+      {%- endif %}
+    </div>
   {% endif %}
 
-  <p>special discount:</p>
-  <p>{{ special_discount }}</p>
-  <div>
-    {% if special_discount > 0 %}
-      <p class = "discount_prompt">{{ discount_Prompt }}</p>
-    {%- endif %}
-</div>
+  {% if section.settings.system_discount_on %}
+    <div type="discount_and_shippment_blocks">
+      <p>system discount:</p>
+      <p type="money">{{ system_discount | money }}</p>
+      {% if system_discount > 0 %}
+        <p type="discount_prompt">
+          {% for campaign in cart.cart_level_discount_applications %}
+            {% assign comma = ', ' %}
+            {% if forloop.last %}
+              {% assign comma = '' %}
+            {% endif %}
+            {{ campaign | append: comma }}
+          {% endfor %}
+        </p>
+      {% else %}
+        <p type="discount_prompt">{{ no_system_discount_Prompt }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
 
-  <p>total discount:</p>
+  {% if section.settings.save10_on %}
+  <div type="discount_and_shippment_blocks">
+    <p>special discount:</p>
+    <p type="money">{{ special_discount | money }}</p>
+    <div>
+      {% if special_discount > 0 %}
+        <p type="discount_prompt">{{ special_discount_Prompt }}</p>
+      {% else %}
+        <p type="discount_prompt">{{ no_special_discount_Prompt }}</p>
+      {%- endif %}
+    </div>
+  </div>
+{% endif %}
+
+  <div type="total_discount_block">
+    <p>total discount:</p>
+    <p id="total_discount"></p>
+    {{ shippingFee | minus: default_shippingFee | abs | plus: system_discount | plus: special_discount | money }}
+  </div>
 </div>
 
 {% schema %}
@@ -65,6 +96,11 @@
       "type": "number",
       "id": "free_shipping_price",
       "label": "Free shipping price"
+    },
+    {
+      "type": "number",
+      "id": "shipping_fee",
+      "label": "Flat shipping fee"
     },
     {
       "type": "number",
@@ -83,6 +119,7 @@
       "label": "FreeShipping available",
       "default": true
     },
+    { "type": "checkbox", "id": "system_discount_on", "label": "Display system discount", "default": true },
     {
       "type": "text",
       "id": "free_shippingPrompt",
@@ -91,9 +128,24 @@
     },
     {
       "type": "text",
-      "id": "discount_Prompt",
-      "label": "Discount prompt",
+      "id": "no_free_shippingPrompt",
+      "label": "No free shipping prompt"
+    },
+    {
+      "type": "text",
+      "id": "special_discount_Prompt",
+      "label": "Special discount prompt",
       "default": "免運費"
+    },
+    {
+      "type": "text",
+      "id": "no_special_discount_Prompt",
+      "label": "No special discount prompt"
+    },
+    {
+      "type": "text",
+      "id": "no_system_discount_Prompt",
+      "label": "No system discount prompt"
     }
   ]
 }

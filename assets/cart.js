@@ -34,10 +34,10 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
-    this.updateQuantity(
-      event.target.dataset.index,
+    this.updateQuantity.apply(this,
+      [event.target.dataset.index,
       event.target.value,
-      document.activeElement.getAttribute("name")
+      document.activeElement.getAttribute("name")]
     );
   }
 
@@ -67,6 +67,7 @@ class CartItems extends HTMLElement {
   }
 
   async updateQuantity(line, quantity, name) {
+    console.log(line, quantity, name)
     try {
       this.enableLoading(line);
 
@@ -129,7 +130,7 @@ class CartItems extends HTMLElement {
         );
       }
       this.disableLoading();
-      return "completed";
+      return parsedState;
     } catch (error) {
       this.querySelectorAll(".loading-overlay").forEach((overlay) =>
         overlay.classList.add("hidden")

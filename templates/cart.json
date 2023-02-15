@@ -8,6 +8,22 @@
         "discount_product":"soft-99-glaco-de-cleaner"
       }
     },
+    "cart-shipping_and_discount": {
+      "type": "section_main_cart_discountReminder",
+      "settings": {
+        "free_shipping_price": 149,
+        "shipping_fee": 49,
+        "save10_price":349,
+        "save10_on": true,
+        "free_shipping_on": true,
+        "system_discount": true,
+        "free_shippingPrompt": "SAVED $49, 免運費ON",
+        "no_free_shippingPrompt": "spend XXX more to get 免運費",
+        "special_discount_Prompt": "SAVED 10%, please use SAVE10 on checkout",
+        "no_special_discount_Prompt": "spend XXX more to get 10% OFF",
+        "no_system_discount_Prompt": "no system discount applied"
+      }
+    },
     "cart-footer": {
       "type": "main-cart-footer",
       "blocks": {
@@ -59,6 +75,7 @@
   },
   "order": [
     "cart-items",
+    "cart-shipping_and_discount",
     "cart-footer",
     "featured-collection"
   ]
