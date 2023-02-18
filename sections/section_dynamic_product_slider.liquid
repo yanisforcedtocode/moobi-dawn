@@ -1,0 +1,121 @@
+{% liquid
+  assign  default_dynamic_collection = section.settings.default_dynamic_collection 
+  assign default_collection_title = section.settings.default_dynamic_collection_title
+  assign default_collection_description = section.settings.default_dynamic_collection_description
+  assign default_collection_product_handles = ""
+  assign section_title = section.settings.section_title
+%}  
+
+{% for product in default_dynamic_collection.products %}
+  {% if forloop.last %}
+    {% assign default_collection_product_handles = default_collection_product_handles | append: product.handle %}
+  {% else %}
+    {% assign default_collection_product_handles = default_collection_product_handles | append: product.handle | append: "," %}
+  {% endif %}
+{% endfor %}
+
+{% liquid 
+  assign default_collection_product_handles = default_collection_product_handles | split: ',' 
+  assign featured_product = all_products[default_collection_product_handles[0]]
+%}
+
+<script src="{{ 'script--homePage--dynamicProduct.js' | asset_url }}" defer="defer"></script>
+
+  <div class="productSlider__section">
+    <div class="productSlider__section__container" data-homePage_engagement_type="homePage_dynamicProduct_slider">
+      <h2 class="products-slide-h2">{{ section_title }} ></h2>
+      <div class="dynamic__pdt__grid">
+        <div class="dynamic__pdt__grid__pdt">
+          <a id="dynamic__pdt__grid__pdt__col__A" href = "{{ featured_product.url }}">
+            <div class="dynamic__pdt__grid__pdt__col">
+              <div class="dynamic__pdt__grid__pdt__col__featuredImg">
+                <img class="dynamic__pdt__grid__pdt__col__featuredImg__img hideImage"
+                  id = "featured_product_img"
+                  src = "{{ featured_product.featured_image | image_url: width: 600 }}" 
+                  width = 400 height = unset loading = "lazy">
+              </div>
+              <div class="dynamic__pdt__grid__pdt__col__content">
+                <h3 class="dynamic__pdt__grid__pdt__col__content__title textSkeleton hideText" id = "featured_product_title">{{ featured_product.title }}</h3>
+                <p class="dynamic__pdt__grid__pdt__col__content__vendor textSkeleton hideText" id = "featured_product_vendor">{{ featured_product.vendor }}</p>
+                <span class="dynamic__pdt__grid__pdt__col__content__price textSkeleton hideText" id = "featured_product_price">{{ featured_product.price | money }}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="dynamic__pdt__grid__clt">
+          <p class="dynamic__pdt__grid__clt__description01" >{{ default_collection_title }}</p>
+          <a href = "{{ default_dynamic_collection.url }}" id = "featured_collection_link">
+            <h2 class="dynamic__pdt__grid__clt__title01 textSkeleton hideText" id = "featured_collection_title"> {{ default_dynamic_collection.title }} </h2>
+          </a>
+          <p class="dynamic__pdt__grid__clt__description textSkeleton"></p>
+          <div class="dynamic__pdt__grid__clt__col">
+            <div class="dynamic__pdt__grid__clt__col__grid">
+              {% for handle in default_collection_product_handles offset: 2 limit: 7 %}
+                {% assign current_product = all_products[handle] %}
+                <div class="dynamic__pdt__grid__clt__col__grid__item">
+                  <a class="dynamic__pdt__grid__clt__col__grid__item__content__a" href = "{{ current_product.url }}" id = "products_list_item_link">
+                    <div class="dynamic__pdt__grid__clt__col__grid__item__featuredImg textSkeleton">
+                      <img class="dynamic__pdt__grid__clt__col__grid__item__featuredImg__img hideImage" 
+                        id = "products_list_item_img"
+                        loading = "lazy" src = "{{ current_product.featured_image | image_url: width: 250 }}" 
+                        width = 200 height = unset >
+                    </div>
+                    <div class="dynamic__pdt__grid__clt__col__grid__item__content">
+                      <h3 class="dynamic__pdt__grid__clt__col__grid__item__content__title textSkeleton hideText" id = "products_list_item_title">
+                        {{ current_product.title }}
+                      </h3>
+                      <p class="dynamic__pdt__grid__clt__col__grid__item__content__vendor textSkeleton hideText" id = "products_list_item_vendor">
+                        {{ current_product.vendor }}
+                      </p>
+                      <span class="dynamic__pdt__grid__clt__col__grid__item__content__price textSkeleton hideText" id = "products_list_item_price">
+                        {{ current_product.price | money }}</span>
+                        {% if current_product.compared_at_price %}
+                          <span class="dynamic__pdt__grid__clt__col__grid__item__content__comparedAtPrice textSkeleton hideText" id = "products_list_item_comparedAtPrice">
+                            {{ current_product.compared_at_price | money }}</span>
+                          {% endif %}
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% schema %}
+  {
+    "name": "Dynamic product slider",
+    "settings": [
+      {
+          "type": "collection",
+          "id": "default_dynamic_collection",
+          "label": "Default dynamic collection"
+        },
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Default section title",
+          "default": "為你推薦"
+        },
+        {
+          "type": "text",
+          "id": "default_dynamic_collection_title",
+          "label": "Default collection title",
+          "default": "Featured collection"
+        },
+        {
+          "type": "text",
+          "id": "default_dynamic_collection_description",
+          "label": "Default collection description"
+        }
+    ],
+    "presets": [
+      {
+        "name": "Dynamic product slider"
+      }
+    ]
+  }
+{% endschema %}

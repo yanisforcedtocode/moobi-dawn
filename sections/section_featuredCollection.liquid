@@ -12,7 +12,7 @@
       {% for collection in featuredCollections %}
       <div class="featuredCollection__section__container__item">
         <a href="{{ collection.url }}">
-          <div>
+          <div class = "featuredCollection__section__container__item__imgWrapper" style = "background-image: url({{ collection.products[0].featured_image | image_url: width: 200 }})" >
             <img
               src="{{ collection.featured_image | image_url: width: 200 }}"
               class= "" width = 200 height = 200

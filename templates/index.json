@@ -72,13 +72,13 @@
         "section_color": "yellow"
       }
     },
-    "product_slider_homePage_01": {
-      "type": "section_product_slider",
+    "product_slide_homePage_dynamic": {
+      "type": "section_dynamic_product_slider",
       "settings": {
-        "title": "車身清潔",
-        "collection": "3m",
-        "engagement_type": "homePage_product_slider_cleaning",
-        "identification_code": "02"
+        "default_dynamic_collection": "meguiars-hk-hong-kong",
+        "section_title": "為你推薦",
+        "default_dynamic_collection_title": "Featured collection",
+        "default_dynamic_collection_description": ""
       }
     },
     "spacer_homepage_02": {
@@ -88,26 +88,78 @@
         "section_color": "grey"
       }
     },
-    "section_featuredCollection_homePage_01": {
-      "type": "section_featuredCollection",
+    "product_slider_homePage_01": {
+      "type": "section_product_slider",
       "settings": {
-        "title": "旗艦系列.",
-        "collection_list": [
-          "3m",
-          "99-atelier",
-          "aion",
-          "air-spencer",
-          "ambi-pur-hk-car-air-freshener-collection",
-          "armorall"
-        ],
-        "engagement_type": "homePage_featuredCollections"
+        "title": "車身清潔",
+        "collection": "車身清潔-body",
+        "engagement_type": "homePage_product_slider_cleaning",
+        "identification_code": "02"
       }
     },
     "spacer_homepage_03": {
       "type": "section_spacer",
       "settings": {
         "section_height": 30,
+        "section_color": "grey"
+      }
+    },
+    "a0361e8a-d0a8-4f1f-8384-5a02b82e41e9": {
+      "type": "section_product_slider",
+      "settings": {
+        "title": "修補系列",
+        "collection": "repairs-polishing",
+        "engagement_type": "homePage_product_slider_repair",
+        "identification_code": ""
+      }
+    },
+    "5d2146b5-002d-40ca-8f29-d8be2b335ea5": {
+      "type": "section_spacer",
+      "settings": {
+        "section_height": 30,
+        "section_color": "grey"
+      }
+    },
+    "a95b56f3-655e-4439-b12c-f6172c9df2da": {
+      "type": "section_product_slider",
+      "settings": {
+        "title": "今期流行",
+        "collection": "recommendation",
+        "engagement_type": "",
+        "identification_code": ""
+      }
+    },
+    "6dc0ea6d-d53c-42e6-a2bb-ee7417b92eca": {
+      "type": "section_spacer",
+      "settings": {
+        "section_height": 60,
         "section_color": "yellow"
+      }
+    },
+    "section_featuredCollection_homePage_01": {
+      "type": "section_featuredCollection",
+      "settings": {
+        "title": "旗艦系列.",
+        "collection_list": [
+          "車身清潔-body",
+          "repairs-polishing",
+          "輪胎清潔-tyres-wheels",
+          "玻璃清潔鍍膜-glass-care",
+          "內飾精品-accessories",
+          "引擎保養-system-maintenance",
+          "cleaning-tools",
+          "車廂清潔-interior-care",
+          "香噴噴-aroma",
+          "all"
+        ],
+        "engagement_type": "homePage_featuredCollections"
+      }
+    },
+    "spacer_homepage_04": {
+      "type": "section_spacer",
+      "settings": {
+        "section_height": 30,
+        "section_color": "grey"
       }
     },
     "section_featuredCollection_homePage_02": {
@@ -119,8 +171,14 @@
           "99-atelier",
           "aion",
           "air-spencer",
+          "armorall",
+          "autosol",
           "ambi-pur-hk-car-air-freshener-collection",
-          "armorall"
+          "napolex",
+          "meguiars-hk-hong-kong",
+          "soft-99",
+          "stp",
+          "turtle-wax-龜牌"
         ],
         "engagement_type": "homePage_featuredBrands"
       }
@@ -135,10 +193,16 @@
   "order": [
     "47f6e5d8-7598-4bbd-832b-1b9ba1f49655",
     "spacer_homepage_01",
-    "product_slider_homePage_01",
+    "product_slide_homePage_dynamic",
     "spacer_homepage_02",
-    "section_featuredCollection_homePage_01",
+    "product_slider_homePage_01",
     "spacer_homepage_03",
+    "a0361e8a-d0a8-4f1f-8384-5a02b82e41e9",
+    "5d2146b5-002d-40ca-8f29-d8be2b335ea5",
+    "a95b56f3-655e-4439-b12c-f6172c9df2da",
+    "6dc0ea6d-d53c-42e6-a2bb-ee7417b92eca",
+    "section_featuredCollection_homePage_01",
+    "spacer_homepage_04",
     "section_featuredCollection_homePage_02",
     "1675921204c310004c"
   ]

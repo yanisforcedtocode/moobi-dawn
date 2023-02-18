@@ -31,6 +31,7 @@
 
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'script--fontawesome_v5.js' | asset_url }}" defer = "defer"></script>
+    <script src = "{{ 'script--moobiQueries.js' | asset_url }}" defer = "defer"></script>
     <script src = "{{ 'script--external_interface.js' | asset_url }}" defer = "defer"></script>
 
     {{ content_for_header }}
@@ -255,7 +256,7 @@
       {{ content_for_layout }}
     </main>
 
-    {% comment %} {% render 'prompt_Banner' cta_text:"立即使用" cta_url:"/pages/timelimitedoffer" prompt_text:"新客戶首單免運費！" %} {% endcomment %}
+    {% comment %} {% render 'snippet_prompt_Banner' cta_text:"立即使用" cta_url:"/pages/timelimitedoffer" prompt_text:"新客戶首單免運費！" %} {% endcomment %}
 
     {% section 'footer' %}
 

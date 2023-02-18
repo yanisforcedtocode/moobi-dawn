@@ -1,8 +1,92 @@
 {
   "sections": {
-    "product-add2Cart": {
-      "type": "section_main_product_addSection",
+    "main-product": {
+      "type": "main-product",
+      "blocks": {
+        "a9f1a6c1-0ab2-4165-ad33-d88a701d5199": {
+          "type": "title",
+          "settings": {
+          }
+        },
+        "a687abb6-12a5-41a7-a643-3841fa3d1680": {
+          "type": "price",
+          "settings": {
+          }
+        },
+        "235b0dd8-41b6-453c-9a49-90e9364e1625": {
+          "type": "complementary",
+          "settings": {
+            "block_heading": "Pairs well with",
+            "make_collapsible_row": true,
+            "icon": "price_tag",
+            "product_list_limit": 10,
+            "products_per_page": 3,
+            "pagination_style": "counter",
+            "image_ratio": "square",
+            "enable_quick_add": false
+          }
+        },
+        "e3c40396-45fb-4536-9388-ce886d5a0326": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "3fc095cd-5af7-416e-a876-7ec164b995ad": {
+          "type": "quantity_selector",
+          "settings": {
+          }
+        },
+        "889de274-923b-4e0a-b39d-bc1acfbd8527": {
+          "type": "popup",
+          "settings": {
+            "text": "pop up",
+            "page": "car-repair-tutorial"
+          }
+        },
+        "a7df332a-09c4-4277-836c-21e1458f60c6": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false
+          }
+        },
+        "9f94aa20-9840-41a3-a50a-7f696a0cdbfa": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "7cb061e7-be79-4b91-ac35-6d6ec8469340": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Terms and conditions",
+            "icon": "check_mark",
+            "content": "<p>blah blah blah<\/p>",
+            "page": "terms-and-conditions"
+          }
+        }
+      },
+      "block_order": [
+        "a9f1a6c1-0ab2-4165-ad33-d88a701d5199",
+        "a687abb6-12a5-41a7-a643-3841fa3d1680",
+        "235b0dd8-41b6-453c-9a49-90e9364e1625",
+        "e3c40396-45fb-4536-9388-ce886d5a0326",
+        "3fc095cd-5af7-416e-a876-7ec164b995ad",
+        "889de274-923b-4e0a-b39d-bc1acfbd8527",
+        "a7df332a-09c4-4277-836c-21e1458f60c6",
+        "9f94aa20-9840-41a3-a50a-7f696a0cdbfa",
+        "7cb061e7-be79-4b91-ac35-6d6ec8469340"
+      ],
       "settings": {
+        "enable_sticky_info": true,
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "media_size": "small",
+        "mobile_thumbnails": "show",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "product-description": {
@@ -12,7 +96,7 @@
     }
   },
   "order": [
-    "product-add2Cart",
+    "main-product",
     "product-description"
   ]
 }

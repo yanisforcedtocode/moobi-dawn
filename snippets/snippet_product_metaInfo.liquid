@@ -1,0 +1,10 @@
+{%liquid 
+    assign product = product
+%}
+
+<div name = "snippet_product_metaInfo" data-productId = "{{}}"
+    data-product_id = "{{ product.id }}"
+    data-product_handle = "{{ product.handle }}"
+    data-product_title = "{{ product.title }}"
+    data-product_tags = "{% for tag in product.tags %}{% if forloop.last %}{{ tag }}{% else %}{{ tag }},{% endif %}{% endfor %}">
+</div>
