@@ -55,6 +55,21 @@ class MoobiQueries {
             return data.data
         } catch (err) { console.log(err) }
     }
+
+    public async getProductListbyCollectionId(id: string) {
+        try {
+            const requestOptions: RequestInit = {
+                method: 'GET',
+                redirect: 'manual'
+            };
+            const response = await fetch(`${this.hostName}/api/v00/dynamicHP/getPdtListsById?id=${id}`, requestOptions)
+            const result = await response.text()
+            const data = await JSON.parse(result)
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 const moobiQueries = new MoobiQueries()

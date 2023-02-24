@@ -709,10 +709,13 @@ body.template-index {
   grid-template-columns: repeat(12, 1fr);
   margin: 0px auto;
   padding: 0 40px;
+  gap: 5px
 }
 @media only screen and (max-width: 1200px) {
   .featuredCollection__section__container {
     grid-template-columns: repeat(6, 1fr);
+    padding: 0 15px;
+    gap: 0px
   }
   .featuredCollection__section__h2container {
     grid-column: 1 / span 6;
@@ -968,7 +971,4 @@ body.template-index {
       }
     }
   }
-}
-.textSkeleton {
-  @include skeletonText;
 }

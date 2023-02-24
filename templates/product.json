@@ -1,7 +1,7 @@
 {
   "sections": {
-    "main-product": {
-      "type": "main-product",
+    "main_product": {
+      "type": "section_main_product_standard",
       "blocks": {
         "a9f1a6c1-0ab2-4165-ad33-d88a701d5199": {
           "type": "title",
@@ -89,14 +89,12 @@
         "padding_bottom": 36
       }
     },
-    "product-description": {
-      "type": "section_main_product_description",
-      "settings": {
-      }
+    "product_description":{
+      "type":"section_main_product_details"
     }
   },
   "order": [
-    "main-product",
-    "product-description"
+    "main_product",
+    "product_description"
   ]
 }

@@ -1,0 +1,46 @@
+{% comment %}
+  receives product variable during render
+{% endcomment %}
+
+{% assign product = product %}
+{% assign sorted_collections = product.collections | sort: 'all_products_count' %}
+
+{% comment %} breadCrumb level 00 {% endcomment %}
+{% for collection in sorted_collections %}
+  {% if collection.metafields.my_fields.parentId %}
+    {% assign collection_matched_01 = collection %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} breadCrumb level 01 {% endcomment %}
+{% for collection in collections %}
+  {% if collection_matched_01.metafields.my_fields.parentId == collection.id %}
+    {% assign collection_matched_02 = collection %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} breadCrumb level 02 {% endcomment %}
+{% for collection in collections %}
+  {% if collection_matched_02.metafields.my_fields.parentId == collection.id %}
+    {% assign collection_matched_03 = collection %}
+  {% endif %}
+{% endfor %}
+
+{% if collection_matched_01 %}
+<div class = "breadCrumbs__Wrapper">
+  {% if collection_matched_03 %}
+      <span class="breadCrumbsText">
+          <a href="{{ collection_matched_03.url }}"> {{ collection_matched_03.title }}</a>
+        </span>
+  {% endif %}
+  {% if collection_matched_02 %}
+      <span class="breadCrumbsText">
+          <a href="{{ collection_matched_02.url }}"> {{ collection_matched_02.title }}</a>
+        </span>
+  {% endif %}
+      <span class="breadCrumbsText">
+          <a href="{{ collection_matched_01.url }}"> {{ collection_matched_01.title }}</a>
+        </span>
+      </div>
+{% endif %}

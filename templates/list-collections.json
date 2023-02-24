@@ -1,17 +1,31 @@
 {
   "sections": {
     "main": {
-      "type": "main-list-collections",
+      "type": "section_main_collection",
       "settings": {
-        "title": "Collections",
-        "sort": "alphabetical",
-        "image_ratio": "square",
-        "columns_desktop": 5,
-        "columns_mobile": "2"
+        "title": "我們的品牌.",
+        "featured_collection": "soft-99",
+        "collection_list": [
+          "3m",
+          "99-atelier",
+          "aion",
+          "air-spencer",
+          "armorall",
+          "autosol",
+          "ambi-pur-hk-car-air-freshener-collection",
+          "napolex",
+          "meguiars-hk-hong-kong",
+          "soft-99",
+          "stp",
+          "turtle-wax-龜牌"
+        ],
+        "engagement_type": "homePage_featuredBrands"
       }
     }
+
   },
   "order": [
     "main"
   ]
 }
+

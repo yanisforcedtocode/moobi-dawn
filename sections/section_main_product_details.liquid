@@ -1,0 +1,59 @@
+{% liquid
+  assign sortedDescription = product.description | split: '</h4>'
+  assign sortedQNA = product.description | split: '</h3>'
+  assign qNA = sortedQNA[1] | split: '<script>'
+  assign qNA = qNA[0]
+  assign sectionTitles = ''
+  assign sectionContents = ''
+%}
+
+{% for description in sortedDescription offset: 1 %}
+  {% unless forloop.last %}
+    {% assign content = description | split: '<h4>' %}
+    {% assign sectionContents = sectionContents | append: content[0] | append: 'xxxsplitxxx' %}
+  {% endunless %}
+  {% if forloop.last %}
+    {% assign content = description | split: '<h3>' %}
+    {% assign sectionContents = sectionContents | append: content[0] %}
+    {% assign sectionContents = sectionContents | split: 'xxxsplitxxx' %}
+  {% endif %}
+{% endfor %}
+
+{% for description in sortedDescription %}
+  {% assign title = description | split: '<h4>' %}
+  {% assign sectionTitles = sectionTitles | append: title[1] | append: 'xxxsplitxxx' %}
+{% endfor %}
+
+{% assign sectionTitles = sectionTitles %}
+{% assign sectionTitles = sectionTitles | split: 'xxxsplitxxx' %}
+
+<script src="{{ 'script--product--wrapperAccordion.js' | asset_url }}" defer="defer"></script>
+
+<div class="product_main_section_standard">
+  <div class = "product_line_spacer"> </div>
+    <h2 class = "product_main_section_title">詳盡資料</h2>
+  <div class="product_main_section_standard_grid2">
+    {% for titles in sectionTitles offset: 1 %}
+      <div class="product_description_wrapper">
+        <h3 class = "product_description_wrapper_title">{{ titles }}</h3>
+        <div class = "product_description_wrapper_content">
+          {{ sectionContents[forloop.index] }}
+        </div>
+    </div>
+    {% endfor %}
+    {% render 'snippet_product_QnA_section' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product description",
+  "settings": [
+  ],
+  "presets": [
+    {
+      "name": "Product description"
+    }
+  ]
+}
+{% endschema %}

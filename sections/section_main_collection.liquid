@@ -1,0 +1,133 @@
+{% comment %} {{ 'style--collection--list.css' | asset_url | stylesheet_tag }} {% endcomment %}
+{% comment %} <script src="{{ 'script--homePage--dynamicProduct.js' | asset_url }}" defer="defer"></script> {% endcomment %}
+
+{% liquid
+  assign all_vendors = section.settings.collection_list
+  assign vendorsCount = 0
+  assign page_title = section.settings.title
+  assign featured_collection = section.settings.featured_collection
+%}
+
+{% for collection in all_vendors %}
+  {% assign vendorsCount = vendorsCount | plus: 1 %}
+{% endfor %}
+
+
+<link
+    rel="stylesheet"
+    href="{{ 'style--collection--list.css' | asset_url }}"
+    type="text/css"
+  >
+<script src="{{ 'scipt--collectionList.js' | asset_url }}" defer="defer"></script>
+
+
+<div class="section_collection_main">
+  <div class="section_collection_main_container">
+    <div class="section_collection_main_container_selector_column">
+      <h1>{{ page_title }}</h1>
+      <h4>合共 {{ vendorsCount }} 個</h4>
+      {% for collection in all_vendors %}
+        {% assign vendorsCount = vendorsCount | plus: 1 %}
+        <a class = "collection_brand_card" href="{{ collection.url }}" data-collectionid = "{{ collection.id }}">
+          <div class = "collection_brand_card_imageWrapper">
+            <img src = "{{ collection.featured_image | image_url: width: 100 }}" loading = "lazy" width = 100 height = unset>
+          </div>
+          <div class = "collection_brand_card_content">
+            <p class = "collection_brand_card_content_title">{{ collection.title }}</p>
+            <p class = "collection_brand_card_content_description">{{ collection.description | strip_html }}</p>
+            <p class = "collection_brand_card_content_product_count">{{ collection.products_count }} current products</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="section_collection_main_container_brand_column">
+      <div class="vendor_section">
+        <div class="vendor_section_card">
+          <div class="vendor_section_card_media imageSkeleton">
+            <img 
+              id="collection_card_image"
+              src="{{ featured_collection.featured_image | image_url: width: 500 }}"
+              width="400"
+              height="unset"
+              loading="lazy"
+            >
+          </div>
+          <div class="vendor_section_card_content">
+            <h3 id="collection_card_title">{{ featured_collection.title }}</h3>
+            <p id="collection_card_description">{{ featured_collection.description }}</p>
+          </div>
+          <a id = "collection_button" href = "{{ featured_collection.url }}" class = "vendor_section_card_button secondary_button flowingBackground">進入{{ featured_collection.title }}總目錄</a>
+        </div>
+        <h3>Top products</h3>
+        <div class = "vendor_section_featuredProducts_wrapper">
+            <div class="vendor_section_featuredProducts">
+                {% for product in featured_collection.products limit: 10 %}
+                    <div class = "product_card">
+                        <a href = "/products/{{ product.handle }}">
+                            <div class = "product_card_image_wrapper">
+                                <img src = "{{ product.featured_image | image_url: width: 400 }}" loading = "lazy" width = 100 height = unset>
+                            </div>
+                            <p class = "product_card_title"> {{ product.title }} </p>
+                            <p class = "product_card_price"> {{ product.price | money }} </p>
+                            <p class = "product_card_comparedAtPrice"> {{ product.compare_at_price | money }} </p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class = "meta-data" style = "display: none">
+  {% for collection in all_vendors %}
+    <div collectionid = "{{ collection.id }}" data-description = "{{ collection.description | strip_html }}" data-title = "{{ collection.title }}" data-image = "{{ collection.featured_image | image_url: width: 500 }}" data-handle = "{{ collection.handle }}">
+      [
+      {% for product in collection.products limit: 8 %}
+        {% if forloop.last %}
+          {
+            "title": "{{ product.title }}",
+            "img": "{{ product.featured_image | image_url: width: 400 }}",
+            "price": "{{ product.price | money }}",
+            "compared_at_price": "{{ product.compare_at_price | money }}",
+            "handle": "{{ product.handle }}"
+          }
+          {% else%}
+          {
+            "title": "{{ product.title }}",
+            "img": "{{ product.featured_image | image_url: width: 400 }}",
+            "price": "{{ product.price | money }}",
+            "compared_at_price": "{{ product.compare_at_price | money }}",
+            "handle": "{{ product.handle }}"
+          },
+        {% endif %}
+        {% endfor %}
+      ]
+    </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Cart discount reminder",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page title"
+    },
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collection list"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

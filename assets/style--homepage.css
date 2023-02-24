@@ -742,11 +742,14 @@ body.template-index {
   grid-template-columns: repeat(12, 1fr);
   margin: 0px auto;
   padding: 0 40px;
+  gap: 5px;
 }
 
 @media only screen and (max-width: 1200px) {
   .featuredCollection__section__container {
     grid-template-columns: repeat(6, 1fr);
+    padding: 0 15px;
+    gap: 0px;
   }
   .featuredCollection__section__h2container {
     grid-column: 1/span 6;
@@ -1036,20 +1039,4 @@ body.template-index {
 .dynamic__pdt__grid__clt__col__grid__item__featuredImg__img {
   width: 100%;
   line-height: 0px;
-}
-
-.textSkeleton {
-  display: block;
-  min-height: 2.8rem;
-  width: 100%;
-  max-width: 500px;
-  background-color: rgb(204, 204, 204);
-  margin-bottom: 5px;
-  animation: 1.2s linear 1s infinite running skeletonOpac;
-}
-.textSkeleton:last-of-type {
-  width: 80%;
-}
-.textSkeleton:first-of-type {
-  width: 100%;
 }

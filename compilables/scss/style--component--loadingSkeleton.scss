@@ -1,0 +1,40 @@
+@mixin skeletonImg {
+  background-color: rgb(204, 204, 204);
+  animation: 1.2s linear 1s infinite running skeletonOpac;
+}
+@mixin skeletonText {
+  display: block;
+  min-height: 2.8rem;
+  width: 100%;
+  max-width: 500px;
+  background-color: rgb(204, 204, 204);
+  margin-bottom: 5px;
+  &:last-of-type {
+    width: 80%;
+  }
+  &:first-of-type {
+    width: 100%;
+  }
+  animation: 1.2s linear 1s infinite running skeletonOpac;
+}
+
+.textSkeleton {
+    @include skeletonText;
+  }
+
+.imageSkeleton{
+  @include skeletonImg
+}
+
+
+@keyframes skeletonOpac {
+  0% {
+    background-color: rgba(204, 204, 204, 0.8);
+  }
+  50% {
+    background-color: rgba(204, 204, 204, 0.2);
+  }
+  100% {
+    background-color: rgba(204, 204, 204, 0.8);
+  }
+}

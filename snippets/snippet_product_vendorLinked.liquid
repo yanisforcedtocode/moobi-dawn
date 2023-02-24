@@ -1,0 +1,15 @@
+{% for collection in collections %}
+  {% assign v = product.vendor | downcase %}
+  {% assign t = collection.title | downcase %}
+  {% if v contains t %}
+    {% assign vendorUrl = collection.url %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+  {% if vendorUrl %}
+    <a href="{{vendorUrl}}">
+      {{ product.vendor }}
+    </a>
+  {% else %}
+    {{ product.vendor }}
+  {% endif %}

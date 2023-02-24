@@ -114,7 +114,7 @@ class DynamicProductnCollection {
                 setTimeout(() => {
                     this.removeHideClasses(this.returnElmForClassesChanges());
                     this.removeSkeletonClass(this.returnElmForClassesChanges());
-                }, 1500);
+                }, 500);
             }
             catch (error) {
                 console.log(error);
@@ -207,6 +207,7 @@ class DynamicProductnCollection {
     }
     renderDynamicProduct() {
         if (this.formatedResponse) {
+            this.featuredProductimg.src = "";
             this.featuredProductimg.src = this.changeJpgRes(this.formatedResponse.featuredpdt.imgUrl, 500);
             this.featuredProductTitle.innerText = this.formatedResponse.featuredpdt.title;
             this.featuredProductVendor.innerText = this.formatedResponse.featuredpdt.vendor;
@@ -237,6 +238,7 @@ class DynamicProductnCollection {
         });
         this.productListItemImg.forEach((el, ind) => {
             if (this.formatedResponse) {
+                el.src = "";
                 el.src = this.changeJpgRes(this.formatedResponse.pdtlist[ind].imgUrl, 250);
             }
         });

@@ -75,5 +75,22 @@ class MoobiQueries {
             }
         });
     }
+    getProductListbyCollectionId(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const requestOptions = {
+                    method: 'GET',
+                    redirect: 'manual'
+                };
+                const response = yield fetch(`${this.hostName}/api/v00/dynamicHP/getPdtListsById?id=${id}`, requestOptions);
+                const result = yield response.text();
+                const data = yield JSON.parse(result);
+                return data;
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
 }
 const moobiQueries = new MoobiQueries();
