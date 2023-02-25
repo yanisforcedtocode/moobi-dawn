@@ -29,6 +29,7 @@ class MoobiQueries {
             const res = await fetch(`${this.hostName}/api/v00/comparisons/param?handle=${handle}`, requestOptions)
             const text = await res.text()
             const data = await JSON.parse(text)
+            console.log(data)
             if (data.results) {
                 return data
             } else {
@@ -63,6 +64,22 @@ class MoobiQueries {
                 redirect: 'manual'
             };
             const response = await fetch(`${this.hostName}/api/v00/dynamicHP/getPdtListsById?id=${id}`, requestOptions)
+            const result = await response.text()
+            const data = await JSON.parse(result)
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+    public async getRecommendationsbyProductId(id: number, limit: number) {
+        try {
+            const requestOptions: RequestInit = {
+                method: 'GET',
+                redirect: 'manual'
+            };
+            const response = await fetch(`/recommendations/products.json?product_id=${id}&limit=${limit}`, requestOptions)
             const result = await response.text()
             const data = await JSON.parse(result)
             return data;

@@ -8,9 +8,7 @@ class WrapperAccordion{
         this.maxWidthClosed = closedWidth 
         this.iniWrapperAccordion()
     }
-    static logRun(){
-        console.log('running')
-    }
+
     iniWrapperAccordion(){
         if(this.warpperElmList && this.warpperElmList.length > 0){
             this.warpperElmList.forEach((el)=>{
@@ -19,14 +17,12 @@ class WrapperAccordion{
 
         }
     }
-    
     wrapperAccordionController(evt: Event, elm: HTMLElement){
         const isOpened = elm.dataset.isOpened
         if(isOpened === 'true'){
             this.closeAccordion(elm, this.maxWidthClosed)
         }
         else{
-            console.log(elm)
             this.openAccordion(elm, this.maxWidthOpened)            
         }
     }

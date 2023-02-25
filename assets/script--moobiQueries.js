@@ -40,6 +40,7 @@ class MoobiQueries {
                 const res = yield fetch(`${this.hostName}/api/v00/comparisons/param?handle=${handle}`, requestOptions);
                 const text = yield res.text();
                 const data = yield JSON.parse(text);
+                console.log(data);
                 if (data.results) {
                     return data;
                 }
@@ -83,6 +84,23 @@ class MoobiQueries {
                     redirect: 'manual'
                 };
                 const response = yield fetch(`${this.hostName}/api/v00/dynamicHP/getPdtListsById?id=${id}`, requestOptions);
+                const result = yield response.text();
+                const data = yield JSON.parse(result);
+                return data;
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
+    getRecommendationsbyProductId(id, limit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const requestOptions = {
+                    method: 'GET',
+                    redirect: 'manual'
+                };
+                const response = yield fetch(`/recommendations/products.json?product_id=${id}&limit=${limit}`, requestOptions);
                 const result = yield response.text();
                 const data = yield JSON.parse(result);
                 return data;

@@ -91,10 +91,14 @@
     },
     "product_description":{
       "type":"section_main_product_details"
+    },
+    "product_comparison":{
+      "type":"section_main_product_comparison"
     }
   },
   "order": [
     "main_product",
-    "product_description"
+    "product_description",
+    "product_comparison"
   ]
 }

@@ -8,7 +8,9 @@
 {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 {{ 'style-main_product.css' | asset_url | stylesheet_tag }}
 
-<div class = "product_main_section_standard">
+<div class = "product_main_section_standard"
+  data-productid = "{{ product.id }}"
+>
   {% render 'snippet_breadCrumbs' product: product %}
   <div class = "product_main_section_standard_grid">
     <div class = "product_section_standard_media">
