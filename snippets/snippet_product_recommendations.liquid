@@ -1,0 +1,31 @@
+{% assign limit = 4 %}
+{{ recommendations.intent }}
+{% for product in recommendations.products %}
+  recommends {{ product.handle }}
+{% endfor %}
+
+
+<div class="page-width product-recommendations" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-limit="{{ limit }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations" data-intent="related">
+  {{ recommendations.performed? }}
+  {{ section.id }}
+  {% if recommendations.performed %}
+    {% if recommendations.products_count > 0 %}
+      <div class="section-header text-center">
+           
+      </div>
+      <ul class="grid grid--uniform grid--view-items">
+        {% for product in recommendations.products %}
+          <li class="grid__item small--one-half medium-up--one-quarter">
+            {{ product.title }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% else %}
+    <div class="product-recommendations__loading-dots">
+      <div class="product-recommendations__loading-dot"></div>
+      <div class="product-recommendations__loading-dot"></div>
+      <div class="product-recommendations__loading-dot"></div>
+    </div>
+  {% endif %}
+</div>

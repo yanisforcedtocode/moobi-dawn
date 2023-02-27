@@ -1,0 +1,98 @@
+
+  {{ 'style--component--productSlides.css' | asset_url | stylesheet_tag }}
+  {{ 'style--component--productComparison.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'script--product--productComparison.js' | asset_url }}" defer="defer"></script>
+
+<div class="product_main_section_standard" id = "recommendation_section">
+  {% comment %} <div class="product_line_spacer"></div> {% endcomment %}
+  <h2 class="product_main_section_title">相關產品</h2>
+  <div class="productreccom__section">
+    <div>
+     <div class="productSlider__section__container">
+      <div class="products-slide-container" data-productPage_engagement_type="productPage_engagement_reccom">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="product_main_section_standard">
+  {% comment %} <div class="product_line_spacer"></div> {% endcomment %}
+  <h2 class="product_main_section_title">相關系列</h2>
+  <div class="productreccom__section">
+    <div>
+     <div class="productSlider__section__container">
+      {% render "snippet_product_smartNav" product: product maxCount: 5 %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<template id = "product_comparison_template">
+  <div class="product_main_section_standard">
+    {% comment %} <div class="product_line_spacer"></div> {% endcomment %}
+    <h2 class="product_main_section_title">產品比對</h2>
+    <div class="productreccom__section">
+      <div class="productSlider__section__container" data-productPage_engagement_type="productPage_engagement_comparison">
+      </div>
+      <div>
+    </div>
+  </div>
+</template>
+
+<template id="product_recommendation_template">
+  <div class="products-slide-item-container">
+    <a href="">
+      <div class = "products-slide-item-imgWrapper imageSkeleton">
+        <img
+          class="products-slide-item-img lazyload"
+          src=""
+          width=200
+          height=unset
+          loading="lazy"
+        >
+      </div>
+      <div class="products-slide-item-content">
+        <h3 class="products-slide-item-title"></h3>
+        <p class="products-slide-item-vendor"></p>
+        <span class="products-slide-item-price"></span>
+        <span class="products-slide-item-price-original"></span>
+      </div>
+    </a>
+    </div>
+</template>
+
+<template id = "comparison_card">
+  <div class = "productComparison__card">
+    <a>
+    <div class = "productComparison__img__wrapper imageSkeleton">
+        <img data-handle ="" data-key="" class = "productComparison__container__grid2S__table__grid5S__img" loading = "lazy" width = 200 height=unset>
+      </div>
+    </a>
+      <div data-handle ="" data-key=""  class = "productComparison__container__grid2S__table__grid5S__title"></div>
+      <div data-handle ="" data-key="" class = "productComparison__container__grid2S__table__grid5S__score"></div>
+      <div data-handle ="" data-key="" class = "productComparison__container__grid2S__table__grid5S__price"></div>
+  </div>
+</template>
+
+<template id = "comparison_side_bar">
+  <div class="productComparison__container__grid2S__titles">
+    <div class="productComparison__container__grid2S__titles__title"></div>
+</div>
+</template>
+
+
+{% schema %}
+{
+  "name": "Product comparison",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product comparison"
+    }
+  ]
+}
+{% endschema %}

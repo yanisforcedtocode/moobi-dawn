@@ -15,6 +15,7 @@
 }
 
 .imageSkeleton {
+  line-height: 0px;
   background-color: rgb(204, 204, 204);
   animation: 1.2s linear 1s infinite running skeletonOpac;
 }

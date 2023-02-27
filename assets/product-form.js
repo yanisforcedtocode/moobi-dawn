@@ -129,9 +129,8 @@ const cartPageAddButtonFinallyExtHandler = (_this) => {
       }
   }
 };
+externalTriggerInterface.addToCartFinally = cartPageAddButtonFinallyExtHandler
 
-
-externalTriggerInterface.addToCartFinally = cartPageAddButtonFinallyExtHandler;
 class productFormExternal extends ProductForm {
   constructor() {
     super();

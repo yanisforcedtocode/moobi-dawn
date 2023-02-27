@@ -12,7 +12,7 @@
   flex-basis: 325px;
   flex-shrink: 0;
   background: #f3f3f3;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   padding: 40px;
 }
@@ -42,7 +42,9 @@
   margin: 0px auto;
 }
 .section_collection_main_container_brand_column .vendor_section_card_media {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
+  min-width: 1px;
   aspect-ratio: 1;
   margin: 0 auto;
   line-height: 0;
@@ -96,6 +98,9 @@
 .collection_brand_card .collection_brand_card_content {
   padding: 0px 20px;
   text-align: right;
+}
+.collection_brand_card .collection_brand_card_content p {
+  margin: 10px 0px;
 }
 .collection_brand_card .collection_brand_card_content_title {
   font-weight: 600;

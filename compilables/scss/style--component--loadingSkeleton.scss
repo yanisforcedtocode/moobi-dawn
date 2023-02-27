@@ -23,6 +23,7 @@
   }
 
 .imageSkeleton{
+  line-height: 0px;
   @include skeletonImg
 }
 

@@ -24,9 +24,15 @@
     padding: 20px;
     padding-bottom: 0px;
   }
+  @media screen and (max-width: 900px) {
+    padding: 40px 20px;
+  }
   &_grid {
     display: flex;
     flex-direction: row;
+    @media screen and (max-width: 900px) {
+      display: block;
+    }
     .product_section_standard_media {
       padding: 10px;
       flex-basis: 400px;
@@ -56,14 +62,46 @@
       }
     }
     .product_section_standard_pricing {
-      flex-basis: 300px;
-      min-width: 250px;
+      padding: 10px;
+      flex-basis: 350px;
+      min-width: 300px;
       height: fit-content;
       .product_section_standard_pricing_add2cart_wrapper{
         padding: 20px;
         height: fit-content;
         border: 1px solid ;
-
+        margin-bottom: 10px;
+        .productPrompt_grid_description{
+          font-size: 1.2rem
+        }
+        .productPrompt_title{
+          margin-top: 0px
+        }
+        .productPrompt_popup_productItem_price{
+          font-weight: 600;
+          text-align: center;
+          color: #3D3D3D
+        }
+        .productPrompt_popup_productItem_comparedAtPrice{
+          color: #606060
+        }
+        .productPrompt_grid_productItem{
+          display: grid;
+          grid-template-columns: 35% 65%;
+          .productPrompt_grid_productItem_title{
+            font-size: 1.3rem
+          }
+          .productPrompt_grid_productItem_imageWrapper{
+            margin-right: 10px;
+            img{
+              width: 100%;
+            }
+          }
+          .productPrompt_popup_productItem_comparedAtPrice{
+            font-size: 1.2rem;
+            text-decoration:line-through
+          }
+        }
       }
     }
   }
@@ -75,13 +113,13 @@
     flex-wrap: wrap;
     grid-template-columns: repeat(3,1fr);
     .product_description_wrapper{
-      flex-basis: 306px;
+      flex-basis: 320px;
       flex-grow: 1;
       flex-shrink: 1;
       height: fit-content;
-      max-width: 550px;
+      max-width: 750px;
       min-width: 150px;
-      max-height: 55px;
+      max-height: 1555px;
       padding: 20px;
       border: 1px solid #404040;
       margin: 5px 15px;
@@ -89,7 +127,6 @@
       transition-duration: 300ms;
       transition-timing-function: ease-out;
       overflow: clip;
-      cursor: pointer;
         .product_qna_wrapper{
           button.accordion{
             border: none;
@@ -136,8 +173,9 @@
 
 .breadCrumbs__Wrapper {
   margin-bottom: 10px;
+  margin-left: 10px;
   .breadCrumbsText {
-    padding: 0 10px;
+    
     a {
       color: #0f1111;
       font-size: 1.3rem;

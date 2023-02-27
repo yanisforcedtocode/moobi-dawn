@@ -13,23 +13,6 @@ const comparisonModuleParams = {
     hostName: "https://moobinavi.df.r.appspot.com",
     nonScoringParams: ["productHandle", "productName", "規格", "產地", "類型", "鍍膜類型", "成份", "附贈品", "可施工數"],
     shownNonScoringParams: ["規格", "產地", "類型", "附贈品"],
-    containerHTML: `<div class = "productComparison__container">
-    <div class = "productComparison__container__grid2S">
-        <div class = "productComparison__container__grid2S__titles">
-            <titles>
-        </div>
-        <div class = "productComparison__container__grid2S__table">
-            <div class = "productComparison__container__grid2S__table__grid5S">
-                <contents>   
-            </div>
-        </div>
-    </div>
-    </div>`,
-    paramsTitleHTML: `<div class = "productComparison__container__grid2S__titles__title"><title></div>`,
-    tableImgHTML: `<a href = ""><img data-handle = "<handle>" data-src = "" class = "productComparison__container__grid2S__table__grid5S__img lazyload"></a>`,
-    tableTitleHTML: `<div class = "productComparison__container__grid2S__table__grid5S__title"><title></div>`,
-    tableScoreHTML: `<div data-handle = "<handle>" data-key = "<key>" class = "productComparison__container__grid2S__table__grid5S__score"><score></div>`,
-    tablePriceHTML: `<div data-handle = "<handle>" data-key = "<key>" class = "productComparison__container__grid2S__table__grid5S__price"><score></div>`,
     greenKeys: ["研磨劑", "需稀釋"],
     blueKeys: ["中性pH", "雨刷水", "倒鏡可用", "頭盔可用", "頭燈可用", "濕車可用", "無水洗車", "含車蠟", "無需拋光", "玻璃適用", "鍍膜車用", "柴油適用", "潤滑機油"],
     purpleKeys: ["需打蠟機", ""],
@@ -43,28 +26,22 @@ class ProductionComparison {
         const idHolder = document.querySelector('[data-productid]');
         this.productId = parseInt(idHolder.dataset.productid);
         this.productHandle = window.location.href.split('/products/')[1];
-        console.log(this.productHandle);
         this.renderTarget = document.querySelector("[data-productPage_engagement_type = 'productPage_engagement_comparison']");
-        this.renderComparisonOrRec();
+        this.renderProductComparison();
     }
     // init
-    renderComparisonOrRec() {
+    renderProductComparison() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const self = this;
                 const data = yield moobiQueries.getPdtCpr(this.productHandle);
-                console.log(data);
-                if (typeof data.results !== "number") {
-                    this.insertRecommendations('[data-productPage_engagement_type = "productPage_engagement_reccom"]', this.productId, 10, 350);
-                }
                 if (typeof data.results === "number") {
                     this.findOneData = data.data.oneData;
                     this.findDocData = data.data.docData;
                     this.formatTableData();
-                    this.createHTMLBlock();
-                    self.renderComparison();
-                    this.insertAjaxAPIdata();
-                    this.displayCustomizations();
+                    const comparisonContainer = this.createHTMLBlock();
+                    comparisonContainer ? this.insertAjaxAPIdata(comparisonContainer) : '';
+                    comparisonContainer ? this.displayCustomizations(comparisonContainer) : '';
+                    this.renderComparison();
                 }
             }
             catch (error) {
@@ -72,12 +49,10 @@ class ProductionComparison {
             }
         });
     }
-    // Handlers
+    // format data objects
     formatTableData() {
         const findOneData = this.findOneData;
         const findDocData = this.findDocData;
-        console.log(findOneData);
-        console.log(findDocData);
         const comparisonTableData = {};
         const basicParamsData = {};
         if (findOneData && findDocData) {
@@ -112,95 +87,133 @@ class ProductionComparison {
                     basicParamsData[el_02].push(score);
                 });
             });
-            this.comparisonTableData = comparisonTableData;
-            this.basicParamsData = basicParamsData;
         }
     }
+    getAllParamsDataSorted() {
+        if (this.findDocData && this.findOneData) {
+            const allParamsDataSorted = [this.findOneData, ...this.findDocData];
+            allParamsDataSorted.forEach((el) => {
+                el = Object.assign(el, el.productParameters);
+                delete el.productParameters;
+            });
+            return allParamsDataSorted;
+        }
+    }
+    // createHTML Elems
     createHTMLBlock() {
-        let paramsHTML = "";
-        let imgsHTML = "";
-        let titlesHTML = "";
-        let tableScoresHTML = "";
-        let tablepricesHTML = "";
-        let contentsHTML = "";
-        // create <titles>
-        // basic params titles
         const filteredOneParamKeys = this.filteredOneParamKeys;
-        const basicParamsData = this.basicParamsData;
-        const comparisonTableData = this.comparisonTableData;
-        console.log(filteredOneParamKeys);
-        console.log(basicParamsData);
-        console.log(comparisonTableData);
-        if (filteredOneParamKeys && basicParamsData && comparisonTableData) {
-            console.log('passed check and render stuff');
-            comparisonModuleParams.shownNonScoringParams.forEach((el) => {
-                let paramHTML = comparisonModuleParams.paramsTitleHTML.replace("<title>", el);
-                paramsHTML += paramHTML;
-            });
-            // featured params titles
-            filteredOneParamKeys.forEach((el) => {
-                let paramHTML = comparisonModuleParams.paramsTitleHTML.replace("<title>", el);
-                paramsHTML += paramHTML;
-                //console.log(paramHTML)
-            });
-            // add params: price
-            let paramPrice = comparisonModuleParams.paramsTitleHTML.replace("<title>", "價錢");
-            paramsHTML += paramPrice;
-            // create <content>
-            // imgs
-            basicParamsData.productHandle.forEach((el) => {
-                let imgHTML = comparisonModuleParams.tableImgHTML.replace("<handle>", el);
-                imgsHTML += imgHTML;
-            });
-            // titles
-            basicParamsData.productName.forEach((el) => {
-                let trimmedName = el.slice(0, 23) + "...";
-                let titleHTML = comparisonModuleParams.tableTitleHTML.replace("<title>", trimmedName);
-                titlesHTML += titleHTML;
-            });
-            // tableScores
-            // basic params scores
-            comparisonModuleParams.shownNonScoringParams.forEach((el) => {
-                basicParamsData[el].forEach((el1) => {
-                    let scoreHTML = comparisonModuleParams.tableScoreHTML.replace("<score>", el1);
-                    scoreHTML = scoreHTML.replace("<key>", el);
-                    tableScoresHTML += scoreHTML;
+        // const basicParamsData = this.basicParamsData
+        // const comparisonTableData = this.comparisonTableData
+        if (filteredOneParamKeys) {
+            const shownParams = [...comparisonModuleParams.shownNonScoringParams, ...filteredOneParamKeys];
+            const allParamsDataSorted = this.getAllParamsDataSorted();
+            const scoreTable = allParamsDataSorted ? this.getScorsTable(allParamsDataSorted) : undefined;
+            const sideBar = this.getSideBar();
+            const container = document.createElement('div');
+            const scoreCardsGrid = document.createElement('div');
+            container.classList.add('productComparison__container__grid2S');
+            scoreCardsGrid.classList.add('productComparison__container__grid2S__table');
+            if (scoreTable && sideBar) {
+                container.insertAdjacentElement('beforeend', sideBar);
+                container.insertAdjacentElement('beforeend', scoreCardsGrid);
+                scoreTable.forEach((el) => {
+                    scoreCardsGrid.insertAdjacentElement('beforeend', el);
                 });
-            });
-            // featured params scores
-            filteredOneParamKeys.forEach((el) => {
-                comparisonTableData[el].forEach((el1) => {
-                    let scoreHTML = comparisonModuleParams.tableScoreHTML.replace("<score>", el1);
-                    scoreHTML = scoreHTML.replace("<key>", el);
-                    tableScoresHTML += scoreHTML;
-                });
-            });
-            // price scores
-            basicParamsData.productHandle.forEach((el) => {
-                let priceHTML = comparisonModuleParams.tablePriceHTML.replace("<handle>", el);
-                tablepricesHTML += priceHTML;
-            });
-            // compile HTML
-            contentsHTML = imgsHTML + titlesHTML + tableScoresHTML + tablepricesHTML;
-            let compiledHTML = comparisonModuleParams.containerHTML.replace("<titles>", paramsHTML);
-            compiledHTML = compiledHTML.replace("<contents>", contentsHTML);
-            this.compiledHTML = compiledHTML;
+                this.compiledHTML = container;
+                return container;
+            }
         }
     }
-    renderComparison() {
-        console.log(this.renderTarget);
-        console.log(this.compiledHTML);
-        if (this.renderTarget && this.compiledHTML) {
-            this.renderTarget.insertAdjacentHTML("beforeend", this.compiledHTML);
-        }
-        else {
-            console.log('target for comparison rendering not found');
+    // Build HTML Elm
+    getScorsTable(allParamsDataSorted) {
+        const cardsArray = [];
+        allParamsDataSorted === null || allParamsDataSorted === void 0 ? void 0 : allParamsDataSorted.forEach((el, ind) => {
+            const comparisonCard = this.getTemplateClone('comparison_card');
+            this.modifyComparisonCardClone(comparisonCard, el);
+            const cardDiv = comparisonCard.querySelector('.productComparison__card');
+            this.insertScoreClones(cardDiv, allParamsDataSorted[ind]);
+            cardsArray.push(cardDiv);
+        });
+        return cardsArray;
+    }
+    getSideBar() {
+        const allKeys = this.getShownParamsKeys();
+        allKeys === null || allKeys === void 0 ? void 0 : allKeys.push('價錢');
+        if (allKeys) {
+            const sideBarClone = this.getTemplateClone('comparison_side_bar');
+            const sideBarWrapper = sideBarClone.querySelector('.productComparison__container__grid2S__titles');
+            this.modifySideBarClone(sideBarWrapper, allKeys);
+            return sideBarWrapper;
         }
     }
-    insertAjaxAPIdata() {
+    getTemplateClone(id) {
+        const template = document.getElementById(id);
+        const clone = template.content.cloneNode(true);
+        return clone;
+    }
+    modifyComparisonCardClone(clone, paramsDataSorted) {
+        const link = clone.querySelector('a');
+        link.href = `/products/${paramsDataSorted.productHandle}`;
+        const image = clone.querySelector('img');
+        this.writeHandleToElm(image, paramsDataSorted.productHandle);
+        const title = clone.querySelector('.productComparison__container__grid2S__table__grid5S__title');
+        title.innerText = paramsDataSorted.productName;
+        const price = clone.querySelector('.productComparison__container__grid2S__table__grid5S__price');
+        this.writeHandleToElm(price, paramsDataSorted.productHandle);
+    }
+    modifySideBarClone(clone, allKeys) {
+        const title = clone.querySelector('.productComparison__container__grid2S__titles__title');
+        allKeys.forEach((el, ind, arr) => {
+            const titleClone = title.cloneNode(true);
+            titleClone.innerText = el;
+            clone.insertAdjacentElement('beforeend', titleClone);
+            if (ind === arr.length - 1) {
+                title.remove();
+            }
+        });
+    }
+    insertScoreClones(card, productScoresData) {
+        var _a;
+        const allShownKeys = this.getShownParamsKeys();
+        if (allShownKeys) {
+            allShownKeys.forEach((el, ind, arr) => {
+                const keyValuePair = { [el]: productScoresData[el] };
+                const scoreElm = this.newScoreElm(card, keyValuePair, false);
+                card.insertAdjacentElement('beforeend', scoreElm);
+                if (ind === arr.length - 1) {
+                    this.cleanUpFirstScoreElm(card);
+                }
+            });
+        }
+        const priceBlock = card.querySelector('.productComparison__container__grid2S__table__grid5S__price');
+        (_a = priceBlock.parentNode) === null || _a === void 0 ? void 0 : _a.appendChild(priceBlock);
+    }
+    getShownParamsKeys() {
+        const filteredOneKeys = this.filteredOneParamKeys;
+        if (filteredOneKeys) {
+            const allKeys = [...comparisonModuleParams.shownNonScoringParams, ...filteredOneKeys];
+            return allKeys;
+        }
+    }
+    newScoreElm(clone, keyValuePair, lastScore) {
+        const score = clone.querySelector('.productComparison__container__grid2S__table__grid5S__score');
+        const scoreClone = score.cloneNode(true);
+        scoreClone.dataset.key = Object.entries(keyValuePair)[0][0];
+        scoreClone.innerText = Object.entries(keyValuePair)[0][1];
+        return scoreClone;
+    }
+    writeHandleToElm(elm, handle) {
+        elm.dataset.handle = handle;
+        return elm;
+    }
+    cleanUpFirstScoreElm(card) {
+        const score = card.querySelector('.productComparison__container__grid2S__table__grid5S__score');
+        score.remove();
+    }
+    insertAjaxAPIdata(comparisonContainer) {
         return __awaiter(this, void 0, void 0, function* () {
-            const productImg = document.querySelectorAll(`.productComparison__container__grid2S__table__grid5S__img`);
-            const productPrice = document.querySelectorAll(`.productComparison__container__grid2S__table__grid5S__price`);
+            const productImg = comparisonContainer.querySelectorAll(`.productComparison__container__grid2S__table__grid5S__img`);
+            const productPrice = comparisonContainer.querySelectorAll(`.productComparison__container__grid2S__table__grid5S__price`);
             const productImageArray = Array.from(productImg);
             for (let image of productImageArray) {
                 const productHandle = image.dataset.handle;
@@ -208,10 +221,9 @@ class ProductionComparison {
                     // call shopify ajaxAPI to get product data 
                     const parsedResponse = yield moobiQueries.getPdtDetails(productHandle);
                     const obj = parsedResponse.data;
-                    console.log(obj);
                     let img_url = obj.image.src;
                     let index = img_url.indexOf(".jpg");
-                    let img_url_100x = img_url.slice(0, index) + "_100x" + img_url.slice(index, -1);
+                    let img_url_100x = img_url.slice(0, index) + "_300x" + img_url.slice(index, -1);
                     // insert imgUrl from ajaxAPI
                     image.src = img_url_100x;
                     // insert link from ajaxAPI
@@ -226,17 +238,14 @@ class ProductionComparison {
             }
         });
     }
-    displayCustomizations() {
+    displayCustomizations(comparisonContainer) {
         const tick = `<i style = "color:#49d900" class="fas fa-check-circle"></i>`;
         const cross = `<i style = "color:#666" class="fas fa-times-circle"></i>`;
-        const scores = document.querySelectorAll(".productComparison__container__grid2S__table__grid5S__score");
-        //const titles = document.querySelectorAll(".productComparison__container__grid2S__titles__title")
+        const scores = comparisonContainer.querySelectorAll(".productComparison__container__grid2S__table__grid5S__score");
         scores.forEach((el, ind) => {
-            //console.log(el.dataset.key)
             comparisonModuleParams.greenKeys.forEach((el1) => {
                 if (el.dataset.key === el1) {
                     const value = parseInt(el.innerText);
-                    //console.log(value)
                     if (value === 1) {
                         el.innerHTML = tick;
                     }
@@ -251,7 +260,6 @@ class ProductionComparison {
             comparisonModuleParams.blueKeys.forEach((el1) => {
                 if (el.dataset.key === el1) {
                     const value = parseInt(el.innerText);
-                    //console.log(value)
                     if (value > 0) {
                         el.innerHTML = tick;
                     }
@@ -266,7 +274,6 @@ class ProductionComparison {
             comparisonModuleParams.purpleKeys.forEach((el1) => {
                 if (el.dataset.key === el1) {
                     const value = parseInt(el.innerText);
-                    //console.log(value)
                     if (value === 0) {
                         el.innerHTML = tick;
                     }
@@ -283,7 +290,6 @@ class ProductionComparison {
                     const value = parseInt(el.innerText);
                     const star = `<i class="fas fa-star"></i>`;
                     let stars = "";
-                    //console.log(value)
                     if (value > 0) {
                         for (let i = 0; i < value; i++) {
                             stars += star;
@@ -308,50 +314,81 @@ class ProductionComparison {
             });
         });
     }
-    filterRecommendations(element, params) {
-        let match = false;
-        params.forEach((el) => {
-            const elID = parseInt(element.id);
-            el === elID ? match = el : "";
-        });
-        return !match;
+    renderComparison() {
+        const sectionTemplate = document.querySelector('#product_comparison_template');
+        const recommendationSection = document.getElementById('recommendation_section');
+        const sectionClone = sectionTemplate.content.cloneNode(true);
+        const section = sectionClone.querySelector('.product_main_section_standard');
+        const renderTarget = section === null || section === void 0 ? void 0 : section.querySelector("[data-productPage_engagement_type = 'productPage_engagement_comparison']");
+        if (renderTarget && this.compiledHTML && section) {
+            renderTarget.insertAdjacentElement("beforeend", this.compiledHTML);
+            recommendationSection === null || recommendationSection === void 0 ? void 0 : recommendationSection.insertAdjacentElement('beforebegin', section);
+        }
+        else {
+            console.log('target for comparison rendering not found');
+        }
+    }
+}
+const insertComparison = new ProductionComparison();
+class ProductRecommendation {
+    constructor() {
+        const idHolder = document.querySelector('[data-productid]');
+        this.productId = parseInt(idHolder.dataset.productid);
+        this.insertRecommendations('[data-productPage_engagement_type = "productPage_engagement_reccom"]', this.productId, 10, 350);
+    }
+    resizeImageSrc(src, imgRes) {
+        const index = src.indexOf(".jpg") || src.indexOf(".png");
+        const resizedSrc = `${src.slice(0, index)}_${imgRes}x${src.slice(index)}`;
+        return resizedSrc;
     }
     insertRecommendations(targetSelector, id, limit, imgRes) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const target = document.querySelector(`${targetSelector}`);
                 const data = yield moobiQueries.getRecommendationsbyProductId(id, limit);
-                console.log(data);
                 const productsData = data.products;
-                if (target) {
-                    productsData.forEach((el, ind) => {
-                        const filterResult = this.filterRecommendations(el, comparisonModuleParams.filterParams);
-                        if (ind <= limit - 1 && filterResult) {
-                            const index = el.images[0].indexOf(".jpg") || el.images[0].indexOf(".png");
-                            target.insertAdjacentHTML("beforeend", `
-                        <a href = "/products/${el.handle}">
-                            <div class = "productreccom__section__container__item">
-                                <div class = "productreccom__section__container__item__imgholder">
-                                    <img data-src = "${el.images[0].slice(0, index)}_${imgRes}x${el.images[0].slice(index)}" class = "productreccom__section__container__item__imgholder__img lazyload">
-                                </div>
-                                <div class = "productreccom__section__container__item__txtholder">
-                                    <p class = "productreccom__section__container__item__txtholder__title">${el.title}</p>
-                                <div class = "productreccom__section__container__item__txtholder__priceholder">
-                                    <p class = ${el.compare_at_price ? "productreccom__section__container__item__txtholder__price--red" : "productreccom__section__container__item__txtholder__price"}>$${(Math.round(el.price / 100)).toFixed(2)}</p>
-                                    <p class = "productreccom__section__container__item__txtholder__priceatcomparison">${!el.compare_at_price ? "" : "$"}${!el.compare_at_price ? "" : el.compare_at_price / 100}</p>
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                `);
-                        }
-                    });
-                }
+                this.renderRecommendations(productsData, target);
             }
             catch (e) {
                 console.log(e);
             }
         });
     }
+    returnRecommendationClone() {
+        const template = document.getElementById('product_recommendation_template');
+        const clone = template.content.cloneNode(true);
+        return clone;
+    }
+    modifyRecommendationClone(clone, dataObj) {
+        const image = clone.querySelector('img');
+        image.src = this.resizeImageSrc(dataObj.images[0], 300);
+        const title = clone.querySelector('h3');
+        title.innerText = dataObj.title;
+        const vendor = clone.querySelector('.products-slide-item-vendor');
+        vendor.innerText = dataObj.vendor;
+        const link = clone.querySelector('a');
+        link.href = `/products/${dataObj.handle}`;
+        const price = clone.querySelector('.products-slide-item-price');
+        // Format number to two decimals (Typescript)
+        const formattedPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(dataObj.price / 100);
+        price.innerText = formattedPrice;
+        const compared_at_price = clone.querySelector('.products-slide-item-price-original');
+        if (dataObj === null || dataObj === void 0 ? void 0 : dataObj.compare_at_price) {
+            const formattedComparedAtPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(dataObj.compare_at_price / 100);
+            compared_at_price.innerText = formattedComparedAtPrice;
+        }
+        return clone;
+    }
+    renderRecommendations(productsData, target) {
+        const sectionHTMLArray = [];
+        productsData.forEach((el) => {
+            const templateClone = this.returnRecommendationClone();
+            const modifiedClone = this.modifyRecommendationClone(templateClone, el);
+            sectionHTMLArray.push(modifiedClone);
+        });
+        sectionHTMLArray.forEach((el) => {
+            target.appendChild(el);
+        });
+    }
 }
-const insertComparison = new ProductionComparison();
+const renderRecommendations = new ProductRecommendation();

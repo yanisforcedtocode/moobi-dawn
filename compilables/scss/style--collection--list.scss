@@ -10,7 +10,7 @@
             flex-basis: 325px;
             flex-shrink: 0;
             background: #f3f3f3;
-            overflow-y: scroll;
+            overflow-y: auto;
             overflow-x: hidden;
             padding: 40px;
             @media screen and (max-width: 780px) {
@@ -36,7 +36,9 @@
                     margin: 0px auto;
                 }
                 &_media{
-                    width: 300px;
+                    width: 100%;
+                    max-width: 300px;
+                    min-width: 1px;
                     aspect-ratio: 1;
                     margin: 0 auto;
                     line-height: 0;
@@ -88,6 +90,9 @@
     .collection_brand_card_content{
         padding: 0px 20px;
         text-align: right;
+        p{
+            margin: 10px 0px
+        }
        
         &_title{
             font-weight: 600;

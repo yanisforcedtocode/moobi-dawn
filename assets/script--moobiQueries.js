@@ -40,7 +40,6 @@ class MoobiQueries {
                 const res = yield fetch(`${this.hostName}/api/v00/comparisons/param?handle=${handle}`, requestOptions);
                 const text = yield res.text();
                 const data = yield JSON.parse(text);
-                console.log(data);
                 if (data.results) {
                     return data;
                 }

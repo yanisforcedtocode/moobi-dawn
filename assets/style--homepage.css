@@ -173,7 +173,6 @@ p.hideText, h1.hideText, h2.hideText, h3.hideText, h4.hideText, span.hideText {
   flex-direction: row;
   flex-wrap: nowrap;
   overflow-x: scroll;
-  margin: 0px 20px;
   clear: both;
   scroll-behavior: smooth;
 }

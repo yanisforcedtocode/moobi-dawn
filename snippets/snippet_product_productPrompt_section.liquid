@@ -1,0 +1,29 @@
+{% assign product = product %}
+
+
+{% if product.metafields.my_fields.prompt_description and product.metafields.my_fields.prompt_productList %}
+    <div class = "product_section_standard_pricing_add2cart_wrapper">
+    <div class="productPrompt--grid" id="gridPromptDiv">
+        <h4 class = "productPrompt_title"><i class="fab fa-hotjar" aria-hidden="true"></i>店長推薦</h4>
+        <p class="productPrompt_grid_description">{{ product.metafields.my_fields.prompt_description }}</p>
+
+        {% if product.metafields.my_fields.prompt_productList %}
+            {% for item in product.metafields.my_fields.prompt_productList.value %}
+        <a class="productPrompt_grid_link" href="/products/{{ item.handle }}">
+            <div class="productPrompt_grid_productItem">
+                <div class="productPrompt_grid_productItem_imageWrapper">
+                    <img src="{{ item.featured_image | image_url: width: 300 }}" height = unset width = 200 loading = "lazy">
+                </div>
+                <h4 class="productPrompt_grid_productItem_title">{{ item.title }}</h4>
+            </div>
+            <div class="productPrompt_popup_productItem_priceWrapper">
+                <p class = "productPrompt_popup_productItem_price">{{ item.price | money_with_currency }}</p>
+                <p class = "productPrompt_popup_productItem_comparedAtPrice">{{ item.compared_at_price | money_with_currency }}</p>
+            </div>
+        </a>
+        {% render 'add2Cart_button_external' featuredProduct: all_products[item.handle] %}
+    {% endfor %}
+</div>
+{% endif %}
+        </div>
+    {% endif %}

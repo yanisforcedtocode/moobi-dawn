@@ -29,7 +29,6 @@ class MoobiQueries {
             const res = await fetch(`${this.hostName}/api/v00/comparisons/param?handle=${handle}`, requestOptions)
             const text = await res.text()
             const data = await JSON.parse(text)
-            console.log(data)
             if (data.results) {
                 return data
             } else {

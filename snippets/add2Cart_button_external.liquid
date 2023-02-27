@@ -1,10 +1,12 @@
 {% liquid
   assign product = featuredProduct
-  assign product_form_id = 'product-form-' | append: section.id
+  assign product_form_id = 'product-form-external' | append: section.id
   assign disabled = disabled
 %}
 
-<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{% if template.name != 'product' %}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{% endif %}
 
 <input
   type="hidden"

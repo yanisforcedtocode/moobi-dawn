@@ -42,4 +42,4 @@ class WrapperAccordion {
         delete elm.dataset.isOpened;
     }
 }
-const descriptionWrapper = new WrapperAccordion('.product_description_wrapper', 1500, 55);
+// const descriptionWrapper = new WrapperAccordion('.product_description_wrapper', 1500, 55)

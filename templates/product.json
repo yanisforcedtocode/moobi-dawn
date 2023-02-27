@@ -89,15 +89,19 @@
         "padding_bottom": 36
       }
     },
+    "product_FBT":{
+      "type":"section_main_product_FBT"
+    },
     "product_description":{
       "type":"section_main_product_details"
     },
     "product_comparison":{
-      "type":"section_main_product_comparison"
+      "type":"section_main_product_recommendation"
     }
   },
   "order": [
     "main_product",
+    "product_FBT",
     "product_description",
     "product_comparison"
   ]

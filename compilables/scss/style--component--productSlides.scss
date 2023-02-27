@@ -1,0 +1,169 @@
+@mixin titleBlockDecor {
+    content: "";
+    position: relative;
+    display: inline-block;
+    right: 10px;
+    top: 3px;
+    width: 1rem;
+    min-height: 2rem;
+    background-color: #ffc500;
+    z-index: 3;
+  }
+  @mixin skeletonImg {
+    background-color: rgb(204, 204, 204);
+    animation: 1.2s linear 1s infinite running skeletonOpac;
+  }
+  @mixin skeletonText {
+    display: block;
+    min-height: 2.8rem;
+    width: 100%;
+    max-width: 500px;
+    background-color: rgb(204, 204, 204);
+    margin-bottom: 5px;
+    &:last-of-type {
+      width: 80%;
+    }
+    &:first-of-type {
+      width: 100%;
+    }
+    animation: 1.2s linear 1s infinite running skeletonOpac;
+  }
+
+/*=== product sliders ===*/
+.productSlider__section {
+  background-color: #fff;
+  box-shadow: rgba(60, 60, 60, 0.2) 2px 2px 4px;
+  position: relative;
+  z-index: 1;
+  padding: 40px 0;
+}
+.productSlider__section__container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0;
+  @media only screen and (max-width: 900px) {
+    padding: 0;
+  }
+  @media only screen and (max-width: 500px) {
+    padding: 0;
+  }
+}
+
+.products-slide-section {
+    display: block;
+    min-height: 370px;
+    position: relative;
+    transition: height 500ms ease-in;
+  }
+  div.products-slide-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0px 20px;
+    clear: both;
+    min-height: 300px;
+    scroll-behavior: smooth;
+    .products-slide-item-container {
+      display: block;
+      flex-basis: 300px;
+      flex-shrink: 1;
+      min-width: 185px;
+      box-sizing: border-box;
+      font-size: 13pt;
+      flex-shrink: 1;
+      margin: 15px 5px;
+    }
+    .products-slide-h2 {
+      font-family: "Noto Sans TC", sans-serif;
+      font-size: 1.9rem;
+      font-weight: 600;
+      margin-top: 0px;
+    }
+    .products-slide-h2::before {
+      @include titleBlockDecor;
+    }
+    .products-slide-item-container h3,
+    .products-slide-item-container p,
+    .products-slide-item-container span {
+      // font-family: "Noto Sans TC", sans-serif;
+    }
+    .products-slide-item-imgWrapper {
+      width: 100%;
+      aspect-ratio: 1;
+    }
+    .products-slide-item-container img {
+      width: 100%;
+    }
+    .products-slide-item-container h3 {
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      margin-top: 0.6rem;
+    }
+    .products-slide-item-container p {
+      color: #606060;
+      font-size: 11px;
+      margin: 0px;
+    }
+    .products-slide-item-container span {
+      margin: 0px;
+    }
+    .products-slide-section i {
+      position: absolute;
+      font-size: 18pt;
+      top: 45%;
+      color: rgba(60, 60, 60, 0.3);
+    }
+    .fa-chevron-circle-left {
+      left: 10px;
+    }
+    .fa-chevron-circle-right {
+      right: 10px;
+    }
+    .products-slide-section i:hover {
+      color: rgba(60, 60, 60, 0.6);
+    }
+    .productSlideButton {
+      font-size: 12px;
+      display: block;
+      margin: 5px 0px;
+      padding: 8px 15px;
+      background-color: #ffc500;
+      color: #fff;
+      border-width: 0px;
+      border-radius: 10px;
+      float: right;
+      box-shadow: 2px 2px 4px rgba(60, 60, 60, 0.2);
+      transition: background-color, 300ms;
+    }
+    .productSlideButton:hover {
+      background-color: #f0ba0b;
+    }
+    .products-slide-item-price {
+      color: #505050;
+      font-size: 1.7rem;
+      font-weight: 600;
+    }
+    .products-slide-item-price-original {
+      display: block;
+      font-size: 1rem;
+      text-decoration: line-through;
+      color: #606060;
+    }
+  }
+
+  @media only screen and (max-width: 550px) {
+    .products-slide-section {
+      min-height: 300px;
+    }
+    .products-slide-section i {
+      display: none;
+    }
+    .products-slide-container {
+      margin: 0px;
+    }
+    .products-slide-item-img {
+      min-height: 100px;
+    }
+  }

@@ -11,15 +11,6 @@
           <a href= '{{ featured_collection.url }}'>
             <h2 class="products-slide-h2">{{ collectionDisplayTitle }} ></h2></a
           >
-          {% comment %} <i
-            id="productslidesection-{{ identificationCode }}left"
-            class="fas fa-chevron-circle-left"
-          ></i>
-          <i
-            id="productslidesection-{{ identificationCode }}right"
-            class="fas fa-chevron-circle-right"
-          ></i> {% endcomment %}
-  
           <div class="products-slide-container productslidecontainer-{{ identificationCode }}">
             {% render 'snippet_productslider', featured_collection: featured_collection %}
           </div>
