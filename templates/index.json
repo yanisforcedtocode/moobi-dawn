@@ -132,7 +132,7 @@
     "6dc0ea6d-d53c-42e6-a2bb-ee7417b92eca": {
       "type": "section_spacer",
       "settings": {
-        "section_height": 60,
+        "section_height": 30,
         "section_color": "yellow"
       }
     },
@@ -183,6 +183,18 @@
         "engagement_type": "homePage_featuredBrands"
       }
     },
+    "spacer_homepage_05": {
+      "type": "section_spacer",
+      "settings": {
+        "section_height": 30,
+        "section_color": "yellow"
+      }
+    },
+    "section_homePage_dynamic_blogs":{
+      "type": "section_dynamic_blogs.liquid",
+      "settings":{}
+    }
+    ,
     "1675921204c310004c": {
       "type": "apps",
       "settings": {
@@ -204,6 +216,8 @@
     "section_featuredCollection_homePage_01",
     "spacer_homepage_04",
     "section_featuredCollection_homePage_02",
+    "spacer_homepage_05",
+    "section_homePage_dynamic_blogs",
     "1675921204c310004c"
   ]
 }

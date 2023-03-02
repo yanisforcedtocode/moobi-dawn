@@ -10,7 +10,6 @@ interface ProductScoresData {
     [x: string]: string
 }
 
-// comparison module variables
 const comparisonModuleParams = {
     hostName: "https://moobinavi.df.r.appspot.com",
     nonScoringParams: ["productHandle","productName","規格","產地","類型","鍍膜類型","成份","附贈品","可施工數"],
@@ -23,7 +22,6 @@ const comparisonModuleParams = {
     filterParams: [7505839390970]
 }
 
-/* input targetClass, insert HTML according to recommended products */
 class ProductionComparison{
     productHandle: string
     productId: number
@@ -337,10 +335,6 @@ class ProductionComparison{
     }
 }
 
-const insertComparison = new ProductionComparison()
-
-
-
 class ProductRecommendation{
     productId: number
     constructor(){
@@ -415,4 +409,5 @@ class ProductRecommendation{
 
 }
 
+const insertComparison = new ProductionComparison()
 const renderRecommendations = new ProductRecommendation()

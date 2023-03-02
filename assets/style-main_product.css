@@ -25,8 +25,14 @@
   padding-bottom: 0px;
 }
 @media screen and (max-width: 900px) {
+  .product_main_section_standard h2 {
+    padding: 0px 15px;
+  }
+}
+@media screen and (max-width: 900px) {
   .product_main_section_standard {
-    padding: 40px 20px;
+    padding: 40px 10px;
+    padding-bottom: 0px;
   }
 }
 .product_main_section_standard_grid {
@@ -241,7 +247,12 @@
 .product_line_spacer {
   display: block;
   height: 0px;
+  width: calc(100% - 20px);
+  margin: 0px auto;
   border-top: 1px solid rgba(64, 64, 64, 0.3137254902);
+}
+.product_line_spacer:empty {
+  display: block;
 }
 
 .tftable {

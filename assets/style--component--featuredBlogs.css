@@ -1,0 +1,101 @@
+.featuredArticle__section {
+  padding: 20px 0px;
+}
+.featuredArticle__section .featuredArticle__section__container {
+  max-width: 1600px;
+  display: block;
+  margin: 0px auto;
+  padding: 0 60px;
+}
+@media only screen and (max-width: 1200px) {
+  .featuredArticle__section .featuredArticle__section__container {
+    padding: 0 25px;
+  }
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__h2container {
+  display: block;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__h2container h2 {
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__h2container h2::before {
+  content: "";
+  position: relative;
+  display: inline-block;
+  right: 10px;
+  top: 3px;
+  width: 1rem;
+  min-height: 2rem;
+  background-color: #ffc500;
+  z-index: 3;
+  background-color: #404040;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 900px;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 10px 0px;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 125px;
+  min-width: 45px;
+  margin-right: 5px;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card:last-of-type {
+  margin-right: 0px;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_card_button {
+  padding: 20px;
+  margin: 0px auto;
+  background: #2D2D2D;
+  color: #fff;
+  text-align: center;
+  width: 90%;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_card_button:hover {
+  transform: scale(1.01);
+}
+@media only screen and (max-width: 480px) {
+  .featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_card_button {
+    margin-top: 40px;
+  }
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_contentWrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_contentWrapper [data-type=article_title] {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_contentWrapper [data-type=article_published_at] {
+  font-size: 1.2rem;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_contentWrapper [data-type=article_description] {
+  font-size: 1.2rem;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_card_imgWrapper {
+  width: 100%;
+  overflow: clip;
+  aspect-ratio: 1.2;
+}
+.featuredArticle__section .featuredArticle__section__container .featuredArticle__section__container__grid .featuredArticle__section__container__grid_item .featuredArticle_card .featuredArticle_card_imgWrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-fit: cover;
+  object-position: center;
+}

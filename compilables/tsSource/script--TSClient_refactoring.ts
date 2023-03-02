@@ -1,8 +1,30 @@
 'use strict'
-// === init TS search client
+interface TypesenseClientStates{
+    searchParams: boolean;
+    query: boolean;
+    isSearchSubmited: boolean;
+    search: {
+        query: boolean;
+        params: boolean;
+        res: boolean;
+    }
+}
+interface TypesenseServerResponse{
+    hits: TypesenseHits[]
+}
+interface TypesenseSearchParams{ 
+        q: string,
+        query_by: string,
+        filter_by: string,
+        sort_by : string
+}
+type TypesenseHits = {
+    highlights: any[]
+    document: {title: string}
+}
 declare var Typesense: any 
 
-let client = new Typesense.SearchClient({
+let moobiTypeSenseClient = new Typesense.SearchClient({
     'nodes': [{
       'host': '2y9h70d3prw6uv8jp-1.a1.typesense.net', // For Typesense Cloud use xxx.a1.typesense.net
       'port': '443',      // For Typesense Cloud use 443
@@ -11,28 +33,37 @@ let client = new Typesense.SearchClient({
     'apiKey': 'itq7jicFo1XypYg2paZKPQx0qxJFgbG6',
     'connectionTimeoutSeconds': 2
   })
-  // === TS search handlers
   
-
-  
-//   searchFn()
 class TSSearchWidget {
     initStates: {
-        searchParams : Boolean,
-        query: Boolean,
-        isSearchSubmited:Boolean,
-        search:{
-            query:Boolean,
-            params:Boolean,
-            res:Boolean
+        searchParams: any;
+        query: any;
+        isSearchSubmited: boolean;
+        search: {
+            query: any;
+            params: any;
+            res: any;
         }
     }
-    constructor(params: any) { 
-        // states
+    currentStates: {
+        searchParams: any;
+        query: any;
+        isSearchSubmited: boolean;
+        search: {
+            query: any;
+            params: any;
+            res: any;
+        }
+    }
+    sectionElm: HTMLElement;
+    queryElm: HTMLElement;
+    paramsElm: HTMLElement;
+    responseElm: HTMLElement;
+    searchBtnElm: HTMLElement;
+
+    constructor() { 
+        console.log('typesense running')
         this.initStates = {
-            // searchParams:[...params.searchParams],
-            // searchFields:[...params.searchFields],
-            // facetFields:[...params.facetFields],
             searchParams : false,
             query: false,
             isSearchSubmited:false,
@@ -41,38 +72,51 @@ class TSSearchWidget {
                 params:false,
                 res:false
             }
-
         }
-        /*this.currentState = {...this.initStates}
-        // targets
-        this.section = document.querySelector(".TSClient__section")
-        this.query = document.querySelector("#query")
-        this.params = document.querySelector("#params")
-        this.response = document.querySelector("#response")
-        this.searchBtn = document.querySelector("#submitsearch")*/
-        }
+        this.currentStates = {...this.initStates}
+        this.sectionElm = document.querySelector(".TSClient__section") as HTMLElement
+        this.queryElm = document.querySelector("#query") as HTMLElement
+        this.paramsElm = document.querySelector("#params") as HTMLElement
+        this.responseElm = document.querySelector("#response") as HTMLElement
+        this.searchBtnElm = document.querySelector("#submitsearch") as HTMLElement
     }
+    // initiation
+
+    init(){
+        this.listen.apply(this, [this.queryElm, this.setQuery, "input"])
+        this.listen.apply(this, [this.paramsElm, this.setParams, "input"])
+        this.listen.apply(this, [this.searchBtnElm, this.setSubmit, "mouseover"])
+        this.setSubmit()
+    }
+
     // event listeners
-    /*
-    listen(elm, fn, self, event='input'){
+    listen(elm: HTMLElement, fn: Function, event:string){
+        console.log(elm)
+        console.log(event)
+        console.log(fn)
         elm.addEventListener(event, (e)=>{
-            if(fn){
-                fn(e.target.value, self)
+            const target = e.target as HTMLInputElement
+            if(target && target.value){
+                fn.apply(this, [target.value])
+            }else{
+                fn.apply(this)
             }
         })
     }
 
     // handlers
     // show string on response block
-    displayRes(res){
-        if (res !== this.response.innerText)
-        {this.response.innerHTML = this.formatRes(res)
+    displayRes(res: any){
+        console.log(res)
+        if (res !== this.responseElm.innerText)
+        {this.responseElm.innerHTML = this.formatRes(res)
         }
     }
-    formatRes(res){
-        const text = res.hits.map((el, ind)=>{
+    formatRes(res: TypesenseServerResponse){
+        const hits = res.hits
+        const text = hits.map((el, ind)=>{
             const title = el.document.title
-            const highlights = []
+            const highlights:any[] = []
             el.highlights.forEach((el_1)=>{
                 highlights.push(JSON. stringify(el_1))
             })
@@ -81,57 +125,49 @@ class TSSearchWidget {
         return text.join("")
     }
     // send search request
-    searchFn = async(params)=>{
-        console.log(JSON.parse(params))
-        let searchParameters = {
-            q         : 'glaco',
-            query_by  : 'title',
-            // 'filter_by' : 'num_employees:>100',
-            // 'sort_by'   : 'num_employees:desc'
-          }
-        const res = await client.collections('shopify_products_zh_01').documents().search(JSON.parse(params))
+    searchFn = async(params: string)=>{
+        const parsedParams: TypesenseSearchParams = JSON.parse(params)
+        const res = await moobiTypeSenseClient.collections('shopify_products_zh_01').documents().search(parsedParams)
         console.log(res)
         return res
     }
 
     // set current state
-    setQuery(query, self){
-        self.currentState.search.query = query
-        self.evoke(self.currentState)
+    setQuery(query: any){
+        console.log(query)
+        this.currentStates.search.query = query
+        this.evoke()
     }
-    setParams(params, self){
-        self.currentState.search.params = params
-        self.evoke(self.currentState)    
+    setParams(params: string){
+        console.log(params)
+        this.currentStates.search.params = params
+        console.log(this.currentStates.search.params)
+        this.evoke()    
     }
-    setSubmit(params, self){
-        if(self.currentState.search.params){
-            self.currentState.isSearchSubmited = true
-            self.evoke(self.currentState)
+    setSubmit(){
+        console.log('submit')
+        console.log(this.currentStates.search.params)
+        if(this.currentStates.search.params){
+            this.currentStates.isSearchSubmited = true
+            this.evoke()
         }
     }
 
     // evoke
-    evoke = async(currentState)=>{
-        if(this.currentState.isSearchSubmited){
-            const res = await this.searchFn(currentState.search.params)
-            this.currentState.search.res = res
-            this.displayRes(
-                res
-            // `${currentState.search.query? currentState.search.query :""}  
-            // ${currentState.search.params? currentState.search.params:""}`
-            )
-            this.currentState.isSearchSubmited = false
+    async evoke(){
+        try {
+            console.log(this.currentStates.isSearchSubmited)
+            if(this.currentStates.isSearchSubmited){
+                const res = await this.searchFn(this.currentStates.search.params)
+                this.currentStates.search.res = res
+                this.displayRes(res)
+                this.currentStates.isSearchSubmited = false
+            }
+        } catch (error) {
+            this.currentStates.isSearchSubmited = false
         }
-    }
-
-    // init
-    init(){
-        const self = this
-        this.listen(self.query, self.setQuery, self)
-        this.listen(self.params, self.setParams, self)
-        this.listen(self.searchBtn, self.setSubmit, self, 'click')
     }
   }
 
   const tsWidget = new TSSearchWidget()
-  tsWidget.init() */
+  tsWidget.init()

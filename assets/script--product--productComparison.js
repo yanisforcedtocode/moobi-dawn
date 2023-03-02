@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// comparison module variables
 const comparisonModuleParams = {
     hostName: "https://moobinavi.df.r.appspot.com",
     nonScoringParams: ["productHandle", "productName", "規格", "產地", "類型", "鍍膜類型", "成份", "附贈品", "可施工數"],
@@ -20,7 +19,6 @@ const comparisonModuleParams = {
     yellowKeys: ["使用頻次"],
     filterParams: [7505839390970]
 };
-/* input targetClass, insert HTML according to recommended products */
 class ProductionComparison {
     constructor() {
         const idHolder = document.querySelector('[data-productid]');
@@ -329,7 +327,6 @@ class ProductionComparison {
         }
     }
 }
-const insertComparison = new ProductionComparison();
 class ProductRecommendation {
     constructor() {
         const idHolder = document.querySelector('[data-productid]');
@@ -391,4 +388,5 @@ class ProductRecommendation {
         });
     }
 }
+const insertComparison = new ProductionComparison();
 const renderRecommendations = new ProductRecommendation();

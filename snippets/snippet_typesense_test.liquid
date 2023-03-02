@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="{{ 'style--TSClient.css' | asset_url }}" type="text/css">
+<div class="TSClient__section">
+  <h3>TS client</h3>
+  <p>query</p>
+  <input type="text" name="" id="query">
+  <p>params</p>
+  <textarea name="" id="params"></textarea>
+  <button id="submitsearch">submit</button>
+  <p>sample</p>
+  <p>
+    {<br>
+    "q" : "glaco",<br>
+    "query_by" : "title"<br>
+    }
+  </p>
+  <p>response</p>
+  <p id="response"></p>
+</div>
+<!-- === TS search package -->
+
+<script src="{{ 'script--TSClient_refactoring.js' | asset_url }}" defer="defer"></script>

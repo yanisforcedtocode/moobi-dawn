@@ -1,0 +1,56 @@
+{{ "style--component--featuredBlogs.css" | asset_url | stylesheet_tag }}
+
+{% liquid 
+    assign beautyBlog = blogs['wisdom-car-beauty'].articles
+    assign tutorialBlog = blogs['car-repairs-tutorial'].articles
+    assign repairBlog = blogs['wisdom-repairs'].articles
+    assign startBlog = blogs['wisdom-startup'].articles
+    assign allBlogs = beautyBlog | concat: tutorialBlog | concat: tutorialBlog | concat: repairBlog | concat: startBlog | sort: 'created_at' | reverse
+%}
+
+<div class="featuredArticle__section">
+  <div class="featuredArticle__section__container">
+    <div class="featuredArticle__section__container__h2container">
+      <h2>MOOBI 豆知識.</h2>
+      <div class="featuredArticle__section__container__grid">
+        <div class = "featuredArticle__section__container__grid_item">
+          {% for article in allBlogs limit: 4 %}
+            <div class = "featuredArticle_card">
+              <a href = "{{ article.url }}">
+              <div class = "featuredArticle_card_imgWrapper">
+                <img loading = "lazy" src = "{{ article.image | image_url: width: 400 }}" width = 250 height = unset>
+              </div>
+            </a>
+            <div class = "featuredArticle_contentWrapper">
+              <p data-type = "article_title">{{ article.title }}</p>
+              <p data-type = "article_published_at">{{ article.published_at | date: "%b %d, %y" }}</p>
+            </div>
+            </div>
+          {% endfor %}
+          <div class = "featuredArticle_card" >
+            <a href = "/pages/car-repair-tutorial">
+             <p class = "featuredArticle_card_button">更多豆知識 {% render 'icon-arrow' %}</p> 
+            </a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% schema %}
+{
+  "name": "Dynamic Blog section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "default_dynamic_collection_description",
+      "label": "Default collection description"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dynamic Blog section"
+    }
+  ]
+}
+{% endschema %}

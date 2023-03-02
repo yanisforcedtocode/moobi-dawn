@@ -1,0 +1,114 @@
+{% liquid
+  assign attribute = attribute
+  assign attributeValue = attributeValue
+  assign excerptlimit = 50
+%}
+
+{% if template.name == 'collection' %}
+  {{ collection.myfields.articles.values[0] }}
+  {% liquid 
+    assign article_01_handle = collection.myfields.articles.values[0]
+    assign article_02_handle = collection.myfields.articles.values[1]
+  %}
+{% endif %}
+
+{% if template.name == 'product' %}
+  {{ collection.myfields.articles.values[0] }}
+  {% liquid 
+    assign article_01_handle = product.metafields.my_fields.article_01
+    assign article_02_handle = product.metafields.my_fields.article_02
+  %}
+{% endif %}
+
+{%- if article_01_handle != blank -%}
+  {% liquid
+    assign article_01 = articles[article_01_handle]
+    assign title_01 = article_01.title
+    assign url_01 = article_01.url
+    assign excerpt_01 = article_01.excerpt | strip_html | truncate: 50, '...'
+    assign img_01 = article_01.image | image_url: width: 500
+    assign title_01 = article_01.title
+  %}
+{%- endif -%}
+
+{%- if article_02_handle != blank -%}
+  {% liquid
+    assign article_02 = articles[article_02_handle]
+    assign title_02 = article_02.title
+    assign url_02 = article_02.url
+    assign excerpt_02 = article_02.excerpt | strip_html | truncate: 50, '...'
+    assign img_02 = article_02.image | image_url: width: 500
+    assign title_02 = article_02.title
+  %}
+{%- endif -%}
+
+{% liquid
+  assign blogHanldes = 'wisdom-car-beauty,car-repairs-tutorial,wisdom-startup' | split: ','
+  assign beautyBlog = blogs['wisdom-car-beauty'].articles
+  assign tutorialBlog = blogs['car-repairs-tutorial'].articles
+  assign repairBlog = blogs['wisdom-repairs'].articles
+  assign startBlog = blogs['wisdom-startup'].articles
+  assign allBlogs = beautyBlog | concat: tutorialBlog | concat: tutorialBlog | concat: repairBlog | concat: startBlog | sort: 'created_at' | reverse
+  assign maxCount = 4
+  assign count = 0
+%}
+
+<div class="metaArticle__grid"  {{ attribute }} = "{{ attributeValue }}">
+  {% if article_01 %}
+    {% assign count = count | plus: 1 %}
+    <div class="metaArticle__grid__item">
+      <a href="{{ url_01 }}">
+        <div class="metaArticle__grid__item__imageWrapper">
+          <img src="{{ img_01 }}" class="metaArticle__grid__img" loading="lazy" width="500" height="unset">
+        </div>
+      </a>
+      <h3 class="metaArticle__grid__item__title">{{ title_01 }}</h3>
+      <p class="metaArticle__grid__item__excerpt">{{ excerpt_01 | strip_html }}</p>
+    </div>
+  {% endif %}
+
+  {% if article_02 %}
+    {% assign count = count | plus: 1 %}
+    <div class="metaArticle__grid__item">
+      <div class="metaArticle__grid__item__imageWrapper">
+        <a href="{{ url_02 }}">
+          <img src="{{ img_02 }}" class="metaArticle__grid__img" loading="lazy" width="500" height="unset">
+        </a>
+      </div>
+      <h3 class="metaArticle__grid__item__title">{{ title_02 }}</h3>
+      <p class="metaArticle__grid__item__excerpt">{{ excerpt_02 | strip_html }}</p>
+    </div>
+  {% endif %}
+
+  {% if count < maxCount %}
+    {% liquid
+      assign limit = maxCount | minus: count
+      assign randomNumber = 'now' | date: '%N' | modulo: 3
+      assign randomBlogHandle = blogHanldes[randomNumber]
+      assign randomBlog = blogs[randomBlogHandle]
+    %}
+    {% for article in randomBlog.articles limit: limit %}
+      <div class="metaArticle__grid__item">
+        <div class="metaArticle__grid__item__imageWrapper">
+          <a href="{{ article.url }}">
+            <img
+              src="{{ article.image | image_url: width: 500 }}"
+              class="metaArticle__grid__img"
+              loading="lazy"
+              width="500"
+              height="unset"
+            >
+          </a>
+        </div>
+        <h3 class="metaArticle__grid__item__title">{{ article.title }}</h3>
+        <p class="metaArticle__grid__item__excerpt">{{ article.excerpt | strip_html }}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="metaArticle__grid__item">
+    <a href="/pages/car-repair-tutorial">
+      <p class="featuredArticle_card_button">更多豆知識 {% render 'icon-arrow' %}</p>
+    </a>
+  </div>
+</div>

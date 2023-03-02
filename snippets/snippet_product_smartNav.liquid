@@ -1,22 +1,30 @@
+{{ "style--component--smartNav.css" | asset_url | stylesheet_tag }}
+
 {% assign product = product %}
 {% assign sorted_collections = product.collections | sort: 'all_products_count' %}
 {% assign maxCount = maxCount %}
 {% assign count = 0 %}
 {{ product.sorted_collections[0].handle }}
-<div class = 'smartNav_image_grid'>
-    {% for collection in sorted_collections %}
-        {% if collection.image and count < maxCount %}
-        {% assign count = count | plus: 1 %}
-        <a href = "{{ collection.url }}">
-        {% assign bestProduct = collection.products[forloop.index] %}
-        <div class = 'smartNav_image_wrapper' style = '
-        background-image: url({{ bestProduct.featured_image | image_url : width: 400 }});
-        background-size: cover;' height = "400"
+<div class="smartNav_image_grid">
+  {% for collection in sorted_collections %}
+    {% if collection.image and count < maxCount %}
+      {% assign count = count | plus: 1 %}
+      {% assign bestProduct = collection.products[forloop.index] %}
+      <div class = "smartNav_card">
+      <a href="{{ collection.url }}">
+        <div
+          class="smartNav_image_wrapper"
+          style="
+            background-image: url({{ bestProduct.featured_image | image_url : width: 400 }});
+            background-size: cover;
+          "
+          height="400"
         >
-            <img loading = 'lazy' src = "{{ collection | image_url: width: 400 }}" height = unset width = 400>
+          <img loading="lazy" src="{{ collection | image_url: width: 400 }}" height="unset" width="400">
         </div>
-        <p>{{ collection.title }}</p>
-        </a>
-        {% endif %}
-    {% endfor %}
+      </a>
+      <p>{{ collection.title }}</p>
+    </div>
+    {% endif %}
+  {% endfor %}
 </div>

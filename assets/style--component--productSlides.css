@@ -14,12 +14,12 @@
 }
 @media only screen and (max-width: 900px) {
   .productSlider__section__container {
-    padding: 0;
+    padding: 0 10px;
   }
 }
 @media only screen and (max-width: 500px) {
   .productSlider__section__container {
-    padding: 0;
+    padding: 0 10px;
   }
 }
 
@@ -51,7 +51,6 @@ div.products-slide-container .products-slide-item-container {
   margin: 15px 5px;
 }
 div.products-slide-container .products-slide-h2 {
-  font-family: "Noto Sans TC", sans-serif;
   font-size: 1.9rem;
   font-weight: 600;
   margin-top: 0px;

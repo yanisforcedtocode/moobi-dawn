@@ -1,7 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "section_main_collection",
+      "type": "section_main_list_collection",
       "settings": {
         "title": "我們的品牌.",
         "featured_collection": "soft-99",

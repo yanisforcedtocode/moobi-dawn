@@ -6,13 +6,27 @@
   -ms-grid-columns: 21% 79%;
   grid-template-columns: 20% 80%;
 }
+@media screen and (max-width: 900px) {
+  .productComparison__container__grid2S {
+    padding: 0px 10px;
+  }
+}
 
 .productComparison__container__grid2S__titles {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   margin-bottom: 14px;
-  flex-basis: 125px;
+  flex-basis: 70px;
+  flex-shrink: 0;
+  flex-grow: 1;
+  max-width: 125px;
+}
+@media screen and (max-width: 900px) {
+  .productComparison__container__grid2S__titles {
+    margin-bottom: 4px;
+    flex-basis: 70px;
+  }
 }
 
 .productComparison__container__grid2S__titles__title {
@@ -64,7 +78,7 @@ div.productComparison__container__grid2S__table__grid5S__score {
 
 .productComparison__card {
   padding: 0px 2px;
-  min-width: 210px;
+  flex-basis: 210px;
   max-width: 210px;
 }
 .productComparison__card a {
@@ -72,6 +86,15 @@ div.productComparison__container__grid2S__table__grid5S__score {
 }
 .productComparison__card img {
   width: 100%;
+}
+@media screen and (max-width: 900px) {
+  .productComparison__card {
+    min-width: 165px;
+  }
+}
+.productComparison__card .productComparison__img__wrapper {
+  width: 100%;
+  aspect-ratio: 1;
 }
 
 /* === prompt ===*/
@@ -88,47 +111,4 @@ div.productComparison__container__grid2S__table__grid5S__score {
 
 h4.productPrompt__section__title {
   font-weight: 600;
-}
-
-.smartNav_image_grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  max-width: 700px;
-  margin: 35px auto;
-  gap: 5px;
-}
-
-.smartNav_image_wrapper {
-  position: relative;
-  border-radius: 50%;
-  margin: 4px;
-  overflow: hidden;
-  line-height: 0px;
-  filter: drop-shadow(1px 1px 2px rgba(60, 60, 60, 0.2));
-}
-
-.smartNav_image_wrapper img {
-  height: 100%;
-  width: 100%;
-  transform: scale(1.15);
-  transition-property: transform;
-  transition-duration: 100ms;
-}
-
-.smartNav_image_wrapper img:hover {
-  transform: scale(1);
-  opacity: 0;
-}
-
-.smartNav_image_grid p {
-  font-size: 1.3rem;
-  text-align: center;
-  margin-top: 1rem;
-  color: rgba(61, 61, 61, 0.7490196078);
-}
-
-@media screen and (max-width: 650px) {
-  .smartNav_image_grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }

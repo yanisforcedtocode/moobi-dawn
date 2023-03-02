@@ -1,0 +1,23 @@
+{{ 'style--component--metafield--articles.css' | asset_url | stylesheet_tag }}
+
+  <div class="collection_main_section_standard">
+    <div class="collection_line_spacer"></div>
+    <h2 class="collection_main_section_title">相關豆知識</h2>
+    <div class="collectionreccom__section">
+       <div class="collectionMetaArticles__section__container">
+        {% render 'snippet_metafield_articles' attribute: 'data-productPage_engagement_type' attributeValue: 'productPage_engagement_blog_manual' %}
+      </div>
+    </div>
+  </div>
+
+{% schema %}
+{
+  "name": "Collection articles",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection articles"
+    }
+  ]
+}
+{% endschema %}

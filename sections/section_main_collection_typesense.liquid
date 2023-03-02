@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="{{ 'style--TSClient--collection.css' | asset_url }}" type="text/css">
+
+<div class="TSClient__section">
+  <div class="overlay"></div>
+  <div class="TSClient__section__grid">
+    <div class="TSClient__section__grid__sideBar__wrapper" id="sideBar__wrapper">
+      <div class="TSClient__section__grid__sideBar">
+        <div class="TSClient__section__grid__sideBar__close"><i id="closeBtn" class="fas fa-times"></i></div>
+
+        <div class="facet__filters">
+          <h3 class="filters__mainTitle"><i class="fas fa-filter"></i> 篩選條件:</h3>
+          <div class="facetFilter__data"></div>
+        </div>
+        <!-- price range -->
+
+        <div class="standardFilters">
+          <h3><i class="fas fa-sort-down"></i> 其他條件</h3>
+          <div class="standardFilters__container">
+            <input type="checkbox" value="discount:>0.09" id="standardFilter__discount:>0.09"
+            ><label for="standardFilter__discount:>0.09">折扣產品</label>
+            <input type="checkbox" value="totalInventory:>0" id="standardFilter__totalInventory:>0"
+            ><label for="standardFilter__totalInventory:>0">有庫存</label>
+          </div>
+        </div>
+        <div class="sortBy">
+          <h3><i class="fas fa-sort"></i> 排序</h3>
+          <div class="sortBy__container">
+            <input type="checkbox" value="price:asc" id="checkbox__sort__price:asc"
+            ><label for="checkbox__sort__price:asc">價錢： 低至高</label>
+            <input type="checkbox" value="price:desc" id="checkbox__sort__price:desc"
+            ><label for="checkbox__sort__price:desc">價錢： 高至低</label>
+            <input type="checkbox" value="order:asc" id="checkbox__sort__order:asc"
+            ><label for="checkbox__sort__order:asc">最暢銷</label>
+            <input type="checkbox" value="createdAt:desc" id="checkbox__sort__createdAt:desc"
+            ><label for="checkbox__sort__createdAt:desc">最新上架</label>
+          </div>
+        </div>
+        <div class="priceInput">
+          <h3><i class="fas fa-dollar-sign"></i> 價格</h3>
+          <div class="priceInput__container">
+            <span>最低</span>
+            <input type="text" disabled="true" id="minV" class="priceInput__container__numInput">
+            <span>最高</span>
+            <input type="text" disabled="true" id="maxV" class="priceInput__container__numInput">
+            <div class="priceInput__container__range">
+              <div class="priceInput__container__range__background"></div>
+              <div class="priceInput__container__range__progressA" id="progressA"></div>
+              <div class="priceInput__container__range__progressB" id="progressB"></div>
+              <input type="range" id="minRange" class="priceInput__container__range--min" value="0" max="100" min="0">
+              <input type="range" id="maxRange" class="priceInput__container__range--max" value="100" max="100" min="0">
+            </div>
+          </div>
+        </div>
+      </div>
+      <button id="submitsearch">查看結果</button>
+    </div>
+    <div class="TSClient__section__grid__main">
+      <div class="TS__collection__titles__container">
+        <h1 id="TS__collection__titles__container__h1" class="TS__collection__titles__container__h1">
+          {{ collection.title }}
+        </h1>
+        {% if collection.description != blank %}
+          <div id="TS__collection__titles__container__rte" class="TS__collection__titles__container__rte">
+            {{ collection.description }}
+          </div>
+        {% endif %}
+      </div>
+      <div id="related__collections" class="related__collections">
+        <h3>相關系列：</h3>
+        {% render 'snippet_collection_smartNav', maxCount: 6, featCollection: collection %}
+      </div>
+
+      <h3 id="resultsTitle" class="results__title">搜尋結果</h3>
+      <button id="filter__btn"><i class="fas fa-caret-down"></i> 產品分類</button>
+
+      <div id="response">
+        {% for product in collection.products limit: 4 %}
+          <div class="productCard">
+            <div class="productCard__container">
+              <div class="productCard__container__media">
+                <div class="productCard__container__imgWrapper">
+                  <svg class="spinner" viewBox="0 0 50 50">
+                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                  </svg>
+                </div>
+              </div>
+              <div class="productCard__container__content">
+                <p class="productCard__container__content__price"></p>
+                <p class="productCard__container__content__vendor"></p>
+                <h4 class="productCard__container__content__title"></h4>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="pageSelect--collection">
+        <div class="pageSelect--collection__container">
+          <button
+            class="pageSelect--collection__container__left"
+            id="pageSelect--collection__container__left"
+            data-value="left"
+          >
+            <i class="fas fa-angle-left"></i> 上頁
+          </button>
+          <div class="pageSelect--collection__container__pageCtrl"></div>
+          <button
+            class="pageSelect--collection__container__right"
+            id="pageSelect--collection__container__right"
+            data-value="right"
+          >
+            下頁 <i class="fas fa-angle-right"></i>
+          </button>
+        </div>
+      </div>
+      {% comment %} {% render 'typesenseClient--collection--articles', metafields: collection.metafields %} {% endcomment %}
+    </div>
+  </div>
+</div>
+<!-- === TS search package -->
+
+<script src="{{ 'typesense.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'script--TSClient--collection.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Main Collection Typesense",
+  "settings": []
+}
+{% endschema %}

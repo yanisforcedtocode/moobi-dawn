@@ -1,0 +1,35 @@
+{{ 'style--component--smartNav.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign featuredCol = '' | split: ','
+  assign maxCount = maxCount
+  assign count = 0
+%}
+{% for product in featCollection.products limit: 12 %}
+  {% assign featuredCol = featuredCol | concat: product.collections %}
+{% endfor %}
+{% assign uniqCols = featuredCol | uniq %}
+
+<div class="smartNav_image_grid">
+  {% for collection in uniqCols %}
+    {% if collection.image and count < maxCount and col.handle != 'all' %}
+      {% assign count = count | plus: 1 %}
+      {% assign bestProduct = collection.products[forloop.index] %}
+      <div class="smartNav_card">
+        <a href="{{ collection.url }}">
+          <div
+            class="smartNav_image_wrapper"
+            style="
+              background-image: url({{ bestProduct.featured_image | image_url : width: 400 }});
+              background-size: cover;
+            "
+            height="400"
+          >
+            <img loading="lazy" src="{{ collection | image_url: width: 400 }}" height="unset" width="400">
+          </div>
+        </a>
+        <p>{{ collection.title }}</p>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

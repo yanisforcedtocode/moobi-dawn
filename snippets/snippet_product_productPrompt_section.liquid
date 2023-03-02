@@ -21,7 +21,7 @@
                 <p class = "productPrompt_popup_productItem_comparedAtPrice">{{ item.compared_at_price | money_with_currency }}</p>
             </div>
         </a>
-        {% render 'add2Cart_button_external' featuredProduct: all_products[item.handle] %}
+        {% render 'snippet_add2Cart_button_external' featuredProduct: all_products[item.handle] disabled: false %}
     {% endfor %}
 </div>
 {% endif %}

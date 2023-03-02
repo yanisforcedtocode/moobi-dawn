@@ -95,14 +95,18 @@
     "product_description":{
       "type":"section_main_product_details"
     },
-    "product_comparison":{
+    "product_recommendations":{
       "type":"section_main_product_recommendation"
+    },
+    "product_articles":{
+      "type":"section_main_product_articles"
     }
   },
   "order": [
     "main_product",
     "product_FBT",
     "product_description",
-    "product_comparison"
+    "product_recommendations",
+    "product_articles"
   ]
 }
