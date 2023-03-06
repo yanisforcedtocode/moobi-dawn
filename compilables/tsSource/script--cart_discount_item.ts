@@ -1,12 +1,76 @@
+type ParsedState = {
+    token: string;
+    note: null | string;
+    attributes: Record<string, unknown>;
+    original_total_price: number;
+    total_price: number;
+    total_discount: number;
+    total_weight: number;
+    item_count: number;
+    items: {
+      id: number;
+      properties: Record<string, unknown>;
+      quantity: number;
+      variant_id: number;
+      key: string;
+      title: string;
+      price: number;
+      original_price: number;
+      discounted_price: number;
+      line_price: number;
+      original_line_price: number;
+      total_discount: number;
+      discounts: [];
+      sku: string;
+      grams: number;
+      vendor: string;
+      taxable: boolean;
+      product_id: number;
+      product_has_only_default_variant: boolean,
+      gift_card: boolean;
+      final_price: number;
+      final_line_price: number;
+      url: string;
+      featured_image: {
+        aspect_ratio: number;
+        alt: string;
+        height: number;
+        url: string;
+        width: number;
+      };
+      image: string;
+      handle: string;
+      requires_shipping: boolean;
+      product_type: string;
+      product_title: string;
+      product_description: string;
+      variant_title: string;
+      variant_options: string[];
+      options_with_values: {
+        name: string;
+        value: unknown;
+      }[];
+      line_level_discount_allocations: [];
+      line_level_total_discount: number;
+    }[];
+    requires_shipping: boolean;
+    currency: string;
+    items_subtotal_price: number;
+    cart_level_discount_applications: [];
+    sections: {[x:string]:string};
+  };
+  
 class CartDiscountItemController {
     noLineItemMatch: boolean;
     productTitle: string
+    discountItemThreshold: number
     buttonClass: string
     quantity__inputs: NodeListOf<HTMLInputElement> 
     addedToCart: string
-    constructor(producdTitle: string){
+    constructor(producdTitle: string, discountItemThreshold: number ){
         this.noLineItemMatch = true
         this.productTitle = producdTitle
+        this.discountItemThreshold = discountItemThreshold
         this.quantity__inputs = this.returnInputsFromDOM()
         this.buttonClass = "quantity__button"
         this.addedToCart = "Discount item redeemed"
@@ -18,20 +82,12 @@ class CartDiscountItemController {
         }
         this.quantity__inputs.forEach((el)=>{
             if(this.checkProductTitle(el)){
-                this.matchingProductHandler(el)
                 this.noLineItemMatch = false
             }
         })
-        if(this.noLineItemMatch){
-            this.enableAddButton()
-        }
-
     }
 
     matchingProductHandler(el: HTMLInputElement) {
-        this.changeElmBackground(el)
-        this.disableSideButtons(el)
-        this.disableAddButton()
         if (this.checkProductQtyOne(el)) {
             this.moreThanOneQtyHandler(el)
         }
@@ -64,11 +120,24 @@ class CartDiscountItemController {
     }
 
     checkProductTitle(elem: HTMLInputElement){
-        if(elem.ariaLabel?.includes(this.productTitle)){
+        if(this.productTitle && elem.ariaLabel?.includes(this.productTitle)){
             return true
         }else{
             return false
         }
+    }
+
+    checkCartItemTitles(parsedState: ParsedState){
+        let mapped = parsedState.items.map((el)=>{
+            if(el.product_title === this.productTitle){
+                return el.key
+            }else{
+                return false
+            }
+        }).filter((el)=>{
+            return el !== false
+        })
+        return mapped[0]
     }
 
     checkProductQtyOne(elem: HTMLInputElement){
@@ -78,6 +147,15 @@ class CartDiscountItemController {
             return false
         }
     }
+
+    checkCartPriceThreshold(totalPrice: number){
+        if(totalPrice> this.discountItemThreshold){
+            return true
+        }else{
+            return false
+        }
+    }
+
 
     enableAddButton(){
         const addButton = document.querySelector('[name="add"]') as HTMLButtonElement | null
@@ -121,21 +199,38 @@ class CartDiscountItemController {
     updateInputsElm(){
         this.quantity__inputs = this.returnInputsFromDOM()
     }
-    
 
-
+    static cartPageAddButtonFinallyExtHandler(_this:any){
+        const button = _this.submitButton as HTMLElement
+        if (button){
+            _this.submitButton.disabled = true
+            // _this.submitButton.innerText = "added to cart"
+            if(window.location.pathname.includes('/cart')){
+                window.location.reload()
+              }
+        }
+      }
+    public async removeDiscountItem(parsedState: ParsedState){
+        try {
+            const metThreshold = this.checkCartPriceThreshold(parsedState.total_price)
+            const keyMap = this.checkCartItemTitles(parsedState)
+            
+            if(!metThreshold && keyMap){
+                const res = await moobiQueries.changeCartItem(keyMap, 0)
+                window.location.reload()
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
-const cartPageAddButtonFinallyExtHandler = (_this:any)=>{
-    const button = _this.submitButton as HTMLElement
-    if (button){
-        _this.submitButton.disabled = true
-        _this.submitButton.innerText = "added to cart"
-    }
-  }
-  externalTriggerInterface.addToCartFinally = cartPageAddButtonFinallyExtHandler
+const discountItemTitle = document.getElementById('discount_item_title')!.innerText 
+const discountItemThreshold = parseInt(document.getElementById('discount_item_threshold')!.innerText )
+const cartDiscount = new CartDiscountItemController(discountItemTitle, discountItemThreshold)
 
-const cartDiscountController = new CartDiscountItemController('雨敵 玻璃清潔噴劑 GLACO Windscreen Glass De Cleaner')
+externalTriggerInterface.addToCartFinally = CartDiscountItemController.cartPageAddButtonFinallyExtHandler
+externalTriggerInterface.updateCartQuantity = cartDiscount.removeDiscountItem.bind(cartDiscount)
 
 class CartDiscountPromptController {
     cartItems: any

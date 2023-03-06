@@ -63,6 +63,11 @@ class CartItems extends HTMLElement {
         section: document.getElementById("main-cart-footer").dataset.id,
         selector: ".js-contents",
       },
+      {
+        id: "section_discount_item",
+        section: document.getElementById("section_discount_item").dataset.id,
+        selector: ".add2CartBlock",
+      }
     ];
   }
 
@@ -83,6 +88,7 @@ class CartItems extends HTMLElement {
       });
       const state = await res.text();
       const parsedState = await JSON.parse(state);
+      console.log(parsedState)
       this.classList.toggle("is-empty", parsedState.item_count === 0);
       const cartDrawerWrapper = document.querySelector("cart-drawer");
       const cartFooter = document.getElementById("main-cart-footer");
@@ -97,8 +103,8 @@ class CartItems extends HTMLElement {
 
       this.getSectionsToRender().forEach((section) => {
         const elementToReplace =
-          document.getElementById(section.id).querySelector(section.selector) ||
-          document.getElementById(section.id);
+        document.getElementById(section.id).querySelector(section.selector) ||
+        document.getElementById(section.id);
         elementToReplace.innerHTML = this.getSectionInnerHTML(
           parsedState.sections[section.section],
           section.selector
@@ -128,6 +134,10 @@ class CartItems extends HTMLElement {
         );
       }
       this.disableLoading();
+      if(externalTriggerInterface){
+        const handler = externalTriggerInterface.updateCartQuantity
+        handler(parsedState)
+      }
       return parsedState;
     } catch (error) {
       this.querySelectorAll(".loading-overlay").forEach((overlay) =>

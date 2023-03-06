@@ -119,18 +119,6 @@ class ProductForm extends HTMLElement {
   }
 }
 
-const cartPageAddButtonFinallyExtHandler = (_this) => {
-  const button = _this.submitButton;
-  if (button) {
-      _this.submitButton.disabled = true;
-      _this.submitButton.innerText = "added to cart";
-      if(window.location.pathname.includes('/cart')){
-        window.location.reload()
-      }
-  }
-};
-externalTriggerInterface.addToCartFinally = cartPageAddButtonFinallyExtHandler
-
 class productFormExternal extends ProductForm {
   constructor() {
     super();

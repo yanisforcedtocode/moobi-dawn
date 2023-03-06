@@ -109,5 +109,56 @@ class MoobiQueries {
             }
         });
     }
+    changeCartItem(id, quantity) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // line is an index starting with 1
+            const body = {
+                'id': id,
+                'quantity': quantity
+            };
+            const bodyString = JSON.stringify(body);
+            try {
+                console.log(bodyString);
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    redirect: 'manual',
+                    body: bodyString
+                };
+                const response = yield fetch(`/cart/change.js`, requestOptions);
+                const result = yield response.text();
+                const data = yield JSON.parse(result);
+                return data;
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
+    renderSection(sectionId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sections = sectionId.join(',');
+            const urlQuery = `/?sections=${sections}`;
+            try {
+                console.log(urlQuery);
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    redirect: 'manual',
+                };
+                const response = yield fetch(`/cart/change.js`, requestOptions);
+                const result = yield response.text();
+                const data = yield JSON.parse(result);
+                return data;
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    }
 }
 const moobiQueries = new MoobiQueries();

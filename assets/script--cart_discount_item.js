@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class CartDiscountItemController {
-    constructor(producdTitle) {
+    constructor(producdTitle, discountItemThreshold) {
         this.noLineItemMatch = true;
         this.productTitle = producdTitle;
+        this.discountItemThreshold = discountItemThreshold;
         this.quantity__inputs = this.returnInputsFromDOM();
         this.buttonClass = "quantity__button";
         this.addedToCart = "Discount item redeemed";
@@ -23,18 +24,11 @@ class CartDiscountItemController {
         }
         this.quantity__inputs.forEach((el) => {
             if (this.checkProductTitle(el)) {
-                this.matchingProductHandler(el);
                 this.noLineItemMatch = false;
             }
         });
-        if (this.noLineItemMatch) {
-            this.enableAddButton();
-        }
     }
     matchingProductHandler(el) {
-        this.changeElmBackground(el);
-        this.disableSideButtons(el);
-        this.disableAddButton();
         if (this.checkProductQtyOne(el)) {
             this.moreThanOneQtyHandler(el);
         }
@@ -68,15 +62,36 @@ class CartDiscountItemController {
     }
     checkProductTitle(elem) {
         var _a;
-        if ((_a = elem.ariaLabel) === null || _a === void 0 ? void 0 : _a.includes(this.productTitle)) {
+        if (this.productTitle && ((_a = elem.ariaLabel) === null || _a === void 0 ? void 0 : _a.includes(this.productTitle))) {
             return true;
         }
         else {
             return false;
         }
     }
+    checkCartItemTitles(parsedState) {
+        let mapped = parsedState.items.map((el) => {
+            if (el.product_title === this.productTitle) {
+                return el.key;
+            }
+            else {
+                return false;
+            }
+        }).filter((el) => {
+            return el !== false;
+        });
+        return mapped[0];
+    }
     checkProductQtyOne(elem) {
         if (parseInt(elem.value) > 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    checkCartPriceThreshold(totalPrice) {
+        if (totalPrice > this.discountItemThreshold) {
             return true;
         }
         else {
@@ -120,16 +135,37 @@ class CartDiscountItemController {
     updateInputsElm() {
         this.quantity__inputs = this.returnInputsFromDOM();
     }
-}
-const cartPageAddButtonFinallyExtHandler = (_this) => {
-    const button = _this.submitButton;
-    if (button) {
-        _this.submitButton.disabled = true;
-        _this.submitButton.innerText = "added to cart";
+    static cartPageAddButtonFinallyExtHandler(_this) {
+        const button = _this.submitButton;
+        if (button) {
+            _this.submitButton.disabled = true;
+            // _this.submitButton.innerText = "added to cart"
+            if (window.location.pathname.includes('/cart')) {
+                window.location.reload();
+            }
+        }
     }
-};
-externalTriggerInterface.addToCartFinally = cartPageAddButtonFinallyExtHandler;
-const cartDiscountController = new CartDiscountItemController('雨敵 玻璃清潔噴劑 GLACO Windscreen Glass De Cleaner');
+    removeDiscountItem(parsedState) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const metThreshold = this.checkCartPriceThreshold(parsedState.total_price);
+                const keyMap = this.checkCartItemTitles(parsedState);
+                if (!metThreshold && keyMap) {
+                    const res = yield moobiQueries.changeCartItem(keyMap, 0);
+                    window.location.reload();
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+    }
+}
+const discountItemTitle = document.getElementById('discount_item_title').innerText;
+const discountItemThreshold = parseInt(document.getElementById('discount_item_threshold').innerText);
+const cartDiscount = new CartDiscountItemController(discountItemTitle, discountItemThreshold);
+externalTriggerInterface.addToCartFinally = CartDiscountItemController.cartPageAddButtonFinallyExtHandler;
+externalTriggerInterface.updateCartQuantity = cartDiscount.removeDiscountItem.bind(cartDiscount);
 class CartDiscountPromptController {
     constructor() {
         this.promptSection = document.getElementById('custom_discount_and_shipping_policies');

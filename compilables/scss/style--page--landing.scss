@@ -1,0 +1,255 @@
+h1{
+  display: block;
+  width:fit-content;
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+h2{
+  font-size: 2.3rem;
+}
+h3{
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+@mixin greyBG{
+    background-color: #f3f3f3
+}
+@mixin whiteBG{
+    background-color: #fff;
+}
+@mixin yellowBG{
+    background-color: #ffc500;
+}
+@mixin yellowTransBG{
+    background-color: #ffc400c4
+}
+@mixin phoneGridtoBlock{
+    @media only screen and (max-width: 600px){
+        display: block;
+    }
+}
+@mixin h2standard{
+
+}
+@mixin h3standard{
+    
+}
+@mixin buttonClickable{
+    display: inline-block;
+    background-color:#ffc500;
+    padding: 10px 25px;
+    border: 0px solid rgba(60,60,60,0.2);
+    border-radius: 5px;
+    box-shadow: 0 2px rgba(60,60,60,0.3);;
+    &:hover{
+        background-color: #ffc400e1;
+    }
+    &:active{
+        background-color: #ffc400e1;
+        box-shadow: 0 1px rgba(60,60,60,0.3);
+        transform: translateY(1px);
+    }
+}
+
+.landing__section{
+    display: block;
+    position: relative;
+    
+    p{
+        font-size: 1.4rem
+    }
+    span{
+        font-size: 1.4rem
+      }
+    &--grey{
+        @extend .landing__section;
+        @include greyBG;
+    }
+    &--white{
+        @extend .landing__section;
+        @include whiteBG;
+        box-shadow:0 2px 4px 2.5px rgba(60, 60, 60, 0.1)
+    }
+    &--yellow{
+        @extend .landing__section;
+        @include yellowBG;
+    }
+    &__spacer{
+        display: block;
+        height: 20px;
+        &--grey{
+            @extend .landing__section__spacer;
+            @include greyBG;
+        }
+        &--white{
+            @extend .landing__section__spacer;
+            @include whiteBG;
+        }
+        &--yellow{
+            @extend .landing__section__spacer;
+            @include yellowBG;
+        }
+    }
+    &__container{
+        position: relative;
+        z-index: 2;
+        padding: 40px 0px;
+        i{
+            position: absolute;
+        }
+        &__button{
+            width: fit-content;
+            padding: 10px 25px;
+            @include buttonClickable;
+            i{
+                position: relative
+            }
+        }
+
+        &__banner{
+            max-width: 100%;
+            padding: 0px;
+            img{
+                display: block;
+                max-height: 300px;
+                max-width: 100%;
+                width: auto;
+                height: auto;
+                margin: 30px auto;
+            }
+        }
+        &__title{
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+        &__gridFeatured{
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            row-gap: 10px;
+            padding: 15px 15px;
+            @media only screen and (max-width: 600px){
+                grid-template-columns: repeat(3, 1fr)
+            }
+            &__title{
+                font-size: 1.1rem;
+                font-weight: 600;
+                grid-column: 1/span 4;
+            }
+            &__item{
+                min-height: 50px;
+                align-self: center;
+                display: inline-block;
+
+                i{
+                    color:#ffc500;
+                    margin: 5px;
+                    position:relative;
+                }
+                h3{
+                    display: inline;
+                }
+                &:first-of-type{
+                    grid-column: 1/span 3;
+                }
+            }
+        }
+        &__grid3s{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 0px 15px;
+        }
+        &__grid4s{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 0px 15px;
+            &__items{
+                min-height: 8rem;
+                text-align: center;
+                @include yellowTransBG;
+                margin: 5px;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        }
+        &__grid2s{
+            display: grid;
+            grid-template-columns: 30% 70%;
+            padding: 30px 10px;
+            @include phoneGridtoBlock;
+            &__title{
+                grid-column: 1/span 2;
+            }
+            &__imgContent{
+                &__img{
+                    display: block;
+                    max-width: 100%;
+                    height: auto;
+                    margin: 0 auto;
+                }
+            }
+            &__textContent{
+                padding: 15px;
+                h3{
+                }
+                &__content{
+                    font-size:0.8rem;
+                    font-weight: 400;
+                    a{
+                        color:#ff8c00
+                    }
+                }
+                &__button{
+                    width:fit-content;
+                    padding: 10px 23px;
+                    border-radius: 5px;
+                    @include buttonClickable
+                }
+            }
+        }
+        &__block{
+            padding: 15px 15px;
+            &__title{
+                grid-column: 1/span 2;
+            }
+            &__imgContent{
+                &__img{
+                    display: block;
+                    max-width: 100%;
+                    width: auto;
+                    max-height: 450px;
+                    height: auto;
+                    margin: 0 auto;
+                }
+            }
+            &__textContent{
+                padding: 15px;
+                h3{
+
+                }
+                &__content{
+                    font-size:0.8rem;
+                    font-weight: 400;
+                    a{
+                        color:#ff8c00
+                    }
+                }
+                &__button{
+                    width:fit-content;
+                    padding: 10px 23px;
+                    border-radius: 5px;
+                    @include buttonClickable
+                }
+            }
+        }       
+    }
+    &__collapsibleContainer{
+        padding: 10px;
+        overflow: hidden;
+        max-height: 150px;
+        transition-duration: 300ms;
+    }
+}

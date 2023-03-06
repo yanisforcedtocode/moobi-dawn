@@ -83,7 +83,7 @@
   {% if count < maxCount %}
     {% liquid
       assign limit = maxCount | minus: count
-      assign randomNumber = 'now' | date: '%N' | modulo: 3
+      assign randomNumber = 'now' | date: '%N' | modulo: 4
       assign randomBlogHandle = blogHanldes[randomNumber]
       assign randomBlog = blogs[randomBlogHandle]
     %}

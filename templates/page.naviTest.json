@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "main_page_landing": {
+      "type": "section_main_page_landing"
+    }
+  },
+  "order": [
+    "main_page_landing"
+  ]
+}

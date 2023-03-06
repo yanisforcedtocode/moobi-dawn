@@ -25,70 +25,100 @@
     assign special_discount = total_price | divided_by: 10
   %}
 {% endif %}
-<div class = "page-width"
-  id="custom_discount_and_shipping_policies"
-  data-save10="{{ section.settings.save10_on }}"
-  data-freeShip="{{ section.settings.free_shipping_on }}"
-  data-free_shippingPrompt="{{free_shippingPrompt}}"
-  data-no_free_shippingPrompt="{{no_free_shippingPrompt}}"
-  data-special_discount_Prompt="{{special_discount_Prompt}}"
-  data-no_special_discount_Prompt="{{no_special_discount_Prompt}}"
-  data-default_shippingFee="{{ default_shippingFee }}"
-  data-freeShipPrice="{{freeShipPrice}}"
-  data-save10Price="{{save10Price}}"
->
-  <h2>折扣及運費</h2>
-  {% if section.settings.free_shipping_on %}
-    <div type="freeShipping_prompt_block">
-      <p>current shipping fee:</p>
-      <p type="money">{{ shippingFee | money }}</p>
-      {% if shippingFee == 0 %}
-        <p type="discount_prompt">{{ free_shippingPrompt }}</p>
-        {% else %}
-        <p type="discount_prompt">{{ no_free_shippingPrompt }}</p>
-      {%- endif %}
-    </div>
-  {% endif %}
+<div class="page-width cart_section_standard">
+  <div class="cart_section_standard_container">
+    <h2 class="cart_section_standard_container_title">折扣及運費</h2>
+    <div class="cart_section_discount_Prompt_grid">
+      <div
+        id="custom_discount_and_shipping_policies"
+        data-save10="{{ section.settings.save10_on }}"
+        data-freeShip="{{ section.settings.free_shipping_on }}"
+        data-free_shippingPrompt="{{free_shippingPrompt}}"
+        data-no_free_shippingPrompt="{{no_free_shippingPrompt}}"
+        data-special_discount_Prompt="{{special_discount_Prompt}}"
+        data-no_special_discount_Prompt="{{no_special_discount_Prompt}}"
+        data-default_shippingFee="{{ default_shippingFee }}"
+        data-freeShipPrice="{{freeShipPrice}}"
+        data-save10Price="{{save10Price}}"
+      >
+        {% if section.settings.free_shipping_on %}
+          <div class = "discount_prompt_block" type="freeShipping_prompt_block">
+            <p class = "discount_prompt_block_title">current shipping fee:</p>
+            <div class="discount_prompt_feesWrapper">
+              <span class = "discount_prompt_price" type="money">{{ shippingFee | money }}</span>
+              {% if shippingFee == 0 %}
+                <span class="badge price__badge-sale color-accent-2" type="discount_prompt">
+                  {{- free_shippingPrompt -}}
+                </span>
+              {% else %}
+                <span class="badge price__badge-sale color-accent-3" type="discount_prompt">
+                  {{- no_free_shippingPrompt -}}
+                </span>
+              {%- endif %}
+            </div>
+          </div>
+        {% endif %}
 
-  {% if section.settings.system_discount_on %}
-    <div type="systemDiscount_prompt_block">
-      <p>system discount:</p>
-      <p type="money">{{ system_discount | money }}</p>
-      {% if system_discount > 0 %}
-        <p type="discount_prompt">
-          {% for campaign in cart.cart_level_discount_applications %}
-            {% assign comma = ', ' %}
-            {% if forloop.last %}
-              {% assign comma = '' %}
-            {% endif %}
-            {{ campaign | append: comma }}
-          {% endfor %}
-        </p>
-      {% else %}
-        <p type="discount_prompt">{{ no_system_discount_Prompt }}</p>
-      {% endif %}
-    </div>
-  {% endif %}
+        {% if section.settings.system_discount_on %}
+          <div class = "discount_prompt_block" type="systemDiscount_prompt_block">
+            <p class = "discount_prompt_block_title">system discount:</p>
+            <div class="discount_prompt_feesWrapper">
+              <span class = "discount_prompt_price" type="money">{{ system_discount | money }}</span>
+              {% if system_discount > 0 %}
+                <span class="badge price__badge-sale color-accent-1" type="discount_prompt">
+                  {% for campaign in cart.cart_level_discount_applications %}
+                    {% assign comma = ', ' %}
+                    {% if forloop.last %}
+                      {% assign comma = '' %}
+                    {% endif %}
+                    {{ campaign | append: comma }}
+                  {% endfor %}
+                </span>
+              {% else %}
+                <span class="badge price__badge-sale color-accent-3" type="discount_prompt">
+                  {{- no_system_discount_Prompt -}}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
 
-  {% if section.settings.save10_on %}
-  <div type="specialDiscount_prompt_block">
-    <p>special discount:</p>
-    <p type="money">{{ special_discount | money }}</p>
-    <div>
-      {% if special_discount > 0 %}
-        <p type="discount_prompt">{{ special_discount_Prompt }}</p>
-      {% else %}
-        <p type="discount_prompt">{{ no_special_discount_Prompt }}</p>
-      {%- endif %}
-    </div>
-  </div>
-{% endif %}
+        {% if section.settings.save10_on %}
+          <div class = "discount_prompt_block" type="specialDiscount_prompt_block">
+            <p class = "discount_prompt_block_title">special discount:</p>
+            <div class="discount_prompt_feesWrapper">
+              <span class = "discount_prompt_price" type="money">{{ special_discount | money }}</span>
+              {% if special_discount > 0 %}
+                <span class="badge price__badge-sale color-accent-1" type="discount_prompt">
+                  {{- special_discount_Prompt -}}
+                </span>
+              {% else %}
+                <span class="badge price__badge-sale color-accent-3" type="discount_prompt">
+                  {{- no_special_discount_Prompt -}}
+                </span>
+              {%- endif %}
+            </div>
+          </div>
+        {% endif %}
 
-  <div type="total_discount_block">
-    <p>total discount:</p>
-    <p id="total_discount">{{ shippingFee | minus: default_shippingFee | abs | plus: system_discount | plus: special_discount | money }}</p>
+        <div class = "total_discount_block" type="total_discount_block">
+          <p class = "total_discount_title">total discount:</p>
+          <p class = "total_discount_price" id="total_discount">
+            {{
+              shippingFee
+              | minus: default_shippingFee
+              | abs
+              | plus: system_discount
+              | plus: special_discount
+              | money
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 {% schema %}
 {

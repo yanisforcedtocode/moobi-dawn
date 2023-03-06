@@ -86,6 +86,55 @@ class MoobiQueries {
             console.log(err);
         }
     }
+
+    public async changeCartItem(id: string, quantity: number) {
+        // line is an index starting with 1
+        const body = {
+            'id': id,
+            'quantity': quantity
+          }
+        const bodyString = JSON.stringify(body)
+
+        try {
+            console.log(bodyString)
+            const requestOptions: RequestInit = {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                  },
+                redirect: 'manual',
+                body: bodyString
+            };
+            const response = await fetch(`/cart/change.js`, requestOptions)
+            const result = await response.text()
+            const data = await JSON.parse(result)
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    public async renderSection(sectionId: string[]) {
+        const sections = sectionId.join(',')
+        const urlQuery = `/?sections=${sections}`
+
+        try {
+            console.log(urlQuery)
+            const requestOptions: RequestInit = {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                  },
+                redirect: 'manual',
+            };
+            const response = await fetch(`/cart/change.js`, requestOptions)
+            const result = await response.text()
+            const data = await JSON.parse(result)
+            return data;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 const moobiQueries = new MoobiQueries()

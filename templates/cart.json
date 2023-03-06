@@ -5,7 +5,34 @@
       "settings": {
         "padding_top": 16,
         "padding_bottom": 36,
-        "discount_product":"soft-99-glaco-de-cleaner"
+        "discount_product": "promotion-stp-fuel-injector-cleaner-no2",
+        "regular_product": "stp-super-conc-fuel-injector-cleaner"
+      },
+      "blocks": {
+        "subtotal": {
+          "type": "subtotal",
+          "settings": {
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ]
+    },
+    "discount-item":{
+      "type": "section_cart_discountItem",
+      "settings": {
+        "discount_product": "promotion-stp-fuel-injector-cleaner-no2",
+        "regular_product": "stp-super-conc-fuel-injector-cleaner",
+        "discount_product_threshold": 100,
+        "thresholdNotMetMessage": "meet a min threshold of placeholder to enjoy discount",
+        "redeemedMessage": "redeemed already"
       }
     },
     "cart-shipping_and_discount": {
@@ -13,10 +40,10 @@
       "settings": {
         "free_shipping_price": 149,
         "shipping_fee": 49,
-        "save10_price":349,
+        "save10_price": 349,
         "save10_on": true,
         "free_shipping_on": true,
-        "system_discount": true,
+        "system_discount_on": true,
         "free_shippingPrompt": "SAVED $49, 免運費ON",
         "no_free_shippingPrompt": "spend XXX more to get 免運費",
         "special_discount_Prompt": "SAVED 10%, please use SAVE10 on checkout",
@@ -43,40 +70,24 @@
         "buttons"
       ],
       "settings": {
+        "discount_product": "soft99-4-x-tire-cleaner"
       }
     },
-    "featured-collection": {
-      "type": "featured-collection",
+    "product_slide_cart_dynamic": {
+      "type": "section_main_cart_recommendation",
       "settings": {
-        "title": "Featured collection",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "color_scheme": "background-1",
-        "image_ratio": "square",
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "default_dynamic_collection": "meguiars-hk-hong-kong",
+        "section_title": "為你推薦",
+        "default_dynamic_collection_title": "Featured collection",
+        "default_dynamic_collection_description": ""
       }
     }
   },
   "order": [
     "cart-items",
-    "cart-shipping_and_discount",
     "cart-footer",
-    "featured-collection"
+    "discount-item",
+    "cart-shipping_and_discount",
+    "product_slide_cart_dynamic"
   ]
 }

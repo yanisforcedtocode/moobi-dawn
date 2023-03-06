@@ -1,0 +1,51 @@
+.cart_section_standard .title-wrapper-with-link a {
+  color: #3d3d3d;
+}
+
+.cart_cartitem_checkout_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.cart_cartitem_checkout_wrapper cart-items {
+  flex-basis: 1200px;
+  flex-grow: 1;
+  margin: 0px;
+}
+@media screen and (max-width: 1150px) {
+  .cart_cartitem_checkout_wrapper {
+    display: block;
+  }
+}
+
+#main-cart-footer {
+  border: 1px solid;
+  height: fit-content;
+  padding: 3rem;
+  min-width: 260px;
+}
+#main-cart-footer .cart__footer {
+  padding: 0;
+}
+#main-cart-footer .cart__footer .cart__blocks {
+  width: fit-content;
+}
+#main-cart-footer .cart__footer .cart__blocks a {
+  color: #3d3d3d;
+  font-weight: 600;
+}
+@media screen and (max-width: 1150px) {
+  #main-cart-footer .cart__footer .cart__blocks {
+    width: 100%;
+    text-align: center;
+  }
+  #main-cart-footer .cart__footer .cart__blocks .totals {
+    justify-content: center;
+  }
+  #main-cart-footer .cart__footer .cart__blocks .tax-note {
+    text-align: center;
+  }
+  #main-cart-footer .cart__footer .cart__blocks .cart__ctas {
+    justify-content: center;
+  }
+}

@@ -2,6 +2,7 @@
   assign product = featuredProduct
   assign product_form_id = 'product-form-external' | append: section.id
   assign disabled = disabled
+  assign buttonText = buttonText
 %}
 
 {% if template.name != 'product' %}
@@ -66,9 +67,11 @@
             {% endif %}
           >
             <span>
-              {%- if product.selected_or_first_available_variant.available -%}
+              {%- if product.selected_or_first_available_variant.available and buttonText -%}
+                {{ buttonText }}
+              {% elsif product.selected_or_first_available_variant.available %}  
                 {{ 'products.product.add_to_cart' | t }}
-              {%- else -%}
+              {% else %}
                 {{ 'products.product.sold_out' | t }}
               {%- endif -%}
             </span>

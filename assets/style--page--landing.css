@@ -1,0 +1,245 @@
+h1 {
+  display: block;
+  width: fit-content;
+  font-size: 2.8rem;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 2.3rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.landing__section, .landing__section--yellow, .landing__section--white, .landing__section--grey {
+  display: block;
+  position: relative;
+}
+.landing__section p, .landing__section--yellow p, .landing__section--white p, .landing__section--grey p {
+  font-size: 1.4rem;
+}
+.landing__section span, .landing__section--yellow span, .landing__section--white span, .landing__section--grey span {
+  font-size: 1.4rem;
+}
+.landing__section--grey {
+  background-color: #f3f3f3;
+}
+.landing__section--white {
+  background-color: #fff;
+  box-shadow: 0 2px 4px 2.5px rgba(60, 60, 60, 0.1);
+}
+.landing__section--yellow {
+  background-color: #ffc500;
+}
+.landing__section__spacer, .landing__section__spacer--yellow, .landing__section__spacer--white, .landing__section__spacer--grey {
+  display: block;
+  height: 20px;
+}
+.landing__section__spacer--grey {
+  background-color: #f3f3f3;
+}
+.landing__section__spacer--white {
+  background-color: #fff;
+}
+.landing__section__spacer--yellow {
+  background-color: #ffc500;
+}
+.landing__section__container {
+  position: relative;
+  z-index: 2;
+  padding: 40px 0px;
+}
+.landing__section__container i {
+  position: absolute;
+}
+.landing__section__container__button {
+  width: fit-content;
+  padding: 10px 25px;
+  display: inline-block;
+  background-color: #ffc500;
+  padding: 10px 25px;
+  border: 0px solid rgba(60, 60, 60, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 2px rgba(60, 60, 60, 0.3);
+}
+.landing__section__container__button:hover {
+  background-color: rgba(255, 196, 0, 0.8823529412);
+}
+.landing__section__container__button:active {
+  background-color: rgba(255, 196, 0, 0.8823529412);
+  box-shadow: 0 1px rgba(60, 60, 60, 0.3);
+  transform: translateY(1px);
+}
+.landing__section__container__button i {
+  position: relative;
+}
+.landing__section__container__banner {
+  max-width: 100%;
+  padding: 0px;
+}
+.landing__section__container__banner img {
+  display: block;
+  max-height: 300px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  margin: 30px auto;
+}
+.landing__section__container__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+.landing__section__container__gridFeatured {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  row-gap: 10px;
+  padding: 15px 15px;
+}
+@media only screen and (max-width: 600px) {
+  .landing__section__container__gridFeatured {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.landing__section__container__gridFeatured__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  grid-column: 1/span 4;
+}
+.landing__section__container__gridFeatured__item {
+  min-height: 50px;
+  align-self: center;
+  display: inline-block;
+}
+.landing__section__container__gridFeatured__item i {
+  color: #ffc500;
+  margin: 5px;
+  position: relative;
+}
+.landing__section__container__gridFeatured__item h3 {
+  display: inline;
+}
+.landing__section__container__gridFeatured__item:first-of-type {
+  grid-column: 1/span 3;
+}
+.landing__section__container__grid3s {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0px 15px;
+}
+.landing__section__container__grid4s {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0px 15px;
+}
+.landing__section__container__grid4s__items {
+  min-height: 8rem;
+  text-align: center;
+  background-color: rgba(255, 196, 0, 0.768627451);
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.landing__section__container__grid2s {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  padding: 30px 10px;
+}
+@media only screen and (max-width: 600px) {
+  .landing__section__container__grid2s {
+    display: block;
+  }
+}
+.landing__section__container__grid2s__title {
+  grid-column: 1/span 2;
+}
+.landing__section__container__grid2s__imgContent__img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.landing__section__container__grid2s__textContent {
+  padding: 15px;
+}
+.landing__section__container__grid2s__textContent__content {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.landing__section__container__grid2s__textContent__content a {
+  color: #ff8c00;
+}
+.landing__section__container__grid2s__textContent__button {
+  width: fit-content;
+  padding: 10px 23px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #ffc500;
+  padding: 10px 25px;
+  border: 0px solid rgba(60, 60, 60, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 2px rgba(60, 60, 60, 0.3);
+}
+.landing__section__container__grid2s__textContent__button:hover {
+  background-color: rgba(255, 196, 0, 0.8823529412);
+}
+.landing__section__container__grid2s__textContent__button:active {
+  background-color: rgba(255, 196, 0, 0.8823529412);
+  box-shadow: 0 1px rgba(60, 60, 60, 0.3);
+  transform: translateY(1px);
+}
+.landing__section__container__block {
+  padding: 15px 15px;
+}
+.landing__section__container__block__title {
+  grid-column: 1/span 2;
+}
+.landing__section__container__block__imgContent__img {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  max-height: 450px;
+  height: auto;
+  margin: 0 auto;
+}
+.landing__section__container__block__textContent {
+  padding: 15px;
+}
+.landing__section__container__block__textContent__content {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.landing__section__container__block__textContent__content a {
+  color: #ff8c00;
+}
+.landing__section__container__block__textContent__button {
+  width: fit-content;
+  padding: 10px 23px;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: #ffc500;
+  padding: 10px 25px;
+  border: 0px solid rgba(60, 60, 60, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 2px rgba(60, 60, 60, 0.3);
+}
+.landing__section__container__block__textContent__button:hover {
+  background-color: rgba(255, 196, 0, 0.8823529412);
+}
+.landing__section__container__block__textContent__button:active {
+  background-color: rgba(255, 196, 0, 0.8823529412);
+  box-shadow: 0 1px rgba(60, 60, 60, 0.3);
+  transform: translateY(1px);
+}
+.landing__section__collapsibleContainer {
+  padding: 10px;
+  overflow: hidden;
+  max-height: 150px;
+  transition-duration: 300ms;
+}

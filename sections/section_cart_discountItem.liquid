@@ -1,0 +1,137 @@
+{% liquid
+  assign regular_product = section.settings.regular_product
+  assign regular_product_handle = regular_product.handle
+  assign discount_product = section.settings.discount_product
+  assign discount_product_handle = discount_product.handle
+  assign discount_product_threshold = section.settings.discount_product_threshold | times: 100
+  assign thresholdNotMetMessage = section.settings.thresholdNotMetMessage
+  assign redeemedMessage = section.settings.redeemedMessage
+  assign saved = regular_product.price | minus: discount_product.price | money
+  assign metDiscountProductThreshold = false
+  assign discountProductInCart = false
+  assign disableAddToCart = true
+%}
+
+{% if cart.total_price >= discount_product_threshold %}
+  {% liquid
+    assign disableAddToCart = false
+    assign metDiscountProductThreshold = true
+  %}
+{% endif %}
+{% for item in cart.items %}
+  {% if item.product.handle == discount_product_handle %}
+    {% liquid
+      assign discountProductInCart = true
+      assign disableAddToCart = true
+    %}
+  {% endif %}
+{% endfor %}
+
+{{ 'style--component--discount_item.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width cart_section_standard" id="section_discount_item" data-id="{{ section.id }}">
+  <div class="cart_section_standard_container">
+    <h2 class="cart_section_standard_container_title">好物試用</h2>
+    <div class="cart_section_discountItem_grid">
+      <div class="cart_section_discountItem_grid_item_imageWrapper">
+        <a href="products/{{ regular_product.handle }}">
+          <img
+            src="{{ discount_product.featured_image | image_url: width: 400 }}"
+            loading="lazy"
+            height="400"
+            width="400"
+          >
+        </a>
+      </div>
+      <div class="cart_section_discountItem_grid_item_content">
+        <h3 id="discount_item_title" class="cart_section_discountItem_grid_item_content_title">
+          {{ discount_product.title }}
+        </h3>
+        <div class = "hidden" id = "discount_item_threshold">{{ discount_product_threshold }}</div>
+        <span class="badge price__badge-sale color-accent-2">Sale</span>
+
+        <div class="cart_content_lineWrapper">
+          <p class="cart_section_discountItem_grid_item_content_message">限時搶購！ (每人限購1件)</p>
+        </div>
+        <div class="cart_content_lineWrapper">
+          <span class="cart_section_discountItem_grid_item_content_message">試用價: </span>
+          <span class="cart_section_discountItem_grid_item_content_price">{{ discount_product.price | money }}</span>
+        </div>
+
+        <div class="cart_content_lineWrapper">
+          <span class="cart_section_discountItem_grid_item_content_message">原價: </span>
+          <span class="cart_section_discountItem_grid_item_content_comparedAt">
+            {{- regular_product.price | money -}}
+          </span>
+        </div>
+
+        <div class="cart_content_lineWrapper">
+          <span class="cart_section_discountItem_grid_item_content_message">已節省: </span>
+          <span class="cart_section_discountItem_grid_item_content_saved">{{ saved }}</span>
+        </div>
+      </div>
+      <div class="cart_section_discountItem_grid_item_addButton">
+        {% if metDiscountProductThreshold == true and discountProductInCart == false %}
+          {%
+            render 'snippet_add2Cart_button_external',
+            featuredProduct: discount_product,
+            disabled: false,
+          %}
+        {% elsif metDiscountProductThreshold == true and discountProductInCart == true %}
+          {% render 'snippet_add2Cart_button_external',
+            featuredProduct: discount_product,
+            disabled: true,
+            buttonText: redeemedMessage
+          %}
+        {% elsif metDiscountProductThreshold == false and discountProductInCart == false %}
+          {% render 'snippet_add2Cart_button_external',
+            featuredProduct: discount_product,
+            disabled: true,
+            buttonText: thresholdNotMetMessage
+          %}
+        {% else %}
+          {% render 'snippet_add2Cart_button_external',
+            featuredProduct: discount_product,
+            disabled: true,
+            buttonText: redeemedMessage
+          %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart discount section",
+  "class": "cart__discount__section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "regular_product",
+      "label": "Regular product"
+    },
+    {
+      "type": "product",
+      "id": "discount_product",
+      "label": "Discount product"
+    },
+    {
+      "type": "number",
+      "id": "discount_product_threshold",
+      "label": "Discount product threshold"
+    },
+    {
+      "type": "text",
+      "id": "thresholdNotMetMessage",
+      "label": "Threshold not met message",
+      "info": "Include the word placeholder to insert the price difference."
+    },
+    {
+      "type": "text",
+      "id": "redeemedMessage",
+      "label": "Redeemed message"
+    }
+  ]
+}
+{% endschema %}

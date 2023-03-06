@@ -1,12 +1,14 @@
-<h1>{{ page.title }}</h1>
-
-{% liquid 
-    assign sortedPageSections = page.content | split: '[$section$]'
+{% liquid
+  assign sortedPageSections = page.content | split: '[$section$]'
 %}
-{% render 'snippet_add2Cart_button_external' featuredProduct: all_products['soft-99-glaco-de-cleaner'] %}
 
-{% for pageSection in sortedPageSections %}
-    {% liquid 
+{{ 'style--page--landing.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width  landing__section">
+  <div class="landing__section__container">
+    <h1>{{ page.title }}</h1>
+    {% for pageSection in sortedPageSections %}
+      {% liquid
         assign typeArray = pageSection | split: '[$type$]'
         assign type = typeArray[1]
         assign titleArray = pageSection | split: '[$title$]'
@@ -20,31 +22,40 @@
         assign img = imgArray[1]
         assign colorArray = pageSection | split: '[$color$]'
         assign color = colorArray[1]
-    %}
-    {% case type %}
-        {% when "banner" %}
-            <div class = "page__section__{{ type }}" {% if color %}data-color = "{{ color }}"{% endif %}>
-                <h3>{{ title }}</h3>
+      %}
+      {% case type %}
+        {% when 'banner' %}
+          <p>{{ title }}</p>
+          <div class="landing__section__container__{{ type }}"{% if color %}  data-color="{{ color }}"{% endif %}>
+            {% if img %}
+              <img loading="lazy" src="{{ img }}" height="400" width="unset">
+            {% endif %}
+          </div>
+        {% when 'grid2s' %}
+            <div class="landing__section__container__{{ type }}" {% if color %} data-color="{{ color }}" {% endif %}>
                 {% if img %}
-                    <img loading = "lazy" src = "{{ img }}" height = 400  width = "unset">
+                    <div class="landing__section__container__grid2s__imgContent">
+                        <img class="landing__section__container__grid2s__imgContent__img" loading="lazy" src="{{ img }}" height="400" width="unset">
+                    </div>
                 {% endif %}
-            </div>
-        {% when "grid2s" %}
-            <div class = "page__section__{{ type }}" {% if color %}data-color = "{{ color }}"{% endif %}>
+                <div class="landing__section__container__grid2s__textContent">
                 <h3>{{ subTitle }}</h3>
-                {% if img %}
-                    <img loading = "lazy" src = "{{ img }}" height = 400  width = "unset">
-                {% endif %}
                 <p>{{ content }}</p>
             </div>
-        {% when "block" %}
-            <div class = "page__section__{{ type }}" {% if color %}data-color = "{{ color }}"{% endif %}>
+          </div>
+        {% when 'block' %}
+            <div class="landing__section__container__{{ type }}" {% if color %}   data-color="{{ color }}" {% endif %}> 
+            {% if img %}
+                <div class="landing__section__container__block__imgContent">
+                    <img class="landing__section__container__block__imgContent__img" loading="lazy" src="{{ img }}" height="400" width="unset">
+                </div>
+            {% endif %}
+            <div class="landing__section__container__block__textContent">
                 <h3>{{ subTitle }}</h3>
-                {% if img %}
-                    <img loading = "lazy" src = "{{ img }}" height = 400  width = "unset">
-                {% endif %}
                 <p>{{ content }}</p>
             </div>
-    {% endcase %}
-
-{% endfor %}
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>

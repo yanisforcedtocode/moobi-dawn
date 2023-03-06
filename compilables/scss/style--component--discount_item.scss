@@ -1,0 +1,121 @@
+.cart_section_standard {
+  margin-bottom: 25px;
+}
+.cart_section_standard_container {
+  padding: 0px 10px;
+  padding: 25px;
+  border: 1px solid;
+  max-width: 1000px;
+  .cart_section_standard_container_title {
+    font-weight: 600;
+    margin-top: 0px;
+  }
+  .cart_section_discountItem_grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .cart_section_discountItem_grid_item_imageWrapper {
+      flex-basis: 105px;
+      flex-grow: 1.5;
+      flex-shrink: 1;
+      min-width: 100px;
+      max-width: 180px;
+      height: fit-content;
+      aspect-ratio: 1;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .cart_section_discountItem_grid_item_content {
+      flex-basis: 150px;
+      flex-grow: 4;
+      min-width: 100px;
+      padding: 0px 25px;
+      @media screen and (max-width: 650px) {
+        padding: 0px 10px;
+      }
+      h3.cart_section_discountItem_grid_item_content_title {
+        margin-bottom: 10px;
+        font-size: 1.6rem;
+        color: #3d3d3d;
+      }
+      .cart_content_lineWrapper {
+        padding: 0px;
+        &:first-of-type {
+          padding-top: 15px;
+        }
+        &:nth-of-type(2) {
+          padding-top: 25px;
+        }
+        .cart_section_discountItem_grid_item_content_message {
+          font-size: 1.3rem;
+          padding: 0px;
+          margin: 0px;
+        }
+        .cart_section_discountItem_grid_item_content_price {
+          font-size: 1.9rem;
+          font-weight: 600;
+          color: #3d3d3d;
+        }
+        .cart_section_discountItem_grid_item_content_comparedAt {
+          font-size: 1.4rem;
+          text-decoration: line-through;
+          font-weight: 600;
+        }
+        .cart_section_discountItem_grid_item_content_saved {
+          font-size: 1.4rem;
+        }
+      }
+    }
+    .cart_section_discountItem_grid_item_addButton {
+      flex-basis: 130px;
+      flex-grow: 1;
+      flex-shrink: 1;
+      min-width: 119px;
+      max-width: 600px;
+      height: fit-content;
+      width: fit-content;
+      margin: 10px 0px;
+      margin-top: 15px;
+      button{
+        padding: 10px;
+        font-size: 1.4rem;
+      }
+    }
+  }
+  button.product-form__buttons {
+    padding: 10px;
+  }
+}
+
+.cart_section_discount_Prompt_grid {
+  .discount_prompt_block {
+    .discount_prompt_block_title {
+      font-size: 1.3rem;
+    }
+    .discount_prompt_feesWrapper {
+      display: flex;
+      .discount_prompt_price {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-right: 10px;
+      }
+    }
+  }
+  .total_discount_block {
+    text-align: center;
+    margin: 0px auto;
+    margin-top: 40px;
+    .total_discount_title {
+      color: #3d3d3d;
+    }
+    .total_discount_price {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #3d3d3d;
+    }
+  }
+}
+

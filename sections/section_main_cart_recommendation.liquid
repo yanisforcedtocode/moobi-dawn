@@ -4,7 +4,22 @@
 
 <script src="{{ 'script--product--productComparison.js' | asset_url }}" defer="defer"></script>
 
-<div class="product_main_section_standard" id = "recommendation_section">
+
+{% liquid 
+  assign product = all_products['soft99-iron-terminator']
+%}
+{% if cart.items.size > 0 %}
+  {% liquid
+    assign itemsCount = cart.items.size 
+    assign modulo = itemsCount
+    assign randomNumber = 'now' | date: '%N' | modulo: modulo
+    assign product = cart.items[randomNumber].product
+   %}
+{% endif %}
+
+<div data-productid = "{{ product.id }}"></div>
+
+<div class="page-width product_main_section_standard cart_section_standard" id = "recommendation_section">
   {% comment %} <div class="product_line_spacer"></div> {% endcomment %}
   <h2 class="product_main_section_title">相關產品</h2>
   <div class="productreccom__section">
@@ -17,7 +32,7 @@
 </div>
 </div>
 
-<div class="product_main_section_standard">
+<div class="page-width product_main_section_standard cart_section_standard">
   {% comment %} <div class="product_line_spacer"></div> {% endcomment %}
   <h2 class="product_main_section_title">相關系列</h2>
   <div class="productreccom__section">
@@ -42,7 +57,7 @@
       </div>
     </div>
     </div>
-  </div>
+
 </template>
 
 <template id="product_recommendation_template">
