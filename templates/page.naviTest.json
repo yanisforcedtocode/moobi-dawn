@@ -1,10 +1,10 @@
 {
   "sections": {
-    "main_page_landing": {
-      "type": "section_main_page_landing"
+    "main_page_repairNavi": {
+      "type": "section_main_page_repairNavi"
     }
   },
   "order": [
-    "main_page_landing"
+    "main_page_repairNavi"
   ]
 }

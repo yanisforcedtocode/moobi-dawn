@@ -102,13 +102,14 @@
         </div>
         <h3 class="metaArticle__grid__item__title">{{ article.title }}</h3>
         <p class="metaArticle__grid__item__excerpt">{{ article.excerpt | strip_html }}</p>
+        <p data-type = "article_published_at">{{ article.published_at | date: "%b %d, %y" }}</p>
       </div>
     {% endfor %}
   {% endif %}
 
   <div class="metaArticle__grid__item">
     <a href="/pages/car-repair-tutorial">
-      <p class="featuredArticle_card_button">更多豆知識 {% render 'icon-arrow' %}</p>
+      <p class="featuredArticle_card_button flowingBackground">更多豆知識 {% render 'icon-arrow' %}</p>
     </a>
   </div>
 </div>

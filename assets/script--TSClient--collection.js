@@ -1,19 +1,5 @@
 'use strict'
 // === init TS search client
-let client = new Typesense.SearchClient({
-    'nodes': [{
-      'host': '2y9h70d3prw6uv8jp-1.a1.typesense.net', // For Typesense Cloud use xxx.a1.typesense.net
-      'port': '443',      // For Typesense Cloud use 443
-      'protocol': 'https'   // For Typesense Cloud use https
-    }],
-    'apiKey': 'itq7jicFo1XypYg2paZKPQx0qxJFgbG6',
-    'connectionTimeoutSeconds': 2
-  })
-  // === TS search handlers
-  
-
-  
-//   searchFn()
 
 class TSSearchWidget {
     constructor(params) { 
@@ -294,7 +280,7 @@ class TSSearchWidget {
             filter_by : `status:= "ACTIVE"`,
             // 'sort_by'   : 'num_employees:desc'
           }
-        const res = await client.collections('shopify_products_zh_01').documents().search(JSON.parse(params))
+        const res = await moobiTypeSenseClient.collections('shopify_products_zh_01').documents().search(JSON.parse(params))
         console.log(res)
         return res
     }
@@ -319,7 +305,7 @@ class TSSearchWidget {
             exclude_fields:'bodyHTML'
           }
         //   console.log(searchParameters)
-        const res = await client.collections('shopify_GQL_test_01').documents().search(searchParameters)
+        const res = await moobiTypeSenseClient.collections('shopify_GQL_test_01').documents().search(searchParameters)
         // console.log(res)
         return res
     }
@@ -338,7 +324,7 @@ class TSSearchWidget {
             sort_by:sortby,
             exclude_fields:'bodyHTML'
           }
-        const res = await client.collections('shopify_GQL_test_01').documents().search(searchParameters)
+        const res = await moobiTypeSenseClient.collections('shopify_GQL_test_01').documents().search(searchParameters)
         // console.log(res)
         return res
     }

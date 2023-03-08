@@ -1,0 +1,42 @@
+{% liquid 
+    assign attribute = attribute
+    assign attributeValue = attributeValue
+%}
+<div class="TS__AC__section" >
+    <div class="TS__AC__fitlers" >
+        <div class="TS__AC__fitlers__container" id = "TS__AC__fitlers__container" >
+            <div class="TS__AC__fitlers__container__item" >
+                <label for="select__<<field_name>>"></label>
+                <div class = "TS__AC__fitlers__container__item__select" name="select__<<field_name>>" id="select__<<field_name>>">
+  
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="AC__sections__wrapper">
+        <div class="TS__AC__section__container">
+            <input type="text" id="TS__AC__section__container__textField" class = "TS__AC__section__container__textField" placeholder="輸入及開始搜尋...">
+            <div class="TS__AC__section__container__dataList__wrapper">
+                <div class="TS__AC__section__container__dataList" id="TS__AC__section__container__dataList">
+                </div>
+            </div>
+            <i id="TS__AC__section__container__searchBtn" class="fas fa-search"></i>
+        </div>
+        <div class="TS__AC__results" >
+            <div class="TS__AC__results__container">
+                <div class="pageSelect">
+                    <div class="pageSelect__container">
+                        <p class="pageSelect__container__pageNum" id = "pageSelect__container__pageNum">1/1</p>
+                      <button class="pageSelect__container__left" id = "pageSelect__container__left" data-value = "left">
+                        <i class="fas fa-angle-left"></i> 上頁</button>
+                      <div class="pageSelect__container__pageCtrl">
+                      </div>
+                      <button class="pageSelect__container__right" id = "pageSelect__container__right" data-value = "right">下頁 <i class="fas fa-angle-right"></i></button>
+                    </div>
+                  </div>
+                <div class="TS__AC__results__container__grid" id = "TS__AC__results" {{ attribute }} = {{ attributeValue }}>
+                </div>
+            </div>
+        </div>
+  </div>
+  </div>

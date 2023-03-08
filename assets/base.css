@@ -2961,3 +2961,22 @@ details-disclosure > details {
 a{
   text-decoration: none
 }
+
+/* by Yan */
+.flowingBackground {
+  background: linear-gradient(-45deg, #3D3D3D, #303030, #606060, #303030);
+  background-size: 400% 400%;
+  animation: gradient 6s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

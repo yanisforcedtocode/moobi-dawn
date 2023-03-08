@@ -1,0 +1,436 @@
+@mixin h2B4 {
+  display: inline-block;
+  content: "";
+  background-color: #ffc500;
+  width: 16px;
+  height: 16px;
+  transform: translateY(10%);
+}
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+h3 {
+  font-size: 1.4rem;
+  margin: 10px;
+}
+.wrapper span {
+  font-size: 0.8rem;
+}
+.wrapper p {
+  font-size: 1.4rem;
+}
+
+html {
+}
+body {
+  background-color: #fff;
+  perspective: 10px;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#PageContainer {
+}
+#MainContent {
+}
+
+#MainContent {
+  margin-top: -47px;
+}
+
+#shopify-section-header {
+}
+
+.repairNavi__section {
+  display: block;
+  position: relative;
+  z-index: 2;
+  max-width: 1600px;
+  margin: 0px auto;
+  margin-bottom: 30px;
+  &:first-of-type {
+    margin-bottom: 0;
+  }
+  &:nth-of-type(3) {
+    .repairNavi__section__container {
+      @media only screen and (max-width: 1000px) {
+        padding: 0px;
+      }
+    }
+  }
+  .repairNavi__section__container {
+    padding: 30px;
+    margin: 0 60px;
+
+    &.--whiteBG {
+      background-color: #fff;
+    }
+    &.--border {
+      border: 1px solid;
+    }
+    @media only screen and (max-width: 1000px) {
+      margin: 0 15px;
+      padding: 20px;
+    }
+  }
+}
+/* ============= para =============*/
+.para {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  z-index: -1;
+  max-width: 1800px;
+  height: 500px;
+  overflow: clip;
+  .para__item01,
+  .para__item02 {
+    position: absolute;
+  }
+  .para__mainH1 {
+    display: block;
+    text-align: right;
+    position: absolute;
+    top: 0px;
+    right: 0%;
+    z-index: 2;
+    font-size: 3.2rem;
+    font-weight: 600;
+    color: #464646;
+    line-height: 1.2;
+    margin-top: 70px;
+    margin-right: 25px;
+    opacity: 0%;
+    animation: 1000ms ease-in-out 0.5s 1 normal forwards titleFlyIn;
+  }
+  .para__mainP {
+    display: block;
+    text-align: right;
+    position: absolute;
+    width: 90%;
+    right: 0%;
+    z-index: 2;
+    font-size: 1.8rem;
+    color: #464646;
+    padding-right: 25px;
+    opacity: 0%;
+    margin-top: 150px;
+    animation: 1000ms ease-in-out 0.5s 1 normal forwards titleFlyIn;
+  }
+  .para__item01 {
+    transform: scale(1) translateY(-148px);
+    width: 100%;
+  }
+  .para__item02 {
+    max-width: 400px;
+    transform: scale(1.1) translateY(53px) translateX(-165px);
+    margin-top: 20px;
+  }
+  @media only screen and (max-width: 1000px) {
+    .para__item01 {
+      transform: scale(1.8) translateY(64px) translateX(-57px);
+      height: auto;
+    }
+    .para__item02 {
+      transform: translateZ(-5px) scale(0.9) translateY(84px) translateX(-60px);
+      margin-top: 20px;
+    }
+    .para__mainP {
+      /*width: 70%*/
+    }
+  }
+}
+
+/* ============= Features =============*/
+.repairNavi__section__container__features {
+  display: grid;
+  grid-template-columns: 50% repeat(3, 1fr);
+  padding: 0px 15px;
+}
+.repairNavi__section__container__features__item {
+  display: block;
+  position: relative;
+  align-self: center;
+  margin: 5px auto;
+}
+.repairNavi__section__container__features__item h2 {
+  margin: 10px 0px;
+  font-size: 1.8rem;
+}
+h2.repairNavi__section__container__features__item__h2 {
+  position: relative;
+  font-size: 2.5rem;
+  opacity: 0%;
+  margin: 0px;
+  animation: 1100ms ease-in-out 1s 1 normal forwards titleFlyInLeft;
+}
+.repairNavi__section__container__features__item i {
+  color: #fcc500;
+  margin-right: 5px;
+}
+@media only screen and (max-width: 550px) {
+  .repairNavi__section__container__features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .repairNavi__section__container__features__item:first-of-type {
+    grid-column: 1 / span 3;
+  }
+}
+
+/* ============= repairNavi =============*/
+.repairNavi__section__container__navi {
+  background-color: #f3f3f3;
+  padding: 30px;
+}
+
+.repairNavi__partSelector__section__container__h2,
+.repairNavi__problemSelector__section__container__h2,
+.repairNavi__solutionSelector__section__container__h2 {
+  margin: 15px 0px;
+  font-size: 1.8rem;
+}
+.repairNavi__partSelector__section__container__h2::before {
+  @include h2B4;
+}
+.repairNavi__problemSelector__section__container__h2::before {
+  @include h2B4;
+}
+.repairNavi__solutionSelector__section__container__h2::before {
+  @include h2B4;
+}
+
+.repairNavi__partSelector__section__container__grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px 0px;
+}
+.repairNavi__partSelector__section__container__grid__col {
+  flex-basis: 110px;
+  flex-grow: 1;
+  margin: 5px;
+  @media screen and (max-width: 900px) {
+    max-width: 150px;
+  }
+}
+.repairNavi__partSelector__section__container__grid__col:hover {
+  transform: scale(1.02);
+  transition: transform 300ms ease-out;
+}
+.repairNavi__partSelector__section__container__grid__col img {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  margin: 0px auto;
+}
+.repairNavi__partSelector__section__container__grid__col img:hover {
+  animation: 1100ms linear 0s infinite normal none rocking;
+}
+.repairNavi__partSelector__section__container__grid__col h3 {
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin: 10px 0;
+}
+
+.repairNavi__problemSelector__section__container__grid {
+  display: grid;
+  position: relative;
+  max-height: 100px;
+  /*z-index: 1;*/
+  padding: 15px 0px;
+  grid-template-columns: repeat(6, 1fr);
+  overflow: hidden;
+  transition: height 400ms ease-in-out 100ms;
+}
+@media only screen and (max-width: 600px) {
+  .repairNavi__problemSelector__section__container__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.repairNavi__problemSelector__section__container__grid p {
+  grid-column: 1 / span 5;
+}
+
+.repairNavi__problemSelector__section__container__grid__col {
+  margin: 5px;
+}
+.repairNavi__problemSelector__section__container__grid__col:hover {
+  transform: scale(1.02);
+  transition: transform 300ms ease-out;
+}
+.repairNavi__problemSelector__section__container__grid__col img {
+  display: block;
+  width: 100%;
+  margin: 0px auto;
+}
+.repairNavi__problemSelector__section__container__grid__col h3 {
+  text-align: center;
+  font-size: 1.4rem;
+  margin: 10px;
+}
+.problemsAnimation {
+  animation: problemsOpacity 500ms ease-in-out 1 forwards;
+}
+.repairNavi__solutionSelector__section__container__grid__container {
+  margin: 15px 0px;
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+}
+
+.repairNavi__solutionSelector__section__container__grid {
+  display: grid;
+  grid-template-columns: 40% 20% 20% 20%;
+  overflow: hidden;
+  background-color: #fff;
+  padding: 5px 15px;
+  margin: 15px 0px;
+}
+.container__grid--first {
+  background-color: none;
+  font-weight: 600;
+}
+.repairNavi__solutionSelector__section__container__grid:hover {
+  transform: scale(1.01);
+  transition: transform 300ms ease-out;
+}
+.container__grid--first:hover {
+  transform: none;
+}
+.repairNavi__solutionSelector__section__container__grid div {
+  margin: 1em 0px;
+}
+.repairNavi__solutionSelector__section__container__grid i {
+  color: #ffc500;
+}
+.repairNavi__solutionSelector__section__container__grid p {
+  margin: 1em 5px;
+  @media screen and (max-width: 1000px) {
+    font-size: 1.25rem;
+    
+  }
+}
+.repairNavi__solutionSelector__section__container__imgWrapper {
+  max-width: 500px;
+  margin: 10px auto;
+}
+.repairNavi__solutionSelector__section__container__imgWrapper h3 {
+  margin: 10px 0px;
+  margin-top: 15px;
+}
+
+@keyframes problemsOpacity {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+/* ============= end of repairNavi =============*/
+
+.repairNavi__section__container__explained {
+  display: flex;
+  flex-wrap: wrap;
+  img {
+    display: block;
+    flex-basis: 150px;
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    max-width: 450px;
+  }
+}
+.repairNavi__section__container__explained__grid {
+  padding: 10px 0px;
+  flex-basis: 200px;
+  flex-grow: 1;
+}
+@media only screen and (max-width: 600px) {
+  .repairNavi__section__container__explained {
+    display: block;
+  }
+}
+
+/* ============= Option menu ============== */
+.repairNavi__section__container__options__grids {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  a {
+    display: block;
+    width: 100%;
+    flex-grow: 1;
+    flex-basis: 125px;
+    height: auto;
+    margin: 5px;
+  }
+}
+.repairNavi__section__container__options__grids__item {
+  min-height: 8rem;
+  text-align: center;
+  background-color: rgba(255, 196, 0, 0.768627451);
+  padding: 10px 10px;
+  cursor: pointer;
+  height: 100%;
+}
+.repairNavi__section__container__options__grids__item img {
+  display: block;
+  max-height: 59px;
+  padding: 10px 0px;
+  margin: 0 auto;
+}
+.repairNavi__section__container__options__grids__item:hover {
+  background-color: #7474746b;
+}
+
+/* ============= Our brands ============== */
+.featuredCollection__section__container__item img {
+}
+
+/*================= Animation ================*/
+@keyframes titleFlyIn {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0%;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 100%;
+  }
+}
+@keyframes titleFlyInLeft {
+  0% {
+    left: -100%;
+    opacity: 0%;
+  }
+  70% {
+    left: 5%;
+  }
+  100% {
+    left: 0%;
+    opacity: 100%;
+  }
+}
+
+@keyframes rocking {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  25% {
+    transform: rotateZ(5deg);
+  }
+  50% {
+    transform: rotateZ(0deg);
+  }
+  75% {
+    transform: rotateZ(-5deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
